@@ -2,34 +2,35 @@
 <html>
   <head>
     <title>BannerTools</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <script src="script.js"></script>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="html2canvas.js"></script>
+    <script src="background.js"></script>
     <style type="text/css">
         *{
             font-family: 'Roboto', sans-serif;
         }
     	#Panel{
-            width: 150px;
+            width: 200px;
     	}
 
         p{
-            color: red;
+            color: grey;
+            font-weight: bold;
         }
     </style>
   </head>
   <body>
     <div id="Panel">
         <h2>BannerTools</h2>
-        <p>This app must be clicked everytime you manually refresh, or open a new tab to enable it.</p>
-        <h4>Debug Options</h4>
-        <input type="checkbox" id="blackCheckbox">Make it black<br>
-        <input type="checkbox" id="showCheckbox">Show me everything<br>
-        <p>(Must have <b>'adContainer'</b> or <b>'ad-container'</b> as ID)</p>
-        <h4>Collect Options</h4>
-        <input type="checkbox" id="marginCheckbox">Add margin<br>
-        <input type="checkbox" id="replayCheckbox">Hide replay button<br>
-        <p>(Must have <b>'replay_btn'</b> or <b>'replay-button'</b> as Class Name)</p>
+        <div id="PanelOptions">
+            <h4>Debug Options</h4>
+            <input type="checkbox" id="blackCheckbox">Make it black<br>
+            <input type="checkbox" id="showCheckbox">Show me everything<br>
+            <h4>Collect Options</h4>
+            <input type="checkbox" id="marginCheckbox">Add margin<br>
+            <input type="checkbox" id="replayCheckbox">Hide replay button<br>
+        </div>
     </div>
   </body>
 </html>
