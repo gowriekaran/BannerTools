@@ -4,7 +4,6 @@
     <title>BannerTools</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="jquery-3.1.1.min.js"></script>
-    <script src="html2canvas.js"></script>
     <script src="background.js"></script>
     <style type="text/css">
         *{
@@ -23,11 +22,13 @@
   <body>
     <div id="Panel">
         <h2>BannerTools</h2>
+        <input type="checkbox" id="disableCheckbox">Turn off BannerTools<br>
         <div id="PanelOptions">
             <h4>Debug Options</h4>
             <input type="checkbox" id="blackCheckbox">Make it black<br>
             <input type="checkbox" id="showCheckbox">Show me everything<br>
             <h4>Collect Options</h4>
+            <button id="screenshotButton">Screenshot</button><br>
             <input type="checkbox" id="marginCheckbox">Add margin<br>
             <input type="checkbox" id="replayCheckbox">Hide replay button<br>
         </div>

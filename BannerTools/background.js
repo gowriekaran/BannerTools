@@ -1,102 +1,178 @@
+// console.log("background script loaded");
+
 $(document).ready(function() {
-  chrome.storage.sync.get('uniqueID_overflow', function(data) {
-    if (data["uniqueID_overflow"] == "visible"){
-      overflow("visible");
-      $("#showCheckbox").prop('checked', true);
-    }
-  });
+  chrome.storage.sync.get('uniqueID_disable', function(data) {
+    // console.log("uniqueID_disable > ",data["uniqueID_disable"]);
 
-  chrome.storage.sync.get('uniqueID_backgroundColor', function(data) {
-    if (data["uniqueID_backgroundColor"] == "black"){
-      backgroundColor("black");
-      $("#blackCheckbox").prop('checked', true);
+    if (data["uniqueID_disable"] == "true"){
+      disable("true");
+      $("#disableCheckbox").prop('checked', true);
     }
-  });
+    else{
+      chrome.storage.sync.set({'uniqueID_disable': 'false'});
 
-  chrome.storage.sync.get('uniqueID_margin', function(data) {
-    if (data["uniqueID_margin"] == "100px"){
-      margin("100px");
-      $("#marginCheckbox").prop('checked', true);
-    }
-  });
+      chrome.storage.sync.get('uniqueID_overflow', function(data) {
+      // console.log("uniqueID_overflow > ",data["uniqueID_overflow"]);
+        if (data["uniqueID_overflow"] == "visible"){
+          scriptRunner("overflow","true");
+          $("#showCheckbox").prop('checked', true);
+        }
+      });
 
-  chrome.storage.sync.get('uniqueID_replay', function(data) {
-    if (data["uniqueID_replay"] == "hidden"){
-      replay("hidden");
-      $("#replayCheckbox").prop('checked', true);
+      chrome.storage.sync.get('uniqueID_backgroundColor', function(data) {
+      // console.log("uniqueID_backgroundColor > ",data["uniqueID_backgroundColor"]);
+        if (data["uniqueID_backgroundColor"] == "black"){
+          scriptRunner("backgroundColor","true");
+          $("#blackCheckbox").prop('checked', true);
+        }
+      });
+
+      chrome.storage.sync.get('uniqueID_margin', function(data) {
+      // console.log("uniqueID_margin > ",data["uniqueID_margin"]);
+        if (data["uniqueID_margin"] == "100px"){
+          scriptRunner("margin","true");
+          $("#marginCheckbox").prop('checked', true);
+        }
+      });
+
+      chrome.storage.sync.get('uniqueID_replay', function(data) {
+      // console.log("uniqueID_replay > ",data["uniqueID_replay"]);
+        if (data["uniqueID_replay"] == "hidden"){
+          scriptRunner("replay","true");
+          $("#replayCheckbox").prop('checked', true);
+        }
+      });
     }
   });
 //------------------------------------------------------------------------------//
   $('#showCheckbox').change(function() {
     if (this.checked) {
-      overflow("visible");
+      scriptRunner("overflow","true");
     }
     else{
-      overflow("");
+      scriptRunner("overflow","false");
     }
   });
 
   $('#blackCheckbox').change(function() {
     if (this.checked) {
-      backgroundColor("black");
+      scriptRunner("backgroundColor","true");
     }
     else{
-      backgroundColor("");
+      scriptRunner("backgroundColor","false");
     }
   });
 
   $('#marginCheckbox').change(function() {
     if (this.checked) {
-      margin("100px");
+      scriptRunner("margin","true");
     }
     else{
-      margin("");
+      scriptRunner("margin","false");
     }
   });
 
   $('#replayCheckbox').change(function() {
     if (this.checked) {
-      replay("hidden");
+      scriptRunner("replay","true");
     }
     else{
-      replay("");
+      scriptRunner("replay","false");
     }
+  });
+
+  $('#disableCheckbox').change(function() {
+    if (this.checked) {
+      disable("true");
+    }
+    else{
+      disable("false");
+    }
+  });
+
+  $('#screenshotButton').click(function(){
+    scriptRunner("screenshot","true");
   });
 });
 //------------------------------------------------------------------------------//
-function overflow(overflow_value){
-  var code = '$("#adContainer").css("overflow","' + overflow_value + '")';
-  var code2 = '$("#ad-container").css("overflow","' + overflow_value + '")';
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.executeScript(tab.id, {code:code} );
-    chrome.tabs.executeScript(tab.id, {code:code2} );
+function scriptRunner(calling_method,passing_value){
+  // console.log(calling_method, passing_value);
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    switch (calling_method){
+      case "overflow":
+                      chrome.tabs.sendMessage(tabs[0].id, {overflow: passing_value});
+                      break;
+      case "backgroundColor":
+                      chrome.tabs.sendMessage(tabs[0].id, {backgroundColor: passing_value});
+                      break;
+      case "margin":
+                      chrome.tabs.sendMessage(tabs[0].id, {margin: passing_value});
+                      break;
+      case "replay":
+                      chrome.tabs.sendMessage(tabs[0].id, {replay: passing_value});
+                      break;
+      case "screenshot":
+                      chrome.tabs.sendMessage(tabs[0].id, {screenshot: passing_value});
+                      break;
+    }
   });
-  chrome.storage.sync.set({'uniqueID_overflow': overflow_value});
 }
 
-function backgroundColor(backgroundColor_value){
-  var code = '$("body").css("backgroundColor","' + backgroundColor_value + '")';
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.executeScript(tab.id, {code:code} );
-  });
-  chrome.storage.sync.set({'uniqueID_backgroundColor': backgroundColor_value});
+function disable(disable_value){
+  // console.log("disable() > ", disable_value);
+  if(disable_value == "true"){
+    scriptRunner("overflow","false");
+    scriptRunner("backgroundColor","false");
+    scriptRunner("margin","false");
+    scriptRunner("replay","false");
+
+    $("#showCheckbox").prop('checked', false);
+    $("#blackCheckbox").prop('checked', false);
+    $("#marginCheckbox").prop('checked', false);
+    $("#replayCheckbox").prop('checked', false);
+
+    $("#PanelOptions").toggle();
+    chrome.storage.sync.set({'uniqueID_disable': 'true'});
+  }
+  else{
+    $("#PanelOptions").toggle();
+    chrome.storage.sync.set({'uniqueID_disable': 'false'});
+  }
 }
 
-function margin(margin_value){
-  var code = '$("body").css("margin","' + margin_value + '")';
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.executeScript(tab.id, {code:code} );
-  });
-  chrome.storage.sync.set({'uniqueID_margin': margin_value});
-}
 
-function replay(replay_value){
-  var code = '$(".replay_btn").css("visibility","' + replay_value + '")';
-  var code2 = '$(".replay-button").css("visibility","' + replay_value + '")';
 
-  chrome.tabs.getSelected(null, function(tab) {
-    chrome.tabs.executeScript(tab.id, {code:code} );
-    chrome.tabs.executeScript(tab.id, {code:code2} );
-  });
-  chrome.storage.sync.set({'uniqueID_replay': replay_value});
-}
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if ((request.execute_screenshot.indexOf("true") >= 0)){
+      chrome.tabs.captureVisibleTab(null, {
+        format : "jpeg",
+        quality : 100
+      }, function(data) {
+        var adSize = request.execute_screenshot;
+        adSize = adSize.split(";").pop();
+
+        var adWidth = adSize.split('-')[0];
+        var adHeight = adSize.split("-").pop();
+        
+        var content = document.createElement("canvas");
+        var image = new Image();
+        image.onload = function() {
+          var canvas = content;
+          canvas.width = adWidth;
+          canvas.height = adHeight;
+          var context = canvas.getContext("2d");
+          context.drawImage(image, 0, 0);
+
+          var link = document.createElement('a');
+          link.download = "backup.jpg";
+          link.href = content.toDataURL();
+          link.click();
+        };
+
+        image.src = data;
+        scriptRunner("screenshot","false");
+      });
+    }
+  }
+);
