@@ -1,8 +1,5 @@
-// console.log("content script loaded");
-
 $(document).ready(function() {
   chrome.storage.sync.get('uniqueID_disable', function(data) {
-    // console.log("uniqueID_disable > ",data["uniqueID_disable"]);
     if (data["uniqueID_disable"] == "false"){
       if((!$("#adContainer").length)&&(!$("#ad-container").length)){
         console.log("You must use 'adContainer' or 'ad-container' as ID for BannerTools to function properly!")
@@ -12,7 +9,6 @@ $(document).ready(function() {
       }
 
       chrome.storage.sync.get('uniqueID_overflow', function(data) {
-      // console.log("uniqueID_overflow > ",data["uniqueID_overflow"]);
         if (data["uniqueID_overflow"] == "visible"){
           overflow("visible");
           $("#showCheckbox").prop('checked', true);
@@ -20,7 +16,6 @@ $(document).ready(function() {
       });
 
       chrome.storage.sync.get('uniqueID_backgroundColor', function(data) {
-      // console.log("uniqueID_backgroundColor > ",data["uniqueID_backgroundColor"]);
         if (data["uniqueID_backgroundColor"] == "black"){
           backgroundColor("black");
           $("#blackCheckbox").prop('checked', true);
@@ -28,7 +23,6 @@ $(document).ready(function() {
       });
 
       chrome.storage.sync.get('uniqueID_margin', function(data) {
-      // console.log("uniqueID_margin > ",data["uniqueID_margin"]);
         if (data["uniqueID_margin"] == "100px"){
           margin("100px");
           $("#marginCheckbox").prop('checked', true);
@@ -36,7 +30,6 @@ $(document).ready(function() {
       });
 
       chrome.storage.sync.get('uniqueID_replay', function(data) {
-      // console.log("uniqueID_replay > ",data["uniqueID_replay"]);
         if (data["uniqueID_replay"] == "hidden"){
           replay("hidden");
           $("#replayCheckbox").prop('checked', true);
@@ -77,6 +70,8 @@ function screenshot(screenshot_value){
     $("#adContainer").css("margin",screenshot_value);
     $("#ad-container").css("margin",screenshot_value);
 
+    replay("hidden");
+
     var adSize = $("meta[name='ad.size']").attr("content");
 
     var start_pos = adSize.indexOf('=') + 1;
@@ -88,11 +83,13 @@ function screenshot(screenshot_value){
 
     var passing_value = "true;"+adWidth+"-"+adHeight;
 
-    setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: passing_value})}, 1000);
+    setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: passing_value})}, 1250);
   }
   else{
     $("#adContainer").css("margin","auto");
     $("#ad-container").css("margin","auto");
+
+    replay("");
   }
 }
 
@@ -120,14 +117,6 @@ chrome.runtime.onMessage.addListener(
 
     else if (request.margin == "false"){
       margin("");
-    }
-
-    else if (request.replay == "true"){
-      replay("hidden");
-    }
-
-    else if (request.replay == "false"){
-      replay("");
     }
 
     else if (request.screenshot == "true"){
