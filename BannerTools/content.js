@@ -1,6 +1,8 @@
 $(document).ready(function() {
   chrome.storage.sync.get('uniqueID_disable', function(data) {
     if (data["uniqueID_disable"] == "false"){
+      $('body').append('<div class="footer" style="background-color: rgba(0,0,0,0.9); color: rgb(0,255,0); padding-top: 5px;padding-bottom: 5px; position: fixed;text-align: right;font-family:arial;bottom: 0px;width: 100%;">BannerTools Activated&nbsp</div>');
+
       if((!$("#adContainer").length)&&(!$("#ad-container").length)){
         console.log("You must use 'adContainer' or 'ad-container' as ID for BannerTools to function properly!")
       }
@@ -35,6 +37,9 @@ $(document).ready(function() {
           $("#replayCheckbox").prop('checked', true);
         }
       });
+    }
+    else if (data["uniqueID_disable"] == "true"){
+      $('body').append('<div class="footer" style="background-color: rgba(0,0,0,0.9); color: rgb(255,0,0); padding-top: 5px;padding-bottom: 5px; position: fixed;text-align: right;font-family:arial;bottom: 0px;width: 100%;">BannerTools Deactivated&nbsp</div>');
     }
   });
 });

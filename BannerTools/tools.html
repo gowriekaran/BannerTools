@@ -17,20 +17,40 @@
             color: grey;
             font-weight: bold;
         }
+
+        .materialize{
+            padding: 5px;
+            border: 1px solid black;
+        }
     </style>
   </head>
   <body>
     <div id="Panel">
         <h2>BannerTools</h2>
-        <input type="checkbox" id="disableCheckbox">Turn off BannerTools<br>
+        <table>
+            <tr>
+                <td><input type="checkbox" id="disableCheckbox"></td>
+                <td>Turn off BannerTools</td>
+            </tr>
+        </table>
         <div id="PanelOptions">
             <h4>Debug Options</h4>
-            <input type="checkbox" id="blackCheckbox">Make it black<br>
-            <input type="checkbox" id="showCheckbox">Show me everything<br>
-            <input type="checkbox" id="marginCheckbox">Add margin<br>
-
+            <table>
+                <tr>
+                    <td><input type="checkbox" id="blackCheckbox"></td>
+                    <td>Make it black</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="showCheckbox"></td>
+                    <td>Show me everything</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="marginCheckbox"></td>
+                    <td>Add margin</td>
+                </tr>
+            </table>
             <h4>Collect Options</h4>
-            <button id="screenshotButton">Screenshot</button><br>
+            <button id="screenshotButton" class="materialize">Screenshot</button><br>
         </div>
     </div>
   </body>
