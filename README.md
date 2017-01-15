@@ -32,3 +32,9 @@ Features:
 
 - Margin
    Adds a margin around the banner
+
+- Timer
+   Displays a timer on screen
+   
+- BannerInfo
+   Display BannerInfo (ad width, height, name)
