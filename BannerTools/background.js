@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  var adWidth;
+  var adHeight;
+
+  scriptRunner("bannerInfo","true");
+
   chrome.storage.sync.get('uniqueID_disable', function(data) {
 
     if (data["uniqueID_disable"] == "true"){
@@ -10,22 +15,36 @@ $(document).ready(function() {
 
       chrome.storage.sync.get('uniqueID_overflow', function(data) {
         if (data["uniqueID_overflow"] == "visible"){
-          scriptRunner("overflow","true");
+          // scriptRunner("overflow","true");
           $("#showCheckbox").prop('checked', true);
         }
       });
 
       chrome.storage.sync.get('uniqueID_backgroundColor', function(data) {
         if (data["uniqueID_backgroundColor"] == "black"){
-          scriptRunner("backgroundColor","true");
+          // scriptRunner("backgroundColor","true");
           $("#blackCheckbox").prop('checked', true);
         }
       });
 
       chrome.storage.sync.get('uniqueID_margin', function(data) {
         if (data["uniqueID_margin"] == "100px"){
-          scriptRunner("margin","true");
+          // scriptRunner("margin","true");
           $("#marginCheckbox").prop('checked', true);
+        }
+      });
+
+      chrome.storage.sync.get('uniqueID_margin', function(data) {
+        if (data["uniqueID_margin"] == "100px"){
+          // scriptRunner("margin","true");
+          $("#marginCheckbox").prop('checked', true);
+        }
+      });
+
+      chrome.storage.sync.get('uniqueID_timer', function(data) {
+        if (data["uniqueID_timer"] == 0){
+          // scriptRunner("stopwatchTimer",0);
+          $("#timerCheckbox").prop('checked', true);
         }
       });
     }
@@ -71,12 +90,22 @@ $(document).ready(function() {
     scriptRunner("overflow","false");
     scriptRunner("backgroundColor","false");
     scriptRunner("margin","false");
+    scriptRunner("stopwatchTimer",1);
 
     $("#showCheckbox").prop('checked', false);
     $("#blackCheckbox").prop('checked', false);
     $("#marginCheckbox").prop('checked', false);
 
     scriptRunner("screenshot","true");
+  });
+
+  $('#timerCheckbox').change(function() {
+    if (this.checked) {
+      scriptRunner("stopwatchTimer",0);
+    }
+    else{
+      scriptRunner("stopwatchTimer",1);
+    }
   });
 });
 //------------------------------------------------------------------------------//
@@ -96,20 +125,27 @@ function scriptRunner(calling_method,passing_value){
       case "screenshot":
                       chrome.tabs.sendMessage(tabs[0].id, {screenshot: passing_value});
                       break;
+      case "stopwatchTimer":
+                      chrome.tabs.sendMessage(tabs[0].id, {stopwatchTimer: passing_value});
+                      break;
+      case "bannerInfo":
+                      chrome.tabs.sendMessage(tabs[0].id, {bannerInfo: passing_value});
+                      break;
     }
   });
 }
 
 function disable(disable_value){
-  // console.log("disable() > ", disable_value);
   if(disable_value == "true"){
     scriptRunner("overflow","false");
     scriptRunner("backgroundColor","false");
     scriptRunner("margin","false");
+    scriptRunner("stopwatchTimer",1);
 
     $("#showCheckbox").prop('checked', false);
     $("#blackCheckbox").prop('checked', false);
     $("#marginCheckbox").prop('checked', false);
+    $("#timerCheckbox").prop('checked', false);
 
     $("#PanelOptions").toggle();
     chrome.storage.sync.set({'uniqueID_disable': 'true'});
@@ -122,14 +158,8 @@ function disable(disable_value){
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if ((request.execute_screenshot.indexOf("true") >= 0)){
-      chrome.tabs.captureVisibleTab(function(data) {
-        var adSize = request.execute_screenshot;
-        adSize = adSize.split(";").pop();
-
-        var adWidth = adSize.split('-')[0];
-        var adHeight = adSize.split("-").pop();
-        
+    if (request.execute_screenshot == "true"){
+      chrome.tabs.captureVisibleTab(function(data) {       
         var content = document.createElement("canvas");
         var image = new Image();
         image.onload = function() {
@@ -148,6 +178,24 @@ chrome.runtime.onMessage.addListener(
         image.src = data;
         scriptRunner("screenshot","false");
       });
+    }
+
+    else if ((request.bannerInfo.indexOf("true") >= 0)){
+      var adSize = request.bannerInfo;
+      adSize = adSize.split(";").pop();
+
+      adWidth = adSize.split('@')[0];
+      adSize = adSize.split('@').pop();
+
+      adHeight = adSize.split('~')[0];
+      adSize = adSize.split('~').pop();
+
+      var adName = adSize;
+
+
+      $("#adWidth").text(adWidth+"px");
+      $("#adHeight").text(adHeight+"px");
+      $("#adName").text(adName);
     }
   }
 );

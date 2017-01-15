@@ -1,6 +1,13 @@
 $(document).ready(function() {
+  var stopwatch = 1;
+  var stopwatch_enabled;
+
+  $('body').append('<style type="text/css">#bottomPanel{position:fixed;bottom:0;width:100%;background:rgba(0,0,0,.8);color:#fff;font-weight:700;font-family:arial;font-size:18px}#stopwatchTimer{padding:15px}</style>');
+  $('body').append('<div id="bottomPanel" hidden><div id="stopwatchTimer"><span class="stopwatchTimer_display">0</span> s</div></div>');
+
   chrome.storage.sync.get('uniqueID_disable', function(data) {
     if (data["uniqueID_disable"] == "false"){
+
       if((!$("#adContainer").length)&&(!$("#ad-container").length)){
         console.log("You must use 'adContainer' or 'ad-container' as ID for BannerTools to function properly!")
       }
@@ -33,6 +40,14 @@ $(document).ready(function() {
         if (data["uniqueID_replay"] == "hidden"){
           replay("hidden");
           $("#replayCheckbox").prop('checked', true);
+        }
+      });
+
+      chrome.storage.sync.get('uniqueID_timer', function(data) {
+        if (data["uniqueID_timer"] == 0){
+          stopwatch = 0;
+          stopwatchTimer(0);
+          $("#timerCheckbox").prop('checked', true);
         }
       });
     }
@@ -72,18 +87,7 @@ function screenshot(screenshot_value){
 
     replay("hidden");
 
-    var adSize = $("meta[name='ad.size']").attr("content");
-
-    var start_pos = adSize.indexOf('=') + 1;
-    var end_pos = adSize.indexOf(',',start_pos);
-
-    var adWidth = adSize.substring(start_pos,end_pos);    
-    var adHeight = adSize.split(",").pop();
-    adHeight = adSize.split("=").pop();
-
-    var passing_value = "true;"+adWidth+"-"+adHeight;
-
-    setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: passing_value})}, 1250);
+    setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: "true"})}, 1250);
   }
   else{
     $("#adContainer").css("margin","auto");
@@ -91,6 +95,58 @@ function screenshot(screenshot_value){
 
     replay("");
   }
+}
+
+$(".replay_btn").click(function() {
+  if(stopwatch_enabled){
+    stopwatchTimer(1);
+    stopwatchTimer(0);
+  }
+});
+
+function stopwatchTimer(stopwatchTimer_value){
+  if(stopwatchTimer_value == 0){
+    stopwatch_enabled = true;
+    $('#bottomPanel').show();
+    stopwatch = setInterval(function() {
+        var value = parseInt($('#stopwatchTimer').find('.stopwatchTimer_display').text(), 10);
+        
+        value++;
+
+        if(value == 15){
+          $('#stopwatchTimer').css("color","#4CAF50");
+        }
+
+        if(value == 30){
+          $('#stopwatchTimer').css("color","#F44336");
+        }
+
+        $('#stopwatchTimer').find('.stopwatchTimer_display').text(value);
+    },1000);
+
+    setTimeout(function() {clearInterval(stopwatch); },31000);
+    chrome.storage.sync.set({'uniqueID_timer': stopwatchTimer_value});
+  }
+  else{
+    $('#bottomPanel').hide();
+    clearInterval(stopwatch);
+    chrome.storage.sync.set({'uniqueID_timer': stopwatchTimer_value});
+  }
+}
+
+function bannerInfo(){
+  var adSize = $("meta[name='ad.size']").attr("content");
+
+  var start_pos = adSize.indexOf('=') + 1;
+  var end_pos = adSize.indexOf(',',start_pos);
+
+  var adWidth = adSize.substring(start_pos,end_pos);    
+  var adHeight = adSize.split(",").pop();
+  adHeight = adSize.split("=").pop();
+
+  var passing_value = "true;"+adWidth+"@"+adHeight+"~"+document.title;
+
+  chrome.runtime.sendMessage({bannerInfo: passing_value});
 }
 
 chrome.runtime.onMessage.addListener(
@@ -125,6 +181,19 @@ chrome.runtime.onMessage.addListener(
 
     else if (request.screenshot == "false"){
       screenshot(1);
+    }
+
+    else if (request.stopwatchTimer == 0){
+      chrome.storage.sync.set({'uniqueID_timer': 0});
+      location.reload();
+    }
+
+    else if (request.stopwatchTimer == 1){
+      stopwatchTimer(1);
+    }
+
+    else if (request.bannerInfo == "true"){
+      bannerInfo();
     }
   }
 );
