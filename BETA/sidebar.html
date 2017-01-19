@@ -2,268 +2,121 @@
 <html>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="hover.css">
-<style>
-*{
-  font-family: 'Roboto', sans-serif;
-}
-
-body{
-  background-color: black;
-  color: white;
-}
-
-#BannerToolsSidePanelNav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: black;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 10px;
-    border-left: 2px solid white;
-    color: white;
-}
-
-#CloseBannerToolsButton {
-    text-decoration: none;
-    color: #FFFFFF;
-    display: block;
-    transition: 0.3s;
-    position: fixed;
-    top: 0;
-    right: 8px;
-    font-size: 25px;
-}
-
-#BannerToolsSidePanelNav img{
-  width: 100px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#BannerToolsSidePanel {
-  padding: 15px;
-}
-
-#BannerToolsSidePanel table {
-  width: 100%;
-}
-
-.BannerToolsSwitchLabelColumn{
-  width: 85%;
-}
-
-.BannerToolsSwitchControlColumn{
-  width: 15%;
-  text-align: center;
-}
-
-#ScreenshotBannerToolsButton {
-  padding: 7px;
-  font-size: 14px;
-  width: 75%;
-  display: block;
-  margin: 0 auto;
-  margin-top: 15px;
-  border: 1px solid black;
-  border-radius: 20px;
-  color: white;
-  background-color: rgb(0,122,255);
-}
-
-#Timer{
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  background-color: rgba(117,117,117,0.8);
-  width: 100%;
-  height: 45px;
-  border-left: 2px solid white;
-  font-size: 25px;
-  color: white;
-  text-align: center;
-  padding: 5px;
-}
-
-*{
-  /*border: 1px solid red;*/
-}
-
-
-
-#PanelOptions p{
-  text-align: center;
-}
-
-
-
-.BannerToolsSwitch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 17px;
-}
-
-.BannerToolsSwitch input {display:none;}
-
-.BannerToolsSlider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.BannerToolsSlider:before {
-  position: absolute;
-  content: "";
-  height: 13px;
-  width: 13px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .BannerToolsSlider {
-  background-color: rgb(76,217,100);
-}
-
-input:focus + .BannerToolsSlider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .BannerToolsSlider:before {
-  -webkit-transform: translateX(13px);
-  -ms-transform: translateX(13px);
-  transform: translateX(13px);
-}
-
-.BannerToolsSlider.BannerToolsSliderRound {
-  border-radius: 17px;
-}
-
-.BannerToolsSlider.BannerToolsSliderRound:before {
-  border-radius: 50%;
-}
-</style>
-<body>
-
-<div id="BannerToolsSidePanelNav">
-  <a href="javascript:void(0)" id="CloseBannerToolsButton" class="hvr-push" onclick="closeNav()">&times;</a>
-  <img src="logo-mh.png">
-  <div id="BannerToolsSidePanel">
-    <table>
-      <tr>
-        <td class="BannerToolsSwitchLabelColumn">BannerTools</td>
-        <td class="BannerToolsSwitchControlColumn">
-          <label class="BannerToolsSwitch">
-            <input type="checkbox" id="disableSwitch">
-            <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-          </label>
-        </td>
-      </tr>
-    </table>
-    <div id="PanelOptions">
-      <p>Debug Options</p>
+<link rel="stylesheet" type="text/css" href="styles.css">
+<script src="jquery-3.1.1.min.js"></script>
+  <body>
+  <div id="BannerToolsSidePanelNav">
+    <a href="javascript:void(0)" id="CloseBannerToolsButton" class="hvr-push" onclick="closeNav()">&times;</a>
+    <img src="logo-mh.png">
+    <div id="BannerToolsSidePanel">
       <table>
         <tr>
-          <td class="BannerToolsSwitchLabelColumn">Add Border</td>
-          <td class="BannerToolsSwitchControlColumn">
+          <td class="BannerToolsSwitchLabelColumn">BannerTools</td>
+          <td class="BannerToolsSwitchControlColumn hvr-grow">
             <label class="BannerToolsSwitch">
-              <input type="checkbox" id="BorderBannerToolsSwitch">
+              <input type="checkbox" id="disableSwitch">
               <div class="BannerToolsSlider BannerToolsSliderRound"></div>
             </label>
           </td>
         </tr>
-        <tr>
-          <td class="BannerToolsSwitchLabelColumn">Add Margin</td>
-          <td class="BannerToolsSwitchControlColumn">
-            <label class="BannerToolsSwitch">
-              <input type="checkbox" id="MarginBannerToolsSwitch">
-              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td class="BannerToolsSwitchLabelColumn">Make It Black</td>
-          <td class="BannerToolsSwitchControlColumn">
-            <label class="BannerToolsSwitch">
-              <input type="checkbox" id="BlackBannerToolsSwitch">
-              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td class="BannerToolsSwitchLabelColumn">Show Me Everything</td>
-          <td class="BannerToolsSwitchControlColumn">
-            <label class="BannerToolsSwitch">
-              <input type="checkbox" id="ShowBannerToolsSwitch">
-              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td class="BannerToolsSwitchLabelColumn">Show Timer</td>
-          <td class="BannerToolsSwitchControlColumn">
-            <label class="BannerToolsSwitch">
-              <input type="checkbox" id="TimerBannerToolsSwitch">
-              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-            </label>
-          </td>
-        </tr>
+      </table>
+      <div id="PanelOptions">
+        <p id="DebugOptions">Debug Options</p>
+        <table id="DebugOptionsPanel">
+          <tr>
+            <td class="BannerToolsSwitchLabelColumn">Add Border</td>
+            <td class="BannerToolsSwitchControlColumn hvr-grow">
+              <label class="BannerToolsSwitch">
+                <input type="checkbox" id="BorderBannerToolsSwitch">
+                <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td class="BannerToolsSwitchLabelColumn">Add Margin</td>
+            <td class="BannerToolsSwitchControlColumn hvr-grow">
+              <label class="BannerToolsSwitch">
+                <input type="checkbox" id="MarginBannerToolsSwitch">
+                <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td class="BannerToolsSwitchLabelColumn">Make It Black</td>
+            <td class="BannerToolsSwitchControlColumn hvr-grow">
+              <label class="BannerToolsSwitch">
+                <input type="checkbox" id="BlackBannerToolsSwitch">
+                <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td class="BannerToolsSwitchLabelColumn">Show Me Everything</td>
+            <td class="BannerToolsSwitchControlColumn hvr-grow">
+              <label class="BannerToolsSwitch">
+                <input type="checkbox" id="ShowBannerToolsSwitch">
+                <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td class="BannerToolsSwitchLabelColumn">Show Timer</td>
+            <td class="BannerToolsSwitchControlColumn hvr-grow">
+              <label class="BannerToolsSwitch">
+                <input type="checkbox" id="TimerBannerToolsSwitch">
+                <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+              </label>
+            </td>
+          </tr>
 
-      </table>
-      <p>Banner Info</p>
-      <table>
-          <tr>
-              <td>Width:</td>
-              <td id="adWidth">Not Found</td>
-          </tr>
-          <tr>
-              <td>Height:</td>
-              <td id="adHeight">Not Found</td>
-          </tr>
-          <tr>
-              <td>Name:</td>
-              <td id="adName">Not Found</td>
-          </tr>
-      </table>
-      <button id="ScreenshotBannerToolsButton" class="hvr-grow">Screenshot</button>
-      <div id="Timer">
-        00:00:00s
+        </table>
+        <p id="BannerInfo">Banner Info</p>
+        <table id="BannerInfoPanel">
+            <tr>
+                <td>Width:</td>
+                <td id="adWidth">Not Found</td>
+            </tr>
+            <tr>
+                <td>Height:</td>
+                <td id="adHeight">Not Found</td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td id="adName">Not Found</td>
+            </tr>
+        </table>
+        <button id="ScreenshotBannerToolsButton" class="hvr-grow">Screenshot</button>
+        <div id="Timer">
+          00:00:00s
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div id="main">
+    <span style="font-size:30px;cursor:pointer;" onclick="openNav()">&#9776; open</span>
+    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+  </div>
+  <script>
 
-<div id="main">
-  <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-  <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</span>
-</div>
+  $("#DebugOptions").click(function(){
+    $("#DebugOptionsPanel").toggle();
+  });
 
-<script>
-openNav();
+  $("#BannerInfo").click(function(){
+    $("#BannerInfoPanel").toggle();
+  });
 
-function openNav() {
-    document.getElementById("BannerToolsSidePanelNav").style.width = "250px";
-    document.getElementById("main").style.marginRight = "250px";
-}
+  openNav();
 
-function closeNav() {
-    document.getElementById("BannerToolsSidePanelNav").style.width = "0";
-    document.getElementById("main").style.marginRight= "0";
-}
-</script>
-     
-</body>
+  function openNav() {
+      document.getElementById("BannerToolsSidePanelNav").style.width = "250px";
+      document.getElementById("main").style.marginRight = "250px";
+  }
+
+  function closeNav() {
+      document.getElementById("BannerToolsSidePanelNav").style.width = "0";
+      document.getElementById("main").style.marginRight= "0";
+  }
+  </script>
+  </body>
 </html> 
