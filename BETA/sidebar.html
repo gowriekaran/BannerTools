@@ -7,6 +7,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+body{
+  background-color: black;
+  color: white;
+}
+
 #BannerToolsSidePanelNav {
     height: 100%;
     width: 0;
@@ -71,24 +76,30 @@
 }
 
 #Timer{
-  position: fixed;
+  position: absolute;
   right: 0px;
   bottom: 0px;
-  background-color: #757575;
+  background-color: rgba(117,117,117,0.8);
   width: 100%;
   height: 45px;
   border-left: 2px solid white;
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  padding: 5px;
 }
 
-#Timer p{
-  font-size: 25px;
-  position: fixed;
-  right: 0px;
-  bottom: 0px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  color: black;
+*{
+  /*border: 1px solid red;*/
 }
+
+
+
+#PanelOptions p{
+  text-align: center;
+}
+
+
 
 .BannerToolsSwitch {
   position: relative;
@@ -163,11 +174,28 @@ input:checked + .BannerToolsSlider:before {
       </tr>
     </table>
     <div id="PanelOptions">
-      <button id="ScreenshotBannerToolsButton" class="hvr-grow">Screenshot</button>
       <p>Debug Options</p>
       <table>
         <tr>
-          <td class="BannerToolsSwitchLabelColumn">Make it black</td>
+          <td class="BannerToolsSwitchLabelColumn">Add Border</td>
+          <td class="BannerToolsSwitchControlColumn">
+            <label class="BannerToolsSwitch">
+              <input type="checkbox" id="BorderBannerToolsSwitch">
+              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="BannerToolsSwitchLabelColumn">Add Margin</td>
+          <td class="BannerToolsSwitchControlColumn">
+            <label class="BannerToolsSwitch">
+              <input type="checkbox" id="MarginBannerToolsSwitch">
+              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="BannerToolsSwitchLabelColumn">Make It Black</td>
           <td class="BannerToolsSwitchControlColumn">
             <label class="BannerToolsSwitch">
               <input type="checkbox" id="BlackBannerToolsSwitch">
@@ -176,19 +204,10 @@ input:checked + .BannerToolsSlider:before {
           </td>
         </tr>
         <tr>
-          <td class="BannerToolsSwitchLabelColumn">Show me everything</td>
+          <td class="BannerToolsSwitchLabelColumn">Show Me Everything</td>
           <td class="BannerToolsSwitchControlColumn">
             <label class="BannerToolsSwitch">
               <input type="checkbox" id="ShowBannerToolsSwitch">
-              <div class="BannerToolsSlider BannerToolsSliderRound"></div>
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td class="BannerToolsSwitchLabelColumn">Add margin</td>
-          <td class="BannerToolsSwitchControlColumn">
-            <label class="BannerToolsSwitch">
-              <input type="checkbox" id="MarginBannerToolsSwitch">
               <div class="BannerToolsSlider BannerToolsSliderRound"></div>
             </label>
           </td>
@@ -202,6 +221,7 @@ input:checked + .BannerToolsSlider:before {
             </label>
           </td>
         </tr>
+
       </table>
       <p>Banner Info</p>
       <table>
@@ -218,8 +238,9 @@ input:checked + .BannerToolsSlider:before {
               <td id="adName">Not Found</td>
           </tr>
       </table>
+      <button id="ScreenshotBannerToolsButton" class="hvr-grow">Screenshot</button>
       <div id="Timer">
-        <p>0s</p>
+        00:00:00s
       </div>
     </div>
   </div>
