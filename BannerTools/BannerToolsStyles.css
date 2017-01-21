@@ -1,13 +1,4 @@
-*{
-  font-family: 'Roboto', sans-serif;
-}
-
-body{
-  background-color: black;
-  color: white;
-}
-
-#BannerToolsSidePanelNav {
+#_BT_SidePanelNav {
     height: 100%;
     width: 0;
     position: fixed;
@@ -19,10 +10,14 @@ body{
     transition: 0.5s;
     padding-top: 10px;
     border-left: 2px solid white;
-    color: white;
 }
 
-#CloseBannerToolsButton {
+#_BT_SidePanelNav * {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#Close_BT_Button {
     text-decoration: none;
     color: #FFFFFF;
     display: block;
@@ -31,28 +26,29 @@ body{
     top: 0;
     right: 8px;
     font-size: 25px;
+    cursor: pointer;
 }
 
-#BannerToolsSidePanelNav img{
+#_BT_SidePanelNav img{
   width: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-#BannerToolsSidePanel {
+#_BT_SidePanel {
   padding: 15px;
 }
 
-#BannerToolsSidePanel table {
+#_BT_SidePanel table {
   width: 100%;
 }
 
-.BannerToolsSwitchLabelColumn{
+._BT_Switch_Label{
   width: 85%;
 }
 
-.BannerToolsSwitchControlColumn{
+._BT_Switch_Control{
   width: 15%;
   text-align: center;
 }
@@ -84,28 +80,20 @@ body{
   padding: 5px;
 }
 
-*{
-  /*border: 1px solid red;*/
-}
-
-
-
 #PanelOptions p{
   text-align: center;
 }
 
-
-
-.BannerToolsSwitch {
+._BT_Switch {
   position: relative;
   display: inline-block;
   width: 30px;
   height: 17px;
 }
 
-.BannerToolsSwitch input {display:none;}
+._BT_Switch input {display:none;}
 
-.BannerToolsSlider {
+._BT_Slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -117,7 +105,7 @@ body{
   transition: .4s;
 }
 
-.BannerToolsSlider:before {
+._BT_Slider:before {
   position: absolute;
   content: "";
   height: 13px;
@@ -129,24 +117,24 @@ body{
   transition: .4s;
 }
 
-input:checked + .BannerToolsSlider {
+input:checked + ._BT_Slider {
   background-color: rgb(76,217,100);
 }
 
-input:focus + .BannerToolsSlider {
+input:focus + ._BT_Slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .BannerToolsSlider:before {
+input:checked + ._BT_Slider:before {
   -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px);
 }
 
-.BannerToolsSlider.BannerToolsSliderRound {
+._BT_Slider._BT_SliderRound {
   border-radius: 17px;
 }
 
-.BannerToolsSlider.BannerToolsSliderRound:before {
+._BT_Slider._BT_SliderRound:before {
   border-radius: 50%;
 }

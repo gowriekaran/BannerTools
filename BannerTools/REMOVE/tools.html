@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <title>BannerTools</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="background.js"></script>
+    <style type="text/css">
+        *{
+            font-family: 'Roboto', sans-serif;
+        }
+    	#Panel{
+            width: 300px;
+    	}
+
+        p{
+            color: grey;
+            font-weight: bold;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="Panel">
+        <h2>BannerTools</h2>
+        <table>
+            <tr>
+                <td><input type="checkbox" id="disableCheckbox"></td>
+                <td>Turn off BannerTools</td>
+            </tr>
+<!--             <tr>
+                <td><input type="checkbox" id="alertCheckbox"></td>
+                <td>Let me know when BannerTools is running</td>
+            </tr> -->
+        </table>
+        <div id="PanelOptions">
+            <h4>Collect Options</h4>
+            <button id="screenshotButton">Screenshot</button><br>
+
+            <h4>Debug Options</h4>
+            <table>
+                <tr>
+                    <td><input type="checkbox" id="blackCheckbox"></td>
+                    <td>Make it black</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="showCheckbox"></td>
+                    <td>Show me everything</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="marginCheckbox"></td>
+                    <td>Add margin</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="timerCheckbox"></td>
+                    <td>Display Timer</td>
+                </tr>
+            </table>
+            <h4>BannerInfo</h4>
+            <table>
+                <tr>
+                    <td>Width:</td>
+                    <td id="adWidth">?</td>
+                </tr>
+                <tr>
+                    <td>Height:</td>
+                    <td id="adHeight">?</td>
+                </tr>
+                <tr>
+                    <td>Banner Name:</td>
+                    <td id="adName">?</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+  </body>
+</html>
