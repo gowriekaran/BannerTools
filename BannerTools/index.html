@@ -1,5 +1,5 @@
   <div id="_BT_SidePanelNav">
-    <a id="Close_BT_Button" class="hvr-push">&times;</a>
+    <p id="Close_BT_Button" class="hvr-push">&times;</p>
     <img src="http://www.mh.ca/wp-content/uploads/logo-mh.png">
     <div id="_BT_SidePanel">
       <table>
@@ -7,13 +7,28 @@
           <td class="_BT_Switch_Label">BannerTools</td>
           <td class="_BT_Switch_Control hvr-grow">
             <label class="_BT_Switch">
-              <input type="checkbox" id="disableSwitch">
+              <input type="checkbox" id="Disable_BT_Switch">
               <div class="_BT_Slider _BT_SliderRound"></div>
             </label>
           </td>
         </tr>
       </table>
-      <div id="PanelOptions">
+      <div id="_BT_PanelOptions">
+        <p id="BannerInfo">Banner Info</p>
+        <table id="BannerInfoPanel">
+            <tr>
+                <td>Width:</td>
+                <td id="_BT_adWidthLabel">Not Found</td>
+            </tr>
+            <tr>
+                <td>Height:</td>
+                <td id="_BT_adHeightLabel">Not Found</td>
+            </tr>
+            <tr>
+                <td>Name:</td>
+                <td id="_BT_adNameLabel">Not Found</td>
+            </tr>
+        </table>
         <p id="DebugOptions">Debug Options</p>
         <table id="DebugOptionsPanel">
           <tr>
@@ -70,31 +85,14 @@
               </label>
             </td>
           </tr>
-
         </table>
-        <p id="BannerInfo">Banner Info</p>
-        <table id="BannerInfoPanel">
-            <tr>
-                <td>Width:</td>
-                <td id="adWidth">Not Found</td>
-            </tr>
-            <tr>
-                <td>Height:</td>
-                <td id="adHeight">Not Found</td>
-            </tr>
-            <tr>
-                <td>Name:</td>
-                <td id="adName">Not Found</td>
-            </tr>
-        </table>
-        <button id="ScreenshotBannerToolsButton" class="hvr-grow">Screenshot</button>
-        <div id="Timer">
+        <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button>
+        <div id="_BT_Timer">
           00:00:00s
         </div>
       </div>
     </div>
   </div>
-
-  <div id="main">
+  <div id="BANNER_STAGING">
 
   </div>
