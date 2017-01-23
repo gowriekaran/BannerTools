@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(
 			var adHeight = adSize;
 
 			chrome.tabs.captureVisibleTab({
-				quality: 60
+				quality: 100
 			},
 			function(data) {       
 				var content = document.createElement("canvas");

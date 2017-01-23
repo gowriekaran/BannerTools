@@ -142,3 +142,9 @@ input:checked + ._BT_Slider:before {
 ._BT_Slider._BT_SliderRound:before {
   border-radius: 50%;
 }
+
+#_BT_Reset{
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
