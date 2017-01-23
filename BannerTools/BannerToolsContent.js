@@ -46,10 +46,7 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var currentBody =  $("body").html();
-          $("body").empty();
-          
-          var BannerTools ='<div id="_BT_SidePanelNav"><p id="Close_BT_Button" class="hvr-push">&times;</p> <img src="http://www.mh.ca/wp-content/uploads/logo-mh.png"><div id="_BT_SidePanel"><table><tr><td class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table><div id="_BT_PanelOptions"><p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"><tr><td>Width:</td><td id="_BT_adWidthLabel">Not Found</td></tr><tr><td>Height:</td><td id="_BT_adHeightLabel">Not Found</td></tr><tr><td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr></table><p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"><tr class="_BT_easter_egg" hidden><td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Add Border</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button><div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div></div><div id="BANNER_STAGING">'+currentBody+'</div>';
+          var BannerTools ='<div id="_BT_SidePanelNav"><img src="http://www.mh.ca/wp-content/uploads/logo-mh.png"><div id="_BT_SidePanel"><table><tr><td class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table><div id="_BT_PanelOptions"><p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"><tr><td>Width:</td><td id="_BT_adWidthLabel">Not Found</td></tr><tr><td>Height:</td><td id="_BT_adHeightLabel">Not Found</td></tr><tr><td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr></table><p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"><tr class="_BT_easter_egg" hidden><td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Add Border</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button><div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div></div>';
           $("body").append(BannerTools);
 
           $("#_BT_adWidthLabel").text(_BT_adWidth+"px");
@@ -139,10 +136,6 @@ $(document).ready(function() {
             else{
               _BT_stopwatchTimer(1);
             }
-          });
-
-          $("#Close_BT_Button").click(function(event) {
-            _BT_closeNav();
           });
 
           $("#_BT_Disable_Switch").change(function() {
@@ -261,7 +254,7 @@ $(document).ready(function() {
 
   function _BT_margin(margin_value){
     // console.log("_BT_replay() > ", margin_value);
-    $("#BANNER_STAGING").css("margin",margin_value);
+    $("body").css("margin",margin_value);
     chrome.storage.sync.set({"uniqueID_margin": margin_value});
   }
 
@@ -362,13 +355,11 @@ $(document).ready(function() {
   function _BT_openNav(){
     _BT_isExpanded = true;
     document.getElementById("_BT_SidePanelNav").style.width = "250px";
-    document.getElementById("BANNER_STAGING").style.marginRight = "250px";
     $("#_BT_Disable_Switch").prop("checked", true);
   }
 
   function _BT_closeNav() {
     _BT_isExpanded = false;
     document.getElementById("_BT_SidePanelNav").style.width = "0";
-    document.getElementById("BANNER_STAGING").style.marginRight= "0";
   }
 });

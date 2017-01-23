@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
-	"version": "1.0",
+	"version": "1.1",
 
 	"browser_action": {
 	  "default_icon": "icon16.jpg"
@@ -17,7 +17,6 @@
 	"permissions": [
 		"storage",
 		"activeTab",
-		// "tabs",
 	    "http://*/*",
 	    "https://*/*",
 	    "file://*/*",
