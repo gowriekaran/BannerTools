@@ -20,21 +20,26 @@ For example:
 /*******************************************************************************************\
 
 Features:
-
-- Screenshot
-   Take a screenshot of the current frame. You may have to use TinyPNG sometimes.
+- BannerInfo
+   Display BannerInfo (ad width, height, name)
 
 - Make it Black
    Sets the background color black
 
-- Show me everything
-   Shows all the frames
-
 - Margin
    Adds a margin around the banner
 
+- Screenshot
+   Take a screenshot of the current frame. You may have to use TinyPNG sometimes.
+
+- Show me everything
+   Shows all the frames
+
 - Timer
    Displays a timer on screen
-   
-- BannerInfo
-   Display BannerInfo (ad width, height, name)
+
+//
+Click on the Logo 3 times and you'll see 3 more options.
+1.) Reset BannerTools
+2.) Add border
+3.) Hide show replay button
