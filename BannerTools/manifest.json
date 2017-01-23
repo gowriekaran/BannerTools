@@ -2,11 +2,10 @@
 	"manifest_version": 2,
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
-	"version": "0.0.2.3",
+	"version": "1.0",
 
 	"browser_action": {
-	  "default_icon": "icon16.jpg",
-	  "default_popup": "tools.html"
+	  "default_icon": "icon16.jpg"
 	},
 
 	"icons": { 
@@ -17,19 +16,33 @@
 
 	"permissions": [
 		"storage",
-		"tabs",
 		"activeTab",
-		"*://*/*",
-		"<all_urls>"
+		// "tabs",
+	    "http://*/*",
+	    "https://*/*",
+	    "file://*/*",
+	    "<all_urls>"
     ],
 
 	"content_scripts": [
 	  {
 	    "matches": [
-	      "<all_urls>",
-	      "*://*/*"
+			"http://*/*",
+		    "https://*/*",
+		    "file://*/*",
+		    "<all_urls>"
 	    ],
-	    "js": ["jquery-3.1.1.min.js", "content.js"]
+	    "js": [
+	    	"jquery-3.1.1.min.js", 
+	    	"BannerToolsContent.js"
+	    ],
+	    "css": [
+	    	"hover.css", 
+	    	"BannerToolsStyles.css"
+	    ]
 	  }
-	]
+	],
+	"background": {
+	  "scripts": ["BannerToolsBackground.js"]
+	}
 }
