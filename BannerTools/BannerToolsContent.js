@@ -1,6 +1,6 @@
 /**
 * Author: Gowriekaran Sinnadurai
-* I want to apologize for the nomenclature used. I had to make sure they were as unique as possible to avoid potential conflications.
+* I want to apologize for the nomenclature used. I had to make sure they were as unique as possible to avoid potential conflictions.
 */
 
 
@@ -46,7 +46,9 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var BannerTools ='<div id="_BT_SidePanelNav"><img src="http://www.mh.ca/wp-content/uploads/logo-mh.png"><div id="_BT_SidePanel"><table><tr><td class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table><div id="_BT_PanelOptions"><p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"><tr><td>Width:</td><td id="_BT_adWidthLabel">Not Found</td></tr><tr><td>Height:</td><td id="_BT_adHeightLabel">Not Found</td></tr><tr><td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr></table><p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"><tr class="_BT_easter_egg" hidden><td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Add Border</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button><div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div></div>';
+          //<tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Add Border</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr>
+
+          var BannerTools ='<div id="_BT_SidePanelNav"><img src="http://www.mh.ca/wp-content/uploads/logo-mh.png"><div id="_BT_SidePanel"><table><tr><td class="_BT_Switch_Label">BannerTools v1.2</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table><div id="_BT_PanelOptions"><p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"><tr><td>Width:</td><td id="_BT_adWidthLabel">Not Found</td></tr><tr><td>Height:</td><td id="_BT_adHeightLabel">Not Found</td></tr><tr><td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr></table><p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"><tr class="_BT_easter_egg" hidden><td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr><td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr class="_BT_easter_egg" hidden><td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr><tr><td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"><div class="_BT_Slider _BT_SliderRound"></div> </label></td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button><div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div></div>';
           $("body").append(BannerTools);
 
           $("#_BT_adWidthLabel").text(_BT_adWidth+"px");
@@ -85,12 +87,12 @@ $(document).ready(function() {
                   _BT_easterEgg++;
                 }
                 if (_BT_easterEgg == 3){
-                  chrome.storage.sync.get("uniqueID_border", function(data) {
-                    if (data["uniqueID_border"] == "1px solid red"){
-                      _BT_border("1px solid red");
-                      $("#_BT_Border_Switch").prop("checked", true);
-                    }
-                  });
+                  // chrome.storage.sync.get("uniqueID_border", function(data) {
+                  //   if (data["uniqueID_border"] == "1px solid red"){
+                  //     _BT_border("1px solid red");
+                  //     $("#_BT_Border_Switch").prop("checked", true);
+                  //   }
+                  // });
 
                   chrome.storage.sync.get("uniqueID_replay", function(data) {
                     if (data["uniqueID_replay"] == "hidden"){
@@ -150,14 +152,14 @@ $(document).ready(function() {
             location.reload();
           });
 
-          $("#_BT_Border_Switch").change(function() {
-            if (this.checked) {
-              _BT_border("1px solid red");
-            }
-            else{
-              _BT_border("");
-            }
-          });
+          // $("#_BT_Border_Switch").change(function() {
+          //   if (this.checked) {
+          //     _BT_border("1px solid red");
+          //   }
+          //   else{
+          //     _BT_border("");
+          //   }
+          // });
 
           $("#_BT_Replay_Switch").change(function() {
             if (this.checked) {
@@ -227,14 +229,14 @@ $(document).ready(function() {
 /*********************************************KEY FUNCTIONS**********************************************************/
   function _BT_disable(disable_value){
     if(disable_value == "true"){
-      _BT_border("");
+      // _BT_border("");
       _BT_margin("");
       _BT_replay("");
       _BT_backgroundColor("");
       _BT_overflow("");
       _BT_stopwatchTimer(1);
 
-      $("#_BT_Border_Switch").prop("checked", false);
+      // $("#_BT_Border_Switch").prop("checked", false);
       $("#_BT_Margin_Switch").prop("checked", false);
       $("#_BT_Replay_Switch").prop("checked", false);
       $("#_BT_Black_Switch").prop("checked", false);
@@ -246,11 +248,11 @@ $(document).ready(function() {
     }
   }
 
-  function _BT_border(border_value){
-    // console.log("_BT_border() > ", border_value);
-    $(_BT_AdContainer).children().attr("style", "border:" + border_value);
-    chrome.storage.sync.set({"uniqueID_border": border_value});
-  }
+  // function _BT_border(border_value){
+  //   // console.log("_BT_border() > ", border_value);
+  //   $(_BT_AdContainer).children().attr("style", "border:" + border_value);
+  //   chrome.storage.sync.set({"uniqueID_border": border_value});
+  // }
 
   function _BT_margin(margin_value){
     // console.log("_BT_replay() > ", margin_value);
@@ -278,14 +280,14 @@ $(document).ready(function() {
 
   function _BT_screenshot(screenshot_value){
     if(screenshot_value == 0){
-      _BT_border("");
+      //_BT_border("");
       _BT_margin("");
       _BT_replay("");
       _BT_backgroundColor("");
       _BT_overflow("");
       _BT_stopwatchTimer(1);
 
-      $("#_BT_Border_Switch").prop("checked", false);
+      // $("#_BT_Border_Switch").prop("checked", false);
       $("#_BT_Margin_Switch").prop("checked", false);
       $("#_BT_Replay_Switch").prop("checked", false);
       $("#_BT_Black_Switch").prop("checked", false);

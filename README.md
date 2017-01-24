@@ -41,5 +41,4 @@ Features:
 //
 Click on the Logo 3 times and you'll see 3 more options.
 1.) Reset BannerTools
-2.) Add border
-3.) Hide show replay button
+2.) Hide show replay button
