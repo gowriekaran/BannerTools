@@ -1,44 +1,23 @@
 # BannerTools
 
-https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma
+[Download](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
-This tool is to help with Banner Development
+#### Facilitate Banner Development
 
-Credit to Mihran Abrahamian for Make it black / Show me everything implementation :)
+_Credit to Mihran Abrahamian for Make it black / Show me everything implementation :)_
 
-/*******************************************************************************************\
-Please make sure your ad container is using the ID: 'adContainer' or 'ad-container'.
+#### Setup:
+* Use **ad-container** ID
+* Use **replay-button** ID
+* Meta tags in `<head>`:
+`<meta name="ad.size" content="width=300,height=250">`
 
-Please make sure your replay button is using the class: 'replay_btn' or 'replay-button'.
-
-Please make sure you have the following in your head tag:
-- "name" attribute with "ad.size" as value
-- "content" attribute with "width=WIDTH,height=HEIGHT" as value.
-
-For example:
-<meta name="ad.size" content="width=300,height=250">
-/*******************************************************************************************\
-
-Features:
-- BannerInfo
-   Display BannerInfo (ad width, height, name)
-
-- Make it Black
-   Sets the background color black
-
-- Margin
-   Adds a margin around the banner
-
+#### Features:
+- BannerInfo (ad width, height, name)
+- Make it Black (Black background)
+- Margin (100px margin)
 - Screenshot
-   Take a screenshot of the current frame. You may have to use TinyPNG sometimes.
+- Show me everything (Reveal everything)
+- Timer (On-screen timer)
 
-- Show me everything
-   Shows all the frames
-
-- Timer
-   Displays a timer on screen
-
-//
-Click on the Logo 3 times and you'll see 3 more options.
-1.) Reset BannerTools
-2.) Hide show replay button
+_Click on the MH Logo 3 times and you'll see more options. (Reset plugin and Option to hide replay button)_
