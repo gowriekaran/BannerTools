@@ -19,5 +19,6 @@ _Credit to Mihran Abrahamian for Make it black / Show me everything implementati
 - Screenshot
 - Show me everything (Reveal everything)
 - Timer (On-screen timer)
+- Override (run on every page, even if adcontainer is not present)
 
 _Click on the MH Logo 3 times and you'll see more options. (Reset plugin and Option to hide replay button)_

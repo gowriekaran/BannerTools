@@ -19,13 +19,15 @@ chrome.runtime.onMessage.addListener(
 			chrome.tabs.captureVisibleTab({
 				quality: 100
 			},
-			function(data) {       
+			function(data) {
 				var content = document.createElement("canvas");
 				var image = new Image();
+
 				image.onload = function() {
 				  var canvas = content;
 				  canvas.width = adWidth;
 				  canvas.height = adHeight;
+
 				  var context = canvas.getContext("2d");
 				  context.drawImage(image, 0, 0);
 

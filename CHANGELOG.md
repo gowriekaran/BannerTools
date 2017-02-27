@@ -1,5 +1,14 @@
 # Version 1.3
-- Cleaned project
+- Removed extraneous code.
+- Added new feature to override adcontainer ID check.
+- Banner Info displays width and height as one, under specs.
+- Modified make it black, now uses 80% opacity.
+- BannerTools version is now only visible if easteregg is enabled.
+- MH Logo is now a local asset.
+- BannerTools is now 200px, was 250px.
+- Minified iOS styles.
+- Added giant comments for fun.
+- Organized project folder.
 
 # Version 1.2
 - Removed the secret option to add borders to all elements in ad-container, it was causing issues on some elements making them disappear. Needs to be fixed.
