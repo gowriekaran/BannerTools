@@ -16,8 +16,13 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		if ((request.execute_screenshot.indexOf("true") >= 0)){
-			var adSize = request.execute_screenshot;
+		if (request.resetZoom == "true"){
+			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+			  chrome.tabs.setZoom(tabs[0].id, 1);
+			});
+		}
+		else if ((request.executeScreenshot.indexOf("true") >= 0)){
+			var adSize = request.executeScreenshot;
 			adSize =  adSize.split(';').pop();
 
 			var adWidth = adSize.split('@')[0];

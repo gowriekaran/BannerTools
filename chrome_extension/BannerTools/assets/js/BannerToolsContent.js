@@ -257,7 +257,8 @@ $(document).ready(function() {
 
       var passing_value = "true;"+_BT_adWidth+"@"+_BT_adHeight;
 
-      setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: passing_value})}, 1000);
+      chrome.runtime.sendMessage({resetZoom: "true"});
+      setTimeout(function(){chrome.runtime.sendMessage({executeScreenshot: passing_value})}, 1000);
     }
     else{
       $("#ad-container").css("margin","auto");
