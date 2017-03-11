@@ -40,5 +40,11 @@
 	"background": {
 	  "scripts": ["assets/js/BannerToolsBackground.js"]
 	},
-	"web_accessible_resources": ["assets/img/Logo.png"]
+	"web_accessible_resources": ["assets/img/Logo.png"],
+	"commands": {
+		"toggle-feature": {
+			"suggested_key": {"default": "Alt+Z"},
+			"description": "Toggle BannerTools"
+		}
+	}
 }

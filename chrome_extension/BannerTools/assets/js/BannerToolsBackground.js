@@ -1,3 +1,12 @@
+chrome.commands.onCommand.addListener(function(command) {
+	if(command == "toggle-feature"){
+	    chrome.storage.sync.set({'uniqueID_disable': 'false'});
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		  chrome.tabs.sendMessage(tabs[0].id, {ExpandPanel: "true"});
+		});
+	}
+});
+
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.storage.sync.set({'uniqueID_disable': 'false'});
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
