@@ -5,6 +5,8 @@
 */
 
 $(document).ready(function() {
+  var _BT_version = 1.3;
+
   var _BT_adWidth,
       _BT_adHeight,
       _BT_stopwatch;
@@ -78,7 +80,7 @@ $(document).ready(function() {
                   $("#_BT_Replay_Switch").prop("checked", true);
                 }
               });
-              $("#_BT_version").append(' v1.3');
+              $("#_BT_version").append(' v' + _BT_version);
             }
             else{
               $("#_BT_SidePanelNav img").click(function(event) {

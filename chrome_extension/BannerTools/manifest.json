@@ -46,5 +46,6 @@
 			"suggested_key": {"default": "Alt+Z"},
 			"description": "Toggle BannerTools"
 		}
-	}
+	},
+	"options_page": "assets/html/bannerToolsOptions.html"
 }
