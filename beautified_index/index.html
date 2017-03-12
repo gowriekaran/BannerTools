@@ -1,4 +1,5 @@
 <div id="_BT_GridOverlay"></div>
+<div id="_BT_RulerCanvas"></div>
 <div id="_BT_SidePanelNav">
    <img class="hvr-bounce-out" id="_BT_Logo">
    <div id="_BT_SidePanelNav_Options">
@@ -80,6 +81,15 @@
             </td>
          </tr>
          <tr>
+            <td class="_BT_Switch_Label">Show All</td>
+            <td class="_BT_Switch_Control hvr-grow">
+               <label class="_BT_Switch">
+                  <input type="checkbox" id="_BT_Show_Switch" value="off">
+                  <div class="_BT_Slider _BT_SliderRound"></div>
+               </label>
+            </td>
+         </tr>
+         <tr>
             <td class="_BT_Switch_Label">Show Grid</td>
             <td class="_BT_Switch_Control hvr-grow">
                <label class="_BT_Switch">
@@ -89,16 +99,18 @@
             </td>
          </tr>
          <tr>
-            <td class="_BT_Switch_Label">Show All</td>
+            <td class="_BT_Switch_Label">Show Rulers</td>
             <td class="_BT_Switch_Control hvr-grow">
                <label class="_BT_Switch">
-                  <input type="checkbox" id="_BT_Show_Switch" value="off">
+                  <input type="checkbox" id="_BT_Rulers_Switch" value="off">
                   <div class="_BT_Slider _BT_SliderRound"></div>
                </label>
             </td>
          </tr>
       </table>
-      <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button>
+      <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button>
+      <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button>
+      <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button>
       <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div>
    </div>
 </div>

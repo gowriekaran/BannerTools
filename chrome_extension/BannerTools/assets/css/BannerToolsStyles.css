@@ -7,7 +7,7 @@
   height: 100%;
   width: 200;
   position: fixed;
-  z-index: 10001;
+  z-index: 1;
   top: 0;
   right: 0;
   background-color: black;
@@ -47,7 +47,7 @@
   text-align: center;
 }
 
-#Screenshot_BT_Button {
+._BT_Button {
   padding: 7px;
   font-size: 14px;
   width: 75%;
@@ -58,6 +58,14 @@
   color: white;
   background-color: rgb(0,122,255);
   margin-top: 15px;
+}
+
+#_BT_XRuler_Button{
+  display: none;
+}
+
+#_BT_YRuler_Button{
+  display: none;
 }
 
 #_BT_Timer{
@@ -85,17 +93,51 @@
 }
 
 #_BT_GridOverlay {
-    background-size: 10px 10px;
-    background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
-    z-index: 10000;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    opacity: 0.5;
-    visibility: hidden;
+  background-size: 10px 10px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: 0.5;
+  visibility: hidden;
+}
+
+#_BT_RulerCanvas {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: none;
+}
+
+._BT_RulerX {
+  cursor: col-resize;
+  width: 0px;
+  height: 100%;
+  border-right: 2px cyan solid;
+  position: absolute
+}
+
+._BT_RulerY {
+  cursor: row-resize;
+  height: 0px;
+  width: 100%;
+  border-top: 2px cyan solid;
+  position: absolute
+}
+
+._BT_RulerPos {
+  position: absolute;
+  font-size: 12px;
+  background-color: rgba(255,255,255,0.7);
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 50px;
 }
 
 /*  iOS styles */
