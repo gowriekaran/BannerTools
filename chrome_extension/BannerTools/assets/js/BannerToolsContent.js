@@ -53,8 +53,13 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr> <td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button> <div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
+          var BannerTools ='<div id="_BT_GridOverlay"></div><div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr> <td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Grid</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Grid_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button> <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
           $("body").append(BannerTools);
+
+          $("#_BT_GridOverlay").css({
+            width: _BT_adWidth,
+            height:  _BT_adHeight
+          });
 
           $("#_BT_Logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
 
@@ -131,6 +136,13 @@ $(document).ready(function() {
             }
           });
 
+          chrome.storage.sync.get("uniqueID_grid", function(data) {
+            if (data["uniqueID_grid"] == "visible"){
+              _BT_grid("visible");
+              $("#_BT_Grid_Switch").prop("checked", true);
+            }
+          });
+
           chrome.storage.sync.get("uniqueID_timer", function(data) {
             if (data["uniqueID_timer"] == 0){
               _BT_stopwatchTimer(0);
@@ -155,6 +167,10 @@ $(document).ready(function() {
           $("#_BT_Override").click(function() {
             chrome.storage.sync.set({"uniqueID_override": "1"});
             location.reload();
+          });
+
+          $("#_BT_Grid_Switch").change(function() {
+            (this.checked) ? ( _BT_grid("visible")) : (_BT_grid("hidden"));
           });
 
           $("#_BT_Replay_Switch").change(function() {
@@ -213,6 +229,7 @@ $(document).ready(function() {
   function _BT_Reset(){
       _BT_margin("");
       _BT_replay("");
+      _BT_grid("hidden");
       _BT_backgroundColor("");
       _BT_overflow("");
       _BT_stopwatchTimer(1);
@@ -229,12 +246,18 @@ $(document).ready(function() {
 
   function _BT_margin(margin_value){
     $("body").css("margin",margin_value);
+    $("#_BT_GridOverlay").css("margin-top",margin_value);
     chrome.storage.sync.set({"uniqueID_margin": margin_value});
   }
 
   function _BT_replay(replay_value){
     $(".replay-button").css("visibility",replay_value);
     chrome.storage.sync.set({"uniqueID_replay": replay_value});
+  }
+
+  function _BT_grid(grid_value){
+    $("#_BT_GridOverlay").css("visibility",grid_value);
+    chrome.storage.sync.set({"uniqueID_grid": grid_value});
   }
 
   function _BT_backgroundColor(backgroundColor_value){
@@ -272,9 +295,9 @@ $(document).ready(function() {
       $("#_BT_Timer").show();
       _BT_isStopwatchEnabled = true;
       _BT_stopwatch = setInterval(function() {
-        var value = parseInt($("#_BT_Timer").find("._BT_Timer_Stopwatch").text(), 10);
+        var value = parseInt($("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(), 10);
         value++;
-        $("#_BT_Timer").find("._BT_Timer_Stopwatch").text(value);
+        $("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(value);
       },1000);
 
       setTimeout(function() {clearInterval(_BT_stopwatch); },30000);
@@ -282,7 +305,7 @@ $(document).ready(function() {
     }
     else{
       _BT_isStopwatchEnabled = false;
-      $("._BT_Timer_Stopwatch").text("1");
+      $("#_BT_Timer_Stopwatch").text("1");
       $("#_BT_Timer").hide();
       clearInterval(_BT_stopwatch);
       chrome.storage.sync.set({"uniqueID_timer": stopwatchTimer_value});
