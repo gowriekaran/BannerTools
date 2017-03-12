@@ -55,6 +55,7 @@ $(document).ready(function() {
 
           var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Start Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Grid</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Grid_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Rulers</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Rulers_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
           $("body").append(BannerTools);
+
           BannerTools = '<div id="_BT_GridOverlay"></div><div id="_BT_RulerCanvas"></div>';
           $(".replay-button").before(BannerTools);
 
@@ -242,33 +243,31 @@ $(document).ready(function() {
             }
           });
 
-          var _BT_RulerX = '<div class="_BT_RulerX draggable ui-widget-content"><span class="_BT_RulerPos"></span></div>';
-          var _BT_RulerY = '<div class="_BT_RulerY draggable ui-widget-content"><span class="_BT_RulerPos"></span></div>';
+          function _BT_getRuler(axis){
+            return '<div class="_BT_Ruler' + axis + ' draggable ui-widget-content"><span class="_BT_RulerPos"></span></div>';
+          }
 
-          $("#_BT_XRuler_Button").click(function() {
-            console.log("x button clicked");
-            $("#_BT_RulerCanvas").append(_BT_RulerX);
-            $("._BT_RulerX").draggable({
-              axis: "x",
+          $("._BT_RulerButtons").click(function(e){
+            var axis;
+            var pos;
+
+            if(this.id == "_BT_XRuler_Button"){
+              axis = "X";
+              pos = "left";
+            }
+            else{
+              axis = "Y";
+              pos = "top";
+            }
+
+            $("#_BT_RulerCanvas").append(_BT_getRuler(axis));
+            $("._BT_Ruler" + axis).draggable({
+              axis: axis,
               containment: "#_BT_RulerCanvas",
               drag: function() {
                 var position = $(this).position();
-                var xPos = $(this).css('left');
-                $(this).find($('._BT_RulerPos')).text('X: ' + xPos);
-              }
-            });
-          });
-
-          $("#_BT_YRuler_Button").click(function() {
-            console.log("y button clicked");
-            $("#_BT_RulerCanvas").append(_BT_RulerY);
-            $("._BT_RulerY").draggable({
-              axis: "y",
-              containment: "#_BT_RulerCanvas",
-              drag: function() {
-                var position = $(this).position();
-                var yPos = $(this).css('top');
-                $(this).find($('._BT_RulerPos')).text('Y: ' + yPos);
+                var Pos = $(this).css(pos);
+                $(this).find($('._BT_RulerPos')).text(axis + ': ' + Pos);
               }
             });
           });
@@ -311,7 +310,6 @@ $(document).ready(function() {
 
   function _BT_margin(margin_value){
     $("body").css("margin",margin_value);
-    $("#_BT_GridOverlay").css("margin-top",margin_value);
     chrome.storage.sync.set({"uniqueID_margin": margin_value});
   }
 
