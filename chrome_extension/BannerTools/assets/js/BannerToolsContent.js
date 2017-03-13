@@ -5,21 +5,13 @@
 */
 
 $(document).ready(function() {
-  var _BT_version = 1.3;
-
-  var _BT_adWidth,
-      _BT_adHeight,
-      _BT_stopwatch;
-
-  var _BT_easterEgg = 0;
-  var _BT_override = 0;
-
-  var _BT_isInitialized = false;
-  var _BT_isExpanded = false;
-  var _BT_isStopwatchEnabled = false;
+  var _BT_version = 1.4;
+  var _BT_adWidth, _BT_adHeight, _BT_stopwatch;
+  var _BT_easterEgg = _BT_override = 0;
+  var _BT_isInitialized = _BT_isExpanded = _BT_isStopwatchEnabled = false;
 
   chrome.storage.sync.get("uniqueID_override", function(data) {
-    if (data["uniqueID_override"] == "1"){
+    if (data["uniqueID_override"] == 1){
       _BT_override = 1;
     }
     _BT_initialize(_BT_override);
@@ -53,7 +45,7 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Start Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Grid</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Grid_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Rulers</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Rulers_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
+          var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Reveal All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Guide</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Guide_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Start Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
           $("body").append(BannerTools);
 
           BannerTools = '<div id="_BT_GridOverlay"></div><div id="_BT_RulerCanvas"></div>';
@@ -119,7 +111,7 @@ $(document).ready(function() {
                   });
 
                   $("._BT_easter_egg").toggle();
-                  $("#_BT_version").append(' v1.3');
+                  $("#_BT_version").append(' v' + _BT_version);
                   chrome.storage.sync.set({"uniqueID_easterEgg": "true"});
                 }
               });
@@ -141,8 +133,8 @@ $(document).ready(function() {
           });
 
           chrome.storage.sync.get("uniqueID_backgroundColor", function(data) {
-            if (data["uniqueID_backgroundColor"] == "rgba(0,0,0,0.8)"){
-              _BT_backgroundColor("rgba(0,0,0,0.8)");
+            if (data["uniqueID_backgroundColor"] == "rgba(0,0,0,0.9)"){
+              _BT_backgroundColor("rgba(0,0,0,0.9)");
               $("#_BT_Black_Switch").prop("checked", true);
             }
           });
@@ -154,17 +146,10 @@ $(document).ready(function() {
             }
           });
 
-          chrome.storage.sync.get("uniqueID_grid", function(data) {
-            if (data["uniqueID_grid"] == "visible"){
-              _BT_grid("visible");
-              $("#_BT_Grid_Switch").prop("checked", true);
-            }
-          });
-
-          chrome.storage.sync.get("uniqueID_ruler", function(data) {
-            if (data["uniqueID_ruler"] == "block"){
-              _BT_rulers("block");
-              $("#_BT_Rulers_Switch").prop("checked", true);
+          chrome.storage.sync.get("uniqueID_guide", function(data) {
+            if (data["uniqueID_guide"] == 1){
+              _BT_guide(1);
+              $("#_BT_Guide_Switch").prop("checked", true);
             }
           });
 
@@ -190,16 +175,12 @@ $(document).ready(function() {
           });
 
           $("#_BT_Override").click(function() {
-            chrome.storage.sync.set({"uniqueID_override": "1"});
+            chrome.storage.sync.set({"uniqueID_override": 1});
             location.reload();
           });
 
-          $("#_BT_Grid_Switch").change(function() {
-            (this.checked) ? ( _BT_grid("visible")) : (_BT_grid("hidden"));
-          });
-
-          $("#_BT_Rulers_Switch").change(function() {
-            (this.checked) ? ( _BT_rulers("block")) : (_BT_rulers("none"));
+          $("#_BT_Guide_Switch").change(function() {
+            (this.checked) ? (_BT_guide(1)) : (_BT_guide(0));
           });
 
           $("#_BT_Border_Switch").change(function() {
@@ -215,7 +196,7 @@ $(document).ready(function() {
           });
 
           $("#_BT_Black_Switch").change(function() {
-            (this.checked) ? ( _BT_backgroundColor("rgba(0,0,0,0.8)")) : (_BT_backgroundColor(""));
+            (this.checked) ? ( _BT_backgroundColor("rgba(0,0,0,0.9)")) : (_BT_backgroundColor(""));
           });
 
           $("#_BT_Show_Switch").change(function() {
@@ -292,18 +273,17 @@ $(document).ready(function() {
       _BT_margin("");
       _BT_replay("");
       _BT_border("");
-      _BT_grid("hidden");
-      _BT_rulers("none");
+      _BT_guide(0);
       _BT_backgroundColor("");
       _BT_overflow("");
       _BT_stopwatchTimer(1);
       $("[id*=_Switch]").prop("checked", false);
+      _BT_closeNav();
   }
 
   function _BT_disable(disable_value){
     if(disable_value == "true"){
       _BT_Reset();
-      _BT_closeNav();
       chrome.storage.sync.set({"uniqueID_disable": "true"});
     }
   }
@@ -321,12 +301,28 @@ $(document).ready(function() {
   function _BT_border(border_value){
     $(".content").children().css("border",border_value);
     $(".content").children().children().css("border",border_value);
+
+    if($(".draggable").length){
+      $(".draggable").css("border","1px cyan solid");
+    }
+
     chrome.storage.sync.set({"uniqueID_border": border_value});
+  }
+
+  function _BT_guide(guide_value){
+    if(guide_value == 1){
+      _BT_grid("visible");
+      _BT_rulers("block");
+    }
+    else{
+      _BT_grid("hidden");
+      _BT_rulers("none");
+    }
+    chrome.storage.sync.set({"uniqueID_guide": guide_value});
   }
 
   function _BT_grid(grid_value){
     $("#_BT_GridOverlay").css("visibility",grid_value);
-    chrome.storage.sync.set({"uniqueID_grid": grid_value});
   }
 
   function _BT_rulers(rulers_value){
@@ -336,7 +332,6 @@ $(document).ready(function() {
 
     $("#_BT_RulerCanvas").css("display",rulers_value);
     $("._BT_RulerButtons").css("display",rulers_value);
-    chrome.storage.sync.set({"uniqueID_ruler": rulers_value});
   }
 
   function _BT_backgroundColor(backgroundColor_value){
@@ -352,7 +347,6 @@ $(document).ready(function() {
   function _BT_screenshot(screenshot_value){
     if(screenshot_value == 0){
       _BT_Reset();
-      _BT_closeNav();
 
       $("#ad-container").css("margin",screenshot_value);
       _BT_replay("hidden");
@@ -406,7 +400,7 @@ $(document).ready(function() {
 
         if(_BT_isInitialized == false){
           chrome.storage.sync.get("uniqueID_override", function(data) {
-            if (data["uniqueID_override"] == "1"){
+            if (data["uniqueID_override"] == 1){
               _BT_override = 1;
             }
             _BT_initialize(_BT_override);
