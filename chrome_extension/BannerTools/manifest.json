@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
-	"version": "1.3",
+	"version": "1.4",
 	"browser_action": {
 	  "default_icon": "assets/img/icon16.jpg"
 	},
@@ -29,10 +29,11 @@
 	    ],
 	    "js": [
 	    	"assets/js/jquery-3.1.1.min.js",
+	    	"assets/js/jquery-ui.min.js",
 	    	"assets/js/BannerToolsContent.js"
 	    ],
 	    "css": [
-	    	"assets/css/hover.css",
+	    	"assets/css/hover-min.css",
 	    	"assets/css/BannerToolsStyles.css"
 	    ]
 	  }
@@ -40,5 +41,12 @@
 	"background": {
 	  "scripts": ["assets/js/BannerToolsBackground.js"]
 	},
-	"web_accessible_resources": ["assets/img/Logo.png"]
+	"web_accessible_resources": ["assets/img/Logo.png"],
+	"commands": {
+		"toggle-feature": {
+			"suggested_key": {"default": "Alt+Z"},
+			"description": "Toggle BannerTools"
+		}
+	},
+	"options_page": "assets/html/BannerToolsOptions.html"
 }

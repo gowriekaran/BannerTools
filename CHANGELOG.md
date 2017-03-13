@@ -1,3 +1,15 @@
+# Version 1.4
+- Removed extraneous code.
+- Refactor code.
+- Added new feature to overlay grid.
+- Added new feature to overlay rulers.
+- Added back border feature as easter egg.
+- Added shortcut ALT+Z to toggle BannerTools.
+- Added options page, could have more potential.
+- Page zoom sets 100% on screenshot.
+- Modified make it black, now uses 90% opacity.
+- Minified hover.css library
+
 # Version 1.3
 - Removed extraneous code.
 - Added new feature to override adcontainer ID check.

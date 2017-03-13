@@ -4,7 +4,7 @@
 
 #### Facilitate Banner Development
 
-_Credit to Mihran Abrahamian for Make it black / Show me everything implementation :)_
+_Credit to Mihran Abrahamian for Lights Off / Reveal All implementation :)_
 
 #### Setup:
 * Use **ad-container** ID
@@ -14,11 +14,16 @@ _Credit to Mihran Abrahamian for Make it black / Show me everything implementati
 
 #### Features:
 - BannerInfo (ad width, height, name)
-- Make it Black (Black background)
-- Margin (100px margin)
+- Lights off
+- Margin Top
+- Reveal All
+- Start Timer
+- Show Guide (Overlaying grid and the ability to add rulers)
 - Screenshot
-- Show me everything (Reveal everything)
-- Timer (On-screen timer)
-- Override (run on every page, even if adcontainer is not present)
 
-_Click on the MH Logo 3 times and you'll see more options. (Reset plugin and Option to hide replay button)_
+_Click on the MH Logo 3 times and you'll see more features_
+#### Extra Features:
+- Override (Force attempt to run on any page)
+- Reset (Reset BannerTools)
+- Border All (Add a border around all elements)
+- Hide Replay

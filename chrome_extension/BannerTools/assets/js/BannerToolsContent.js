@@ -5,19 +5,13 @@
 */
 
 $(document).ready(function() {
-  var _BT_adWidth,
-      _BT_adHeight,
-      _BT_stopwatch;
-
-  var _BT_easterEgg = 0;
-  var _BT_override = 0;
-
-  var _BT_isInitialized = false;
-  var _BT_isExpanded = false;
-  var _BT_isStopwatchEnabled = false;
+  var _BT_version = 1.4;
+  var _BT_adWidth, _BT_adHeight, _BT_stopwatch;
+  var _BT_easterEgg = _BT_override = 0;
+  var _BT_isInitialized = _BT_isExpanded = _BT_isStopwatchEnabled = false;
 
   chrome.storage.sync.get("uniqueID_override", function(data) {
-    if (data["uniqueID_override"] == "1"){
+    if (data["uniqueID_override"] == 1){
       _BT_override = 1;
     }
     _BT_initialize(_BT_override);
@@ -51,8 +45,16 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Debug Options</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr> <td class="_BT_Switch_Label">Add Margin</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay Button</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Make It Black</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Run Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Me Everything</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button> <div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
+          var BannerTools ='<div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr></table> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Reveal All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Guide</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Guide_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Start Timer</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Timer_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div></div></div>';
           $("body").append(BannerTools);
+
+          BannerTools = '<div id="_BT_GridOverlay"></div><div id="_BT_RulerCanvas"></div>';
+          $(".replay-button").before(BannerTools);
+
+          $("#_BT_GridOverlay, #_BT_RulerCanvas").css({
+            width: _BT_adWidth,
+            height:  _BT_adHeight
+          });
 
           $("#_BT_Logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
 
@@ -78,7 +80,15 @@ $(document).ready(function() {
                   $("#_BT_Replay_Switch").prop("checked", true);
                 }
               });
-              $("#_BT_version").append(' v1.3');
+
+              chrome.storage.sync.get("uniqueID_border", function(data) {
+                if (data["uniqueID_border"] == "1px solid red"){
+                  _BT_border("1px solid red");
+                  $("#_BT_Border_Switch").prop("checked", true);
+                }
+              });
+
+              $("#_BT_version").append(' v' + _BT_version);
             }
             else{
               $("#_BT_SidePanelNav img").click(function(event) {
@@ -93,8 +103,15 @@ $(document).ready(function() {
                     }
                   });
 
+                  chrome.storage.sync.get("uniqueID_border", function(data) {
+                    if (data["uniqueID_border"] == 1){
+                      _BT_border("1px solid red");
+                      $("#_BT_Border_Switch").prop("checked", true);
+                    }
+                  });
+
                   $("._BT_easter_egg").toggle();
-                  $("#_BT_version").append(' v1.3');
+                  $("#_BT_version").append(' v' + _BT_version);
                   chrome.storage.sync.set({"uniqueID_easterEgg": "true"});
                 }
               });
@@ -116,8 +133,8 @@ $(document).ready(function() {
           });
 
           chrome.storage.sync.get("uniqueID_backgroundColor", function(data) {
-            if (data["uniqueID_backgroundColor"] == "rgba(0,0,0,0.8)"){
-              _BT_backgroundColor("rgba(0,0,0,0.8)");
+            if (data["uniqueID_backgroundColor"] == "rgba(0,0,0,0.9)"){
+              _BT_backgroundColor("rgba(0,0,0,0.9)");
               $("#_BT_Black_Switch").prop("checked", true);
             }
           });
@@ -126,6 +143,13 @@ $(document).ready(function() {
             if (data["uniqueID_overflow"] == "visible"){
               _BT_overflow("visible");
               $("#_BT_Show_Switch").prop("checked", true);
+            }
+          });
+
+          chrome.storage.sync.get("uniqueID_guide", function(data) {
+            if (data["uniqueID_guide"] == 1){
+              _BT_guide(1);
+              $("#_BT_Guide_Switch").prop("checked", true);
             }
           });
 
@@ -151,8 +175,16 @@ $(document).ready(function() {
           });
 
           $("#_BT_Override").click(function() {
-            chrome.storage.sync.set({"uniqueID_override": "1"});
+            chrome.storage.sync.set({"uniqueID_override": 1});
             location.reload();
+          });
+
+          $("#_BT_Guide_Switch").change(function() {
+            (this.checked) ? (_BT_guide(1)) : (_BT_guide(0));
+          });
+
+          $("#_BT_Border_Switch").change(function() {
+            (this.checked) ? ( _BT_border("1px solid red")) : (_BT_border(""));
           });
 
           $("#_BT_Replay_Switch").change(function() {
@@ -164,7 +196,7 @@ $(document).ready(function() {
           });
 
           $("#_BT_Black_Switch").change(function() {
-            (this.checked) ? ( _BT_backgroundColor("rgba(0,0,0,0.8)")) : (_BT_backgroundColor(""));
+            (this.checked) ? ( _BT_backgroundColor("rgba(0,0,0,0.9)")) : (_BT_backgroundColor(""));
           });
 
           $("#_BT_Show_Switch").change(function() {
@@ -181,7 +213,7 @@ $(document).ready(function() {
             }
           });
 
-          $("#Screenshot_BT_Button").click(function(){
+          $("#_BT_Screenshot_Button").click(function(){
             _BT_screenshot(0);
           });
 
@@ -190,6 +222,35 @@ $(document).ready(function() {
               _BT_stopwatchTimer(1);
               _BT_stopwatchTimer(0);
             }
+          });
+
+          function _BT_getRuler(axis){
+            return '<div class="_BT_Ruler' + axis + ' draggable ui-widget-content"><span class="_BT_RulerPos"></span></div>';
+          }
+
+          $("._BT_RulerButtons").click(function(e){
+            var axis;
+            var pos;
+
+            if(this.id == "_BT_XRuler_Button"){
+              axis = "X";
+              pos = "left";
+            }
+            else{
+              axis = "Y";
+              pos = "top";
+            }
+
+            $("#_BT_RulerCanvas").append(_BT_getRuler(axis));
+            $("._BT_Ruler" + axis).draggable({
+              axis: axis,
+              containment: "#_BT_RulerCanvas",
+              drag: function() {
+                var position = $(this).position();
+                var Pos = $(this).css(pos);
+                $(this).find($('._BT_RulerPos')).text(axis + ': ' + Pos);
+              }
+            });
           });
 
           _BT_openNav();
@@ -211,16 +272,18 @@ $(document).ready(function() {
   function _BT_Reset(){
       _BT_margin("");
       _BT_replay("");
+      _BT_border("");
+      _BT_guide(0);
       _BT_backgroundColor("");
       _BT_overflow("");
       _BT_stopwatchTimer(1);
       $("[id*=_Switch]").prop("checked", false);
+      _BT_closeNav();
   }
 
   function _BT_disable(disable_value){
     if(disable_value == "true"){
       _BT_Reset();
-      _BT_closeNav();
       chrome.storage.sync.set({"uniqueID_disable": "true"});
     }
   }
@@ -233,6 +296,42 @@ $(document).ready(function() {
   function _BT_replay(replay_value){
     $(".replay-button").css("visibility",replay_value);
     chrome.storage.sync.set({"uniqueID_replay": replay_value});
+  }
+
+  function _BT_border(border_value){
+    $(".content").children().css("border",border_value);
+    $(".content").children().children().css("border",border_value);
+
+    if($(".draggable").length){
+      $(".draggable").css("border","1px cyan solid");
+    }
+
+    chrome.storage.sync.set({"uniqueID_border": border_value});
+  }
+
+  function _BT_guide(guide_value){
+    if(guide_value == 1){
+      _BT_grid("visible");
+      _BT_rulers("block");
+    }
+    else{
+      _BT_grid("hidden");
+      _BT_rulers("none");
+    }
+    chrome.storage.sync.set({"uniqueID_guide": guide_value});
+  }
+
+  function _BT_grid(grid_value){
+    $("#_BT_GridOverlay").css("visibility",grid_value);
+  }
+
+  function _BT_rulers(rulers_value){
+    if(rulers_value == "none"){
+      $(".draggable").remove();
+    }
+
+    $("#_BT_RulerCanvas").css("display",rulers_value);
+    $("._BT_RulerButtons").css("display",rulers_value);
   }
 
   function _BT_backgroundColor(backgroundColor_value){
@@ -248,14 +347,14 @@ $(document).ready(function() {
   function _BT_screenshot(screenshot_value){
     if(screenshot_value == 0){
       _BT_Reset();
-      _BT_closeNav();
 
       $("#ad-container").css("margin",screenshot_value);
       _BT_replay("hidden");
 
       var passing_value = "true;"+_BT_adWidth+"@"+_BT_adHeight;
 
-      setTimeout(function(){chrome.runtime.sendMessage({execute_screenshot: passing_value})}, 1000);
+      chrome.runtime.sendMessage({resetZoom: "true"});
+      setTimeout(function(){chrome.runtime.sendMessage({executeScreenshot: passing_value})}, 1000);
     }
     else{
       $("#ad-container").css("margin","auto");
@@ -269,9 +368,9 @@ $(document).ready(function() {
       $("#_BT_Timer").show();
       _BT_isStopwatchEnabled = true;
       _BT_stopwatch = setInterval(function() {
-        var value = parseInt($("#_BT_Timer").find("._BT_Timer_Stopwatch").text(), 10);
+        var value = parseInt($("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(), 10);
         value++;
-        $("#_BT_Timer").find("._BT_Timer_Stopwatch").text(value);
+        $("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(value);
       },1000);
 
       setTimeout(function() {clearInterval(_BT_stopwatch); },30000);
@@ -279,7 +378,7 @@ $(document).ready(function() {
     }
     else{
       _BT_isStopwatchEnabled = false;
-      $("._BT_Timer_Stopwatch").text("1");
+      $("#_BT_Timer_Stopwatch").text("1");
       $("#_BT_Timer").hide();
       clearInterval(_BT_stopwatch);
       chrome.storage.sync.set({"uniqueID_timer": stopwatchTimer_value});
@@ -301,7 +400,7 @@ $(document).ready(function() {
 
         if(_BT_isInitialized == false){
           chrome.storage.sync.get("uniqueID_override", function(data) {
-            if (data["uniqueID_override"] == "1"){
+            if (data["uniqueID_override"] == 1){
               _BT_override = 1;
             }
             _BT_initialize(_BT_override);

@@ -1,3 +1,5 @@
+<div id="_BT_GridOverlay"></div>
+<div id="_BT_RulerCanvas"></div>
 <div id="_BT_SidePanelNav">
    <img class="hvr-bounce-out" id="_BT_Logo">
    <div id="_BT_SidePanelNav_Options">
@@ -23,27 +25,27 @@
             <td id="_BT_adSpecsLabel">Not Found</td>
          </tr>
       </table>
-      <p id="DebugOptions">Debug Options</p>
+      <p id="DebugOptions">Tools</p>
       <table id="DebugOptionsPanel">
+         <tr class="_BT_easter_egg" hidden>
+            <td id="_BT_Override" class="_BT_Switch_Label">Override</td>
+            <td class="_BT_Switch_Control"></td>
+         </tr>
          <tr class="_BT_easter_egg" hidden>
             <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td>
             <td class="_BT_Switch_Control"></td>
          </tr>
          <tr class="_BT_easter_egg" hidden>
-            <td id="_BT_Override" class="_BT_Switch_Label">Override</td>
-            <td class="_BT_Switch_Control"></td>
-         </tr>
-         <tr>
-            <td class="_BT_Switch_Label">Add Margin</td>
-            <td class="_BT_Switch_Control hvr-grow">
+            <td class="_BT_Switch_Label">Border All</td>
+            <td class="_BT_Switch_Control">
                <label class="_BT_Switch">
-                  <input type="checkbox" id="_BT_Margin_Switch" value="off">
+                  <input type="checkbox" id="_BT_Border_Switch" value="off">
                   <div class="_BT_Slider _BT_SliderRound"></div>
                </label>
             </td>
          </tr>
          <tr class="_BT_easter_egg" hidden>
-            <td class="_BT_Switch_Label">Hide Replay Button</td>
+            <td class="_BT_Switch_Label">Hide Replay</td>
             <td class="_BT_Switch_Control">
                <label class="_BT_Switch">
                   <input type="checkbox" id="_BT_Replay_Switch" value="off">
@@ -52,7 +54,7 @@
             </td>
          </tr>
          <tr>
-            <td class="_BT_Switch_Label">Make It Black</td>
+            <td class="_BT_Switch_Label">Lights Off</td>
             <td class="_BT_Switch_Control hvr-grow">
                <label class="_BT_Switch">
                   <input type="checkbox" id="_BT_Black_Switch" value="off">
@@ -61,16 +63,16 @@
             </td>
          </tr>
          <tr>
-            <td class="_BT_Switch_Label">Run Timer</td>
+            <td class="_BT_Switch_Label">Margin Top</td>
             <td class="_BT_Switch_Control hvr-grow">
                <label class="_BT_Switch">
-                  <input type="checkbox" id="_BT_Timer_Switch" value="off">
+                  <input type="checkbox" id="_BT_Margin_Switch" value="off">
                   <div class="_BT_Slider _BT_SliderRound"></div>
                </label>
             </td>
          </tr>
          <tr>
-            <td class="_BT_Switch_Label">Show Me Everything</td>
+            <td class="_BT_Switch_Label">Reveal All</td>
             <td class="_BT_Switch_Control hvr-grow">
                <label class="_BT_Switch">
                   <input type="checkbox" id="_BT_Show_Switch" value="off">
@@ -78,8 +80,28 @@
                </label>
             </td>
          </tr>
+         <tr>
+            <td class="_BT_Switch_Label">Show Guide</td>
+            <td class="_BT_Switch_Control hvr-grow">
+               <label class="_BT_Switch">
+                  <input type="checkbox" id="_BT_Guide_Switch" value="off">
+                  <div class="_BT_Slider _BT_SliderRound"></div>
+               </label>
+            </td>
+         </tr>
+         <tr>
+            <td class="_BT_Switch_Label">Start Timer</td>
+            <td class="_BT_Switch_Control hvr-grow">
+               <label class="_BT_Switch">
+                  <input type="checkbox" id="_BT_Timer_Switch" value="off">
+                  <div class="_BT_Slider _BT_SliderRound"></div>
+               </label>
+            </td>
+         </tr>
       </table>
-      <button id="Screenshot_BT_Button" class="hvr-grow">Screenshot</button>
-      <div id="_BT_Timer"><span class="_BT_Timer_Stopwatch">1</span> s</div>
+      <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button>
+      <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button>
+      <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button>
+      <div id="_BT_Timer"><span id="_BT_Timer_Stopwatch">1</span> s</div>
    </div>
 </div>
