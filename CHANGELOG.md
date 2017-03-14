@@ -1,3 +1,7 @@
+# Version 1.5
+- Added shortcut ALT+X to disable BannerTools
+- Edited console log messages
+
 # Version 1.4
 - Removed extraneous code.
 - Refactor code.
