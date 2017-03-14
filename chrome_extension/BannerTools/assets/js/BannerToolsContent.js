@@ -253,7 +253,7 @@ $(document).ready(function() {
             });
           });
 
-          _BT_openNav();
+          _BT_openNav("enabled");
         }
       });
     }
@@ -278,13 +278,14 @@ $(document).ready(function() {
       _BT_overflow("");
       _BT_stopwatchTimer(1);
       $("[id*=_Switch]").prop("checked", false);
-      _BT_closeNav();
+      _BT_closeNav("disabled");
   }
 
   function _BT_disable(disable_value){
     if(disable_value == "true"){
       _BT_Reset();
       chrome.storage.sync.set({"uniqueID_disable": "true"});
+      location.reload();
     }
   }
 
@@ -358,7 +359,7 @@ $(document).ready(function() {
     }
     else{
       $("#ad-container").css("margin","auto");
-      _BT_openNav();
+      _BT_openNav("enabled");
       _BT_replay("");
     }
   }
@@ -397,7 +398,6 @@ $(document).ready(function() {
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if (request.ExpandPanel == "true"){
-
         if(_BT_isInitialized == false){
           chrome.storage.sync.get("uniqueID_override", function(data) {
             if (data["uniqueID_override"] == 1){
@@ -408,12 +408,15 @@ $(document).ready(function() {
         }
         else{
           if(_BT_isExpanded == false){
-            _BT_openNav();
+            _BT_openNav("maximized");
           }
           else{
-            _BT_closeNav();
+            _BT_closeNav("minimized");
           }
         }
+      }
+      else if (request.ExpandPanel == "false"){
+        _BT_disable("true");
       }
       else if (request.screenshot == "false"){
         _BT_screenshot(1);
@@ -421,16 +424,16 @@ $(document).ready(function() {
     }
   );
 
-  function _BT_openNav(){
+  function _BT_openNav(_BT_openNav_value){
     _BT_isExpanded = true;
     document.getElementById("_BT_SidePanelNav").style.width = "200px";
     $("#_BT_Disable_Switch").prop("checked", true);
-    console.log("BannerTools has been enabled!");
+    console.log("BannerTools has been " + _BT_openNav_value + "!");
   }
 
-  function _BT_closeNav() {
+  function _BT_closeNav(_BT_closeNav_value) {
     _BT_isExpanded = false;
     document.getElementById("_BT_SidePanelNav").style.width = "0";
-    console.log("BannerTools has been disabled. Click on the extension to relaunch it!");
+    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to relaunch it!");
   }
 });
