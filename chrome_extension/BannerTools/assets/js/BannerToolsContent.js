@@ -416,7 +416,9 @@ $(document).ready(function() {
         }
       }
       else if (request.ExpandPanel == "false"){
-        _BT_disable("true");
+        if(_BT_isInitialized == true){
+          _BT_disable("true");
+        }
       }
       else if (request.screenshot == "false"){
         _BT_screenshot(1);
@@ -434,6 +436,6 @@ $(document).ready(function() {
   function _BT_closeNav(_BT_closeNav_value) {
     _BT_isExpanded = false;
     document.getElementById("_BT_SidePanelNav").style.width = "0";
-    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to relaunch it!");
+    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
   }
 });
