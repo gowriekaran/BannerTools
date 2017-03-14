@@ -1,8 +1,16 @@
 chrome.commands.onCommand.addListener(function(command) {
-	if(command == "toggle-feature"){
+	if(command == "toggle-extension1"){
 	    chrome.storage.sync.set({'uniqueID_disable': 'false'});
 		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		  chrome.tabs.sendMessage(tabs[0].id, {ExpandPanel: "true"});
+		});
+	}
+});
+
+chrome.commands.onCommand.addListener(function(command) {
+	if(command == "toggle-extension2"){
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+		  chrome.tabs.sendMessage(tabs[0].id, {ExpandPanel: "false"});
 		});
 	}
 });

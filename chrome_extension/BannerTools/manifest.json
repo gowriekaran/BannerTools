@@ -43,9 +43,13 @@
 	},
 	"web_accessible_resources": ["assets/img/Logo.png"],
 	"commands": {
-		"toggle-feature": {
+		"toggle-extension1": {
 			"suggested_key": {"default": "Alt+Z"},
-			"description": "Toggle BannerTools"
+			"description": "Minimize / Maximize BannerTools"
+		},
+		"toggle-extension2": {
+			"suggested_key": {"default": "Alt+X"},
+			"description": "Disable BannerTools"
 		}
 	},
 	"options_page": "assets/html/BannerToolsOptions.html"
