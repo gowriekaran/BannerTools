@@ -5,7 +5,7 @@
 */
 
 $(document).ready(function() {
-  var _BT_version = 1.4;
+  var _BT_version = 1.5;
   var _BT_adWidth, _BT_adHeight, _BT_stopwatch;
   var _BT_easterEgg = _BT_override = 0;
   var _BT_isInitialized = _BT_isExpanded = _BT_isStopwatchEnabled = false;
