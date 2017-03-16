@@ -119,16 +119,16 @@
   cursor: col-resize;
   width: 0px;
   height: 100%;
-  border-right: 2px cyan solid;
-  position: absolute
+  border-right: 1px cyan solid;
+  position: absolute;
 }
 
 ._BT_RulerY {
   cursor: row-resize;
   height: 0px;
   width: 100%;
-  border-top: 2px cyan solid;
-  position: absolute
+  border-top: 1px cyan solid;
+  position: absolute;
 }
 
 ._BT_RulerPos {

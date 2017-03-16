@@ -1,0 +1,1 @@
+document.getElementById("_BT_adDurationLabel").innerHTML = (banner.myTL.duration()+"s");

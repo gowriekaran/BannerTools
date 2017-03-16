@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
-	"version": "1.5",
+	"version": "1.6",
 	"browser_action": {
 	  "default_icon": "assets/img/icon16.jpg"
 	},
@@ -41,7 +41,10 @@
 	"background": {
 	  "scripts": ["assets/js/BannerToolsBackground.js"]
 	},
-	"web_accessible_resources": ["assets/img/Logo.png"],
+	"web_accessible_resources": [
+		"assets/img/Logo.png",
+		"assets/js/_BT_BannerObject.js"
+	],
 	"commands": {
 		"toggle-extension1": {
 			"suggested_key": {"default": "Alt+Z"},
