@@ -4,42 +4,40 @@
 	"description": "To help facilitate banner development.",
 	"version": "1.6",
 	"browser_action": {
-	  "default_icon": "assets/img/icon16.jpg"
+		"default_icon": "assets/img/icon16.jpg"
 	},
 	"icons": {
-	  "16": "assets/img/icon16.jpg",
-	  "48": "assets/img/icon48.jpg",
-	  "128": "assets/img/icon128.jpg"
+		"16": "assets/img/icon16.jpg",
+		"48": "assets/img/icon48.jpg",
+		"128": "assets/img/icon128.jpg"
 	},
 	"permissions": [
 		"storage",
 		"activeTab",
-	    "http://*/*",
-	    "https://*/*",
-	    "file://*/*",
-	    "<all_urls>"
-    ],
-	"content_scripts": [
-	  {
-	    "matches": [
-			"http://*/*",
-		    "https://*/*",
-		    "file://*/*",
-		    "<all_urls>"
-	    ],
-	    "js": [
-	    	"assets/js/jquery-3.1.1.min.js",
-	    	"assets/js/jquery-ui.min.js",
-	    	"assets/js/BannerToolsContent.js"
-	    ],
-	    "css": [
-	    	"assets/css/hover-min.css",
-	    	"assets/css/BannerToolsStyles.css"
-	    ]
-	  }
+		"http://*/*",
+		"https://*/*",
+		"file://*/*",
+		"<all_urls>"
 	],
+	"content_scripts": [{
+		"matches": [
+			"http://*/*",
+			"https://*/*",
+			"file://*/*",
+			"<all_urls>"
+		],
+		"js": [
+			"assets/js/jquery-3.1.1.min.js",
+			"assets/js/jquery-ui.min.js",
+			"assets/js/BannerToolsContent.js"
+		],
+		"css": [
+			"assets/css/hover-min.css",
+			"assets/css/BannerToolsStyles.css"
+		]
+	}],
 	"background": {
-	  "scripts": ["assets/js/BannerToolsBackground.js"]
+		"scripts": ["assets/js/BannerToolsBackground.js"]
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
@@ -50,11 +48,15 @@
 	],
 	"commands": {
 		"toggle-extension1": {
-			"suggested_key": {"default": "Alt+Z"},
+			"suggested_key": {
+				"default": "Alt+Z"
+			},
 			"description": "Minimize / Maximize BannerTools"
 		},
 		"toggle-extension2": {
-			"suggested_key": {"default": "Alt+X"},
+			"suggested_key": {
+				"default": "Alt+X"
+			},
 			"description": "Disable BannerTools"
 		}
 	},

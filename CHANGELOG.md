@@ -1,3 +1,13 @@
+#Version 1.6
+- Hooked into banner object
+- Added feature to play / pause banner
+- Updated screenshot to automatically go to last frame
+- Fixed ruler overlay issue, not being visible at max point
+- Fixed ruler max value issue, not being able to reach max point due to ruler width
+- Removed timer feature
+- Duration stays green when under 30, red at 30+
+- Added feature for toast notifications
+
 # Version 1.5
 - Added shortcut ALT+X to disable BannerTools
 - Edited console log messages

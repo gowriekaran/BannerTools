@@ -17,32 +17,32 @@
   padding-top: 10px;
 }
 
-#_BT_SidePanelNav img{
+#_BT_SidePanelNav img {
   width: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-#_BT_SidePanelNav_Options{
+#_BT_SidePanelNav_Options {
   margin-top: 15px;
   padding: 10px;
 }
 
-#_BT_SidePanelNav_Options p{
+#_BT_SidePanelNav_Options p {
   text-align: center;
   padding: 15px;
 }
 
-#_BT_SidePanelNav_Options table{
+#_BT_SidePanelNav_Options table {
   width: 100%;
 }
 
-._BT_Switch_Label{
+._BT_Switch_Label {
   width: 85%;
 }
 
-._BT_Switch_Control{
+._BT_Switch_Control {
   width: 15%;
   text-align: center;
 }
@@ -56,19 +56,16 @@
   border: 1px solid black;
   border-radius: 20px;
   color: white;
-  background-color: rgb(0,122,255);
+  background-color: rgb(0, 122, 255);
   margin-top: 15px;
 }
 
-#_BT_XRuler_Button{
+._BT_RulerButtons {
   display: none;
 }
 
-#_BT_YRuler_Button{
-  display: none;
-}
-
-#_BT_Reset, #_BT_Override{
+#_BT_Reset,
+#_BT_Override {
   color: red;
   text-decoration: underline;
   cursor: pointer;
@@ -116,79 +113,153 @@
 ._BT_RulerPos {
   position: absolute;
   font-size: 12px;
-  background-color: rgba(255,255,255,0.7);
+  background-color: rgba(255, 255, 255, 0.7);
   display: block;
   font-family: Arial, Helvetica, sans-serif;
   width: 50px;
 }
 
 ._BT_play-button {
-   fill: rgb(255,59,48);
-   outline: none;
-   border: 0px solid;
-   background: transparent;
-   width: 100px;
-   text-align: center;
-   display: block;
-   margin: auto;
+  fill: #FFEB3B;
+  outline: none;
+  border: 4px solid #FFEB3B;
+  border-radius: 100px;
+  background: transparent;
+  width: 75px;
+  text-align: center;
+  display: block;
+  margin: auto;
+  margin-top: 15px;
+  transition: 0.5s;
 }
 
 ._BT_play-button:hover {
-   cursor: pointer;
+  cursor: pointer;
 }
 
-#_BT_adDurationLabel{
+#_BT_adDurationLabel {
   color: rgb(76, 217, 100);
 }
 
-/* The snackbar - position it at the bottom and in the middle of the screen */
 #_BT_ToastMessage {
-    font-family: Arial, Helvetica, sans-serif;
-    visibility: hidden; /* Hidden by default. Visible on click */
-    min-width: 250px; /* Set a default minimum width */
-    margin-left: -125px; /* Divide value of min-width by 2 */
-    background-color: #333; /* Black background color */
-    color: #fff; /* White text color */
-    text-align: center; /* Centered text */
-    border-radius: 2px; /* Rounded borders */
-    padding: 16px; /* Padding */
-    position: fixed; /* Sit on top of the screen */
-    z-index: 1; /* Add a z-index if needed */
-    left: 50%; /* Center the snackbar */
-    bottom: 30px; /* 30px from the bottom */
+  font-family: Arial, Helvetica, sans-serif;
+  visibility: hidden;
+  background-color: #607D8B;
+  color: #ECEFF1;
+  text-align: center;
+  border-radius: 100px;
+  padding: 16px;
+  position: fixed;
+  top: 30px;
+  left: 30px;
 }
 
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
 #_BT_ToastMessage.show {
-    visibility: visible; /* Show the snackbar */
-
-/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
-However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
-/* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
+  from {
+    left: -100px;
+    opacity: 0;
+  }
+  to {
+    left: 30px;
+    opacity: 1;
+  }
 }
 
 @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+  from {
+    left: -100px;
+    opacity: 0;
+  }
+  to {
+    left: 30px;
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 0; opacity: 0;}
+  from {
+    left: 30px;
+    opacity: 1;
+  }
+  to {
+    left: -100px;
+    opacity: 0;
+  }
 }
 
 @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+  from {
+    left: 30px;
+    opacity: 1;
+  }
+  to {
+    left: -100px;
+    opacity: 0;
+  }
 }
+
 
 /*  iOS styles */
 
-._BT_Switch{position:relative;display:inline-block;width:30px;height:17px}._BT_Switch input{display:none}._BT_Slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}._BT_Slider:before{position:absolute;content:"";height:13px;width:13px;left:2px;bottom:2px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+._BT_Slider{background-color:#4cd964}input:focus+._BT_Slider{box-shadow:0 0 1px #2196F3}input:checked+._BT_Slider:before{-webkit-transform:translateX(13px);-ms-transform:translateX(13px);transform:translateX(13px)}._BT_Slider._BT_SliderRound{border-radius:17px}._BT_Slider._BT_SliderRound:before{border-radius:50%}
+._BT_Switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px
+}
+
+._BT_Switch input {
+  display: none
+}
+
+._BT_Slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s
+}
+
+._BT_Slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s
+}
+
+input:checked+._BT_Slider {
+  background-color: #4cd964
+}
+
+input:focus+._BT_Slider {
+  box-shadow: 0 0 1px #2196F3
+}
+
+input:checked+._BT_Slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px)
+}
+
+._BT_Slider._BT_SliderRound {
+  border-radius: 17px
+}
+
+._BT_Slider._BT_SliderRound:before {
+  border-radius: 50%
+}

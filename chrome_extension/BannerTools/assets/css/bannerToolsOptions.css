@@ -1,21 +1,21 @@
-body{
+body {
 	background-color: black;
 	margin-left: 1.5em;
 }
 
-a{
+a {
 	color: white;
 	font-size: 30px;
 	text-decoration: none;
 }
 
-a:hover{
+a:hover {
 	color: red;
 	cursor: pointer;
 	transition: 0.5s;
 }
 
-div{
+div {
 	display: block;
 	margin-top: 25px;
 }

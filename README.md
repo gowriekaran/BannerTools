@@ -20,6 +20,7 @@ _Credit to Mihran Abrahamian for Lights Off / Reveal All implementation :)_
 - Start Timer
 - Show Guide (Overlaying grid and the ability to add rulers)
 - Screenshot
+- Toast (Cool notifications rather than boring console logs)
 
 _Click on the MH Logo 3 times and you'll see more features_
 #### Extra Features:
@@ -27,3 +28,4 @@ _Click on the MH Logo 3 times and you'll see more features_
 - Reset (Reset BannerTools)
 - Border All (Add a border around all elements)
 - Hide Replay
+- Toast
