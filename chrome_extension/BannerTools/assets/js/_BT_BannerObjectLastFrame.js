@@ -1,0 +1,1 @@
+banner.myTL.seek(banner.myTL.duration());

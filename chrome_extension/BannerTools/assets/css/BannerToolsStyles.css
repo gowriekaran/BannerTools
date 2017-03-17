@@ -68,24 +68,6 @@
   display: none;
 }
 
-#_BT_Timer{
-  position: absolute;
-  right: 0px;
-  bottom: 0px;
-  background-color: rgba(117,117,117,0.8);
-  width: 100%;
-  height: 45px;
-  border-left: 2px solid white;
-  font-size: 25px;
-  color: rgb(76,217,100);
-  text-align: center;
-  padding: 5px;
-}
-
-#_BT_Timer_Stopwatch{
-  color: rgb(76,217,100) !important;
-}
-
 #_BT_Reset, #_BT_Override{
   color: red;
   text-decoration: underline;
@@ -138,6 +120,73 @@
   display: block;
   font-family: Arial, Helvetica, sans-serif;
   width: 50px;
+}
+
+._BT_play-button {
+   fill: rgb(255,59,48);
+   outline: none;
+   border: 0px solid;
+   background: transparent;
+   width: 100px;
+   text-align: center;
+   display: block;
+   margin: auto;
+}
+
+._BT_play-button:hover {
+   cursor: pointer;
+}
+
+#_BT_adDurationLabel{
+  color: rgb(76, 217, 100);
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#_BT_ToastMessage {
+    font-family: Arial, Helvetica, sans-serif;
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#_BT_ToastMessage.show {
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
 }
 
 /*  iOS styles */

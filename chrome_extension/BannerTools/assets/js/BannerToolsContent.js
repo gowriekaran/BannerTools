@@ -6,9 +6,9 @@
 
 $(document).ready(function() {
   var _BT_version = 1.6;
-  var _BT_adWidth, _BT_adHeight, _BT_stopwatch;
+  var _BT_adWidth, _BT_adHeight;
   var _BT_easterEgg = _BT_override = 0;
-  var _BT_isInitialized = _BT_isExpanded = _BT_isStopwatchEnabled = false;
+  var _BT_isInitialized = _BT_isExpanded = false;
 
   chrome.storage.sync.get("uniqueID_override", function(data) {
     if (data["uniqueID_override"] == 1){
@@ -31,7 +31,7 @@ $(document).ready(function() {
     if($("#ad-container").length || override_value == 1){
       chrome.storage.sync.get("uniqueID_disable", function(data) {
         if (data["uniqueID_disable"] == "true"){
-          console.log("BannerTools is currently disabled. Click on the extension to launch it!");
+          _BT_ToastNotification("BannerTools is currently disabled. Click on the extension to launch it!");
         }
         else {
           _BT_isInitialized = true;
@@ -45,9 +45,9 @@ $(document).ready(function() {
           _BT_adHeight = _BT_adSize.split(",").pop();
           _BT_adHeight = _BT_adSize.split("=").pop();
 
-          var BannerTools = '<script src="' + chrome.extension.getURL('/assets/js/_BT_BannerObject.js') + '"></script>';
+          _BT_injectScript("_BT_BannerObjectDuration");
 
-          BannerTools +='<br><div id="_BT_GridOverlay"></div><div id="_BT_RulerCanvas"></div><div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr><tr> <td>Duration:</td><td id="_BT_adDurationLabel">Not Found</td></tr></table> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Reveal All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Guide</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Guide_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Ruler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Clear Rulers</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> </div></div>';
+          var BannerTools ='<div id="_BT_RulerCanvas"></div><div id="_BT_SidePanelNav"> <img class="hvr-bounce-out" id="_BT_Logo"> <div id="_BT_SidePanelNav_Options"> <table> <tr> <td id="_BT_version" class="_BT_Switch_Label">BannerTools</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Disable_Switch"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <p id="BannerInfo">Banner Info</p><table id="BannerInfoPanel"> <tr> <td>Name:</td><td id="_BT_adNameLabel">Not Found</td></tr><tr> <td>Specs:</td><td id="_BT_adSpecsLabel">Not Found</td></tr><tr> <td>Duration:</td><td id="_BT_adDurationLabel">Not Found</td></tr></table> <button class="_BT_play-button _BT_button" aria-live="assertive" tabindex="32" aria-label="Pause"> <svg width="100%" height="100%" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <path id="_BT_12" d="M 11 10 L 17 10 L 17 26 L 11 26 M 20 10 L 26 10 L 26 26 L 20 26"> <animate id="_BT_animation" begin="indefinite" attributeType="XML" attributeName="d" fill="freeze" from="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" to="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" dur="0.1s" keySplines=".4 0 1 1" repeatCount="1"></animate> </path> </defs> <use xlink:href="#_BT_12" class="_BT_svg-shadow"></use> <use xlink:href="#_BT_12" class="_BT_svg-fill"></use> </svg> </button> <p id="DebugOptions">Tools</p><table id="DebugOptionsPanel"> <tr class="_BT_easter_egg" hidden> <td id="_BT_Override" class="_BT_Switch_Label">Override</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td id="_BT_Reset" class="_BT_Switch_Label">Reset</td><td class="_BT_Switch_Control"></td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Border All</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Border_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr class="_BT_easter_egg" hidden> <td class="_BT_Switch_Label">Hide Replay</td><td class="_BT_Switch_Control"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Replay_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Lights Off</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Black_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Margin Top</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Margin_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Reveal All</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Show_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr><tr> <td class="_BT_Switch_Label">Show Guide</td><td class="_BT_Switch_Control hvr-grow"> <label class="_BT_Switch"> <input type="checkbox" id="_BT_Guide_Switch" value="off"> <div class="_BT_Slider _BT_SliderRound"></div></label> </td></tr></table> <button id="_BT_XRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add X Ruler</button> <button id="_BT_YRuler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Add Y Ruler</button> <button id="_BT_Ruler_Button" class="_BT_Button _BT_RulerButtons hvr-grow">Clear Rulers</button> <button id="_BT_Screenshot_Button" class="_BT_Button hvr-grow">Screenshot</button> </div></div>';
           $("body").append(BannerTools);
 
           BannerTools = '<!-- _BT_GridOverlay INJECTED INTO AD-CONTAINER BY BANNERTOOLS SO YOU CAN CLICK ON REPLAY BUTTON WHILE GRID OVERLAYS THE AD-CONTAINER --><br><div id="_BT_GridOverlay"></div>';
@@ -155,20 +155,8 @@ $(document).ready(function() {
             }
           });
 
-          chrome.storage.sync.get("uniqueID_timer", function(data) {
-            if (data["uniqueID_timer"] == 0){
-              _BT_stopwatchTimer(0);
-              $("#_BT_Timer_Switch").prop("checked", true);
-            }
-            else{
-              _BT_stopwatchTimer(1);
-            }
-          });
-
           $("#_BT_Disable_Switch").change(function() {
-            if (!this.checked) {
-              _BT_disable("true");
-            }
+            if (!this.checked) _BT_disable("true");
           });
 
           $("#_BT_Reset").click(function() {
@@ -205,24 +193,27 @@ $(document).ready(function() {
             (this.checked) ? ( _BT_overflow("visible")) : (_BT_overflow(""));
           });
 
-          $("#_BT_Timer_Switch").change(function() {
-            if (this.checked) {
-              chrome.storage.sync.set({"uniqueID_timer": 0});
-              location.reload();
-            }
-            else{
-              _BT_stopwatchTimer(1);
-            }
-          });
-
           $("#_BT_Screenshot_Button").click(function(){
             _BT_screenshot(0);
           });
 
-          $(".replay-button").click(function() {
-            if(_BT_isStopwatchEnabled){
-              _BT_stopwatchTimer(1);
-              _BT_stopwatchTimer(0);
+          var flip = true,
+            pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
+            play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
+            $animation = $('#_BT_animation');
+
+          $("._BT_play-button").on('click', function() {
+            flip = !flip;
+            $animation.attr({
+                "from": flip ? pause : play,
+                "to": flip ? play : pause
+            }).get(0).beginElement();
+
+            if(flip){
+              _BT_injectScript("_BT_BannerObjectPlay");
+            }
+            else{
+              _BT_injectScript("_BT_BannerObjectPause");            
             }
           });
 
@@ -270,7 +261,7 @@ $(document).ready(function() {
       });
     }
     else{
-      console.log("BannerTools will remain disabled as it could not find 'ad-container' ID!");
+      _BT_ToastNotification("BannerTools will remain disabled as it could not find 'ad-container' ID!");
     }
   }
 /*
@@ -281,6 +272,13 @@ $(document).ready(function() {
  | |___| (_) | | |  __/ | |  | |_| | | | | (__| |_| | (_) | | | \__ \
   \_____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 */
+
+  function _BT_injectScript(_BT_injectScript_value){
+    var script = '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + _BT_injectScript_value + '.js') + '"></script>';
+    $("body").append(script);
+    $("._BT_injectedScript").remove();    
+  }
+
   function _BT_Reset(){
       _BT_margin("");
       _BT_replay("");
@@ -288,7 +286,6 @@ $(document).ready(function() {
       _BT_guide(0);
       _BT_backgroundColor("");
       _BT_overflow("");
-      _BT_stopwatchTimer(1);
       $("[id*=_Switch]").prop("checked", false);
       _BT_closeNav("disabled");
   }
@@ -345,7 +342,7 @@ $(document).ready(function() {
     }
 
     $("#_BT_RulerCanvas").css("display",rulers_value);
-    $("._BT_RulerButtons").css("display",rulers_value);
+    $("._BT_RulerButtons").not("#_BT_Ruler_Button").css("display",rulers_value);
   }
 
   function _BT_backgroundColor(backgroundColor_value){
@@ -360,6 +357,7 @@ $(document).ready(function() {
 
   function _BT_screenshot(screenshot_value){
     if(screenshot_value == 0){
+      _BT_ToastNotification('Screenshotting Banner!');
       _BT_Reset();
 
       $("#ad-container").css("margin",screenshot_value);
@@ -367,6 +365,7 @@ $(document).ready(function() {
 
       var passing_value = "true;"+_BT_adWidth+"@"+_BT_adHeight;
 
+      _BT_injectScript("_BT_BannerObjectLastFrame");      
       chrome.runtime.sendMessage({resetZoom: "true"});
       setTimeout(function(){chrome.runtime.sendMessage({executeScreenshot: passing_value})}, 1000);
     }
@@ -377,27 +376,13 @@ $(document).ready(function() {
     }
   }
 
-  function _BT_stopwatchTimer(stopwatchTimer_value){
-    if(stopwatchTimer_value == 0){
-      $("#_BT_Timer").show();
-      _BT_isStopwatchEnabled = true;
-      _BT_stopwatch = setInterval(function() {
-        var value = parseInt($("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(), 10);
-        value++;
-        $("#_BT_Timer").find("#_BT_Timer_Stopwatch").text(value);
-      },1000);
+function _BT_ToastNotification(_BT_ToastNotification_value) {
+    var Toast = '<div id="_BT_ToastMessage">' + _BT_ToastNotification_value + '</div>';
+    $("body").append(Toast);
+    $("#_BT_ToastMessage").addClass("show");
+    setTimeout(function(){ $("#_BT_ToastMessage").remove(); }, 3000);
+}
 
-      setTimeout(function() {clearInterval(_BT_stopwatch); },30000);
-      chrome.storage.sync.set({"uniqueID_timer": stopwatchTimer_value});
-    }
-    else{
-      _BT_isStopwatchEnabled = false;
-      $("#_BT_Timer_Stopwatch").text("1");
-      $("#_BT_Timer").hide();
-      clearInterval(_BT_stopwatch);
-      chrome.storage.sync.set({"uniqueID_timer": stopwatchTimer_value});
-    }
-  }
 /*
   _   _             _             _   _               ______                            _     _______      _ _
  | \ | |           (_)           | | (_)             |  ____|                          | |   / / ____|    | | |
@@ -443,12 +428,12 @@ $(document).ready(function() {
     _BT_isExpanded = true;
     document.getElementById("_BT_SidePanelNav").style.width = "200px";
     $("#_BT_Disable_Switch").prop("checked", true);
-    console.log("BannerTools has been " + _BT_openNav_value + "!");
+    _BT_ToastNotification("BannerTools has been " + _BT_openNav_value + "!");
   }
 
   function _BT_closeNav(_BT_closeNav_value) {
     _BT_isExpanded = false;
     document.getElementById("_BT_SidePanelNav").style.width = "0";
-    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
+    _BT_ToastNotification("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
   }
 });

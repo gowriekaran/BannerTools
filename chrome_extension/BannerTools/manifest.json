@@ -43,7 +43,10 @@
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
-		"assets/js/_BT_BannerObject.js"
+		"assets/js/_BT_BannerObjectDuration.js",
+		"assets/js/_BT_BannerObjectLastFrame.js",
+		"assets/js/_BT_BannerObjectPlay.js",
+		"assets/js/_BT_BannerObjectPause.js"
 	],
 	"commands": {
 		"toggle-extension1": {
