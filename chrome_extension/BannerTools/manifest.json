@@ -59,6 +59,5 @@
 			},
 			"description": "Disable BannerTools"
 		}
-	},
-	"options_page": "assets/html/BannerToolsOptions.html"
+	}
 }
