@@ -1,3 +1,7 @@
+#Version 1.7
+- Removed options
+- Bug fixes
+
 #Version 1.6
 - Hooked into banner object
 - Added feature to play / pause banner
