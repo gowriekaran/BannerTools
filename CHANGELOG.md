@@ -1,6 +1,8 @@
 #Version 1.7.1
 - Refactored Code
 - HTML is now an asset. Does need to be minifed and pasted like before.
+- Rewritten with "_BT_" prefix + camelCase format
+- Storage values are loaded all at once on startup, rather than so many individual ones. Updated individually, more practical.
 - More to follow
 
 #Version 1.7
