@@ -1,3 +1,4 @@
+<!-- - - - - - - - - - <BannerTools> - - - - - - - - - - - -->
 <div id="_BT_rulerCanvas"></div>
 <div id="_BT_">
     <div>
@@ -15,7 +16,7 @@
                 </td>
             </tr>
         </table>
-        <table class="_BT_specialTable">
+        <table class="_BT_specialTable _BT_easterEgg" hidden>
             <tr>
                 <td>
                     <span id="_BT_override">Override</span>
@@ -44,7 +45,10 @@
         </table>
     </div>
     <div>
-        <button class="_BT_playButton _BT_button" aria-live="assertive" tabindex="32" aria-label="Pause">
+        <table class="_BT_specialTable2">
+            <tr>
+                <td>
+                    <button class="_BT_playButton _BT_button" aria-live="assertive" tabindex="32" aria-label="Pause">
         <svg viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <defs>
                 <path id="_BT_12" d="M 11 10 L 17 10 L 17 26 L 11 26 M 20 10 L 26 10 L 26 26 L 20 26">
@@ -56,11 +60,14 @@
             <use xlink:href="#_BT_12" class="_BT_svg-fill"></use>
         </svg>
       </button>
+                </td>
+                <td>
+                    <img id="_BT_screenshotButton" class="hvr-grow"/>
+                </td>
+            </tr>
+        </table>
     </div>
     <div>
-        <button id="_BT_screenshotButton" class="_BT_button hvr-grow">Screenshot</button>
-    </div>
-    <div class="_BT_easterEgg" hidden>
         <table>
             <tr class="_BT_easterEgg" hidden>
                 <td>Border All</td>
@@ -133,3 +140,4 @@
         <button id="_BT_rulerButton" class="_BT_button _BT_rulerButtons hvr-grow">Clear Rulers</button>
     </div>
 </div>
+<!-- - - - - - - - - - </BannerTools> - - - - - - - - - - - -->

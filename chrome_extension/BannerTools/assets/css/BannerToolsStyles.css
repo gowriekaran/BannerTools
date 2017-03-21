@@ -22,7 +22,7 @@
 }
 
 #_BT_ img {
-  width: 75px;
+  width: 100px;
   display: block;
   margin: auto;
 }
@@ -41,10 +41,26 @@
 }
 
 ._BT_specialTable tr>td:nth-child(1) {
-  width: 50% !important;
+  width: 30% !important;
 }
 
 ._BT_specialTable tr>td:nth-child(2) {
+  width: 70% !important;
+}
+
+#_BT_screenshotButton {
+  width: 50px !important;
+}
+
+#_BT_screenshotButton:hover {
+  cursor: pointer;
+}
+
+._BT_specialTable2 tr>td:nth-child(1) {
+  width: 50% !important;
+}
+
+._BT_specialTable2 tr>td:nth-child(2) {
   width: 50% !important;
 }
 

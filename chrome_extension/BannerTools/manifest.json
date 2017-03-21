@@ -44,6 +44,7 @@
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
+		"assets/img/camera.png",
 		"assets/js/_BT_BannerObjectDuration.js",
 		"assets/js/_BT_BannerObjectLastFrame.js",
 		"assets/js/_BT_BannerObjectPlay.js",

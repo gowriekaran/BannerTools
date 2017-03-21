@@ -72,6 +72,7 @@ $(document).ready(function () {
             });
 
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
+            $("#_BT_screenshotButton").attr("src", chrome.extension.getURL('/assets/img/camera.png'));
 
             $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
             $("#_BT_adNameLabel").text(document.title);
@@ -298,7 +299,7 @@ $(document).ready(function () {
     _BT_toast(0);
     _BT_backgroundColor("");
     _BT_overflow("");
-    $("[id*=_switch]").prop("checked", false);
+    $("[id*=Switch]").prop("checked", false);
     _BT_closeNav("disabled");
   }
 
@@ -461,7 +462,7 @@ $(document).ready(function () {
 
   function _BT_openNav(_BT_openNav_value) {
     _BT_isExpanded = true;
-    document.getElementById("_BT_").style.width = "200px";
+    document.getElementById("_BT_").style.width = "250px";
     $("#_BT_disableSwitch").prop("checked", true);
     _BT_toastNotification("BannerTools has been " + _BT_openNav_value + "!");
   }
