@@ -5,6 +5,7 @@
 - Storage values are loaded all at once on startup, rather than so many individual ones. Updated individually, more practical.
 - Modified screenshot function to pass array rather than query string
 - Added comments above and below injected code to quickly spot BannerTools
+- Screenshot button changed to an image
 - More to follow
 
 #Version 1.7
