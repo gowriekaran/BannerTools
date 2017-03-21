@@ -1,3 +1,8 @@
+#Version 1.7.1
+- Refactored Code
+- HTML is now an asset. Does need to be minifed and pasted like before.
+- More to follow
+
 #Version 1.7
 - Removed options
 - Bug fixes

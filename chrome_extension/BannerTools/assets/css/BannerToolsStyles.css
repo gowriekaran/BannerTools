@@ -1,11 +1,10 @@
-#_BT_SidePanelNav * {
+#_BT_ * {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#_BT_SidePanelNav {
+#_BT_ {
   height: 100%;
-  width: 200;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -17,37 +16,39 @@
   padding-top: 10px;
 }
 
-#_BT_SidePanelNav img {
-  width: 100px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#_BT_SidePanelNav_Options {
-  margin-top: 15px;
+#_BT_>div {
+  margin-top: 10px;
   padding: 10px;
 }
 
-#_BT_SidePanelNav_Options p {
-  text-align: center;
-  padding: 15px;
+#_BT_ img {
+  width: 75px;
+  display: block;
+  margin: auto;
 }
 
-#_BT_SidePanelNav_Options table {
+#_BT_ table {
   width: 100%;
 }
 
-._BT_Switch_Label {
-  width: 85%;
+#_BT_ tr>td:nth-child(1) {
+  width: 90%;
 }
 
-._BT_Switch_Control {
-  width: 15%;
-  text-align: center;
+#_BT_ tr>td:nth-child(2) {
+  width: 10%;
+  text-align: right;
 }
 
-._BT_Button {
+._BT_specialTable tr>td:nth-child(1) {
+  width: 50% !important;
+}
+
+._BT_specialTable tr>td:nth-child(2) {
+  width: 50% !important;
+}
+
+._BT_button {
   padding: 7px;
   font-size: 14px;
   width: 75%;
@@ -57,21 +58,20 @@
   border-radius: 20px;
   color: white;
   background-color: rgb(0, 122, 255);
-  margin-top: 15px;
 }
 
-._BT_RulerButtons {
+._BT_rulerButtons {
   display: none;
 }
 
-#_BT_Reset,
-#_BT_Override {
+#_BT_reset,
+#_BT_override {
   color: red;
   text-decoration: underline;
   cursor: pointer;
 }
 
-#_BT_GridOverlay {
+#_BT_gridOverlay {
   background-size: 10px 10px;
   background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
   position: absolute;
@@ -84,7 +84,7 @@
   visibility: hidden;
 }
 
-#_BT_RulerCanvas {
+#_BT_rulerCanvas {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
@@ -94,7 +94,7 @@
   display: none;
 }
 
-._BT_RulerX {
+._BT_rulerX {
   cursor: col-resize;
   width: 0px;
   height: 100%;
@@ -102,7 +102,7 @@
   position: absolute;
 }
 
-._BT_RulerY {
+._BT_rulerY {
   cursor: row-resize;
   height: 0px;
   width: 100%;
@@ -110,7 +110,7 @@
   position: absolute;
 }
 
-._BT_RulerPos {
+._BT_rulerPos {
   position: absolute;
   font-size: 12px;
   background-color: rgba(255, 255, 255, 0.7);
@@ -119,21 +119,21 @@
   width: 50px;
 }
 
-._BT_play-button {
+._BT_playButton {
   fill: rgb(255, 255, 255);
   outline: none;
   border: 0px;
   border-radius: 100px;
   background: rgb(255, 59, 48);
   width: 50px;
+  height: 50px;
   text-align: center;
   display: block;
   margin: auto;
-  margin-top: 15px;
   transition: 0.5s;
 }
 
-._BT_play-button:hover {
+._BT_playButton:hover {
   cursor: pointer;
 }
 
@@ -141,7 +141,7 @@
   color: rgb(76, 217, 100);
 }
 
-#_BT_ToastMessage {
+#_BT_toastMessage {
   font-family: Arial, Helvetica, sans-serif;
   visibility: hidden;
   background-color: #607D8B;
@@ -154,7 +154,7 @@
   left: 30px;
 }
 
-#_BT_ToastMessage.show {
+#_BT_toastMessage.show {
   visibility: visible;
   -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
@@ -207,18 +207,18 @@
 
 /*  iOS styles */
 
-._BT_Switch {
+._BT_switch {
   position: relative;
   display: inline-block;
   width: 30px;
   height: 17px
 }
 
-._BT_Switch input {
+._BT_switch input {
   display: none
 }
 
-._BT_Slider {
+._BT_slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -230,7 +230,7 @@
   transition: .4s
 }
 
-._BT_Slider:before {
+._BT_slider:before {
   position: absolute;
   content: "";
   height: 13px;
@@ -242,24 +242,24 @@
   transition: .4s
 }
 
-input:checked+._BT_Slider {
+input:checked+._BT_slider {
   background-color: #4cd964
 }
 
-input:focus+._BT_Slider {
+input:focus+._BT_slider {
   box-shadow: 0 0 1px #2196F3
 }
 
-input:checked+._BT_Slider:before {
+input:checked+._BT_slider:before {
   -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px)
 }
 
-._BT_Slider._BT_SliderRound {
+._BT_slider._BT_sliderRound {
   border-radius: 17px
 }
 
-._BT_Slider._BT_SliderRound:before {
+._BT_slider._BT_sliderRound:before {
   border-radius: 50%
 }
