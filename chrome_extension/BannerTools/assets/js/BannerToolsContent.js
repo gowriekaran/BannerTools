@@ -298,7 +298,7 @@ $(document).ready(function () {
     _BT_toast(0);
     _BT_backgroundColor("");
     _BT_overflow("");
-    $("[id*=_Switch]").prop("checked", false);
+    $("[id*=_switch]").prop("checked", false);
     _BT_closeNav("disabled");
   }
 
@@ -387,16 +387,21 @@ $(document).ready(function () {
       $("#ad-container").css("margin", screenshot_value);
       _BT_replay("hidden");
 
-      var passing_value = "true;" + _BT_adWidth + "@" + _BT_adHeight;
-
       _BT_injectScript("_BT_BannerObjectLastFrame");
-      chrome.runtime.sendMessage({
-        resetZoom: "true"
+      chrome.extension.sendRequest({
+        cmd: "resetZoom"
       });
+
       setTimeout(function () {
-        chrome.runtime.sendMessage({
-          executeScreenshot: passing_value
-        })
+        var matches = [
+          _BT_adWidth,
+          _BT_adHeight
+        ]
+
+        chrome.extension.sendRequest({
+          cmd: "screenshot",
+          matches: matches
+        });
       }, 1000);
     } else {
       $("#ad-container").css("margin", "auto");
