@@ -1,18 +1,19 @@
-#Version 1.7.1
+# Version 1.7.1
 - Refactored Code
-- HTML is now an asset. Does need to be minifed and pasted like before.
-- Rewritten with "_BT_" prefix + camelCase format
+- HTML is now an asset. Does need to be minifed and pasted into a js string variable like before.
+- Rewritten variables with "_BT_" prefix + camelCase format
 - Storage values are loaded all at once on startup, rather than so many individual ones. Updated individually, more practical.
 - Modified screenshot function to pass array rather than query string
-- Added comments above and below injected code to quickly spot BannerTools
-- Screenshot button changed to an image
+- Added comments above and below injected code to quickly spot BannerTools in the dev console
+- Screenshot button changed to an image as it is more user friendly
+- Added a reverse and forward button
 - More to follow
 
-#Version 1.7
+# Version 1.7
 - Removed options
 - Bug fixes
 
-#Version 1.6
+# Version 1.6
 - Hooked into banner object
 - Added feature to play / pause banner
 - Updated screenshot to automatically go to last frame

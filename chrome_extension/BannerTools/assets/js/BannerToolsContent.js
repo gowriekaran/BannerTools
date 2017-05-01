@@ -73,6 +73,8 @@ $(document).ready(function () {
 
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
             $("#_BT_screenshotButton").attr("src", chrome.extension.getURL('/assets/img/camera.png'));
+            $("#_BT_rewindButton").attr("src", chrome.extension.getURL('/assets/img/rewind.png'));
+            $("#_BT_forwardButton").attr("src", chrome.extension.getURL('/assets/img/forward.png'));
 
             $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
             $("#_BT_adNameLabel").text(document.title);
@@ -210,7 +212,7 @@ $(document).ready(function () {
               play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
               $animation = $('#_BT_animation');
 
-            $("._BT_playButton").on('click', function () {
+            $("#_BT_playButton").on('click', function () {
               flip = !flip;
               $animation.attr({
                 "from": flip ? pause : play,
@@ -222,6 +224,16 @@ $(document).ready(function () {
               } else {
                 _BT_injectScript("_BT_BannerObjectPause");
               }
+            });
+
+            $("#_BT_rewindButton").on('click', function () {
+              console.log("reverse");
+              _BT_injectScript("_BT_BannerObjectReverse");
+            });
+
+            $("#_BT_forwardButton").on('click', function () {
+              console.log("forward");              
+              _BT_injectScript("_BT_BannerObjectPlay");
             });
 
             function _BT_getRuler(axis) {

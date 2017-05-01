@@ -45,10 +45,13 @@
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
 		"assets/img/camera.png",
+		"assets/img/rewind.png",
+		"assets/img/forward.png",
 		"assets/js/_BT_BannerObjectDuration.js",
 		"assets/js/_BT_BannerObjectLastFrame.js",
 		"assets/js/_BT_BannerObjectPlay.js",
 		"assets/js/_BT_BannerObjectPause.js",
+		"assets/js/_BT_BannerObjectReverse.js",
 		"assets/html/_BT_exterior.html",
 		"assets/html/_BT_interior.html"
 	],

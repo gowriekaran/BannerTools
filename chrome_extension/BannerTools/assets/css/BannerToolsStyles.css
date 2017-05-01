@@ -16,12 +16,12 @@
   padding-top: 10px;
 }
 
-#_BT_>div {
+#_BT_ > div {
   margin-top: 10px;
   padding: 10px;
 }
 
-#_BT_ img {
+#_BT_logo {
   width: 100px;
   display: block;
   margin: auto;
@@ -31,37 +31,44 @@
   width: 100%;
 }
 
-#_BT_ tr>td:nth-child(1) {
+#_BT_ tr > td:nth-child(1) {
   width: 90%;
 }
 
-#_BT_ tr>td:nth-child(2) {
+#_BT_ tr > td:nth-child(2) {
   width: 10%;
   text-align: right;
 }
 
-._BT_specialTable tr>td:nth-child(1) {
+._BT_specialTable tr > td:nth-child(1) {
   width: 30% !important;
 }
 
-._BT_specialTable tr>td:nth-child(2) {
+._BT_specialTable tr > td:nth-child(2) {
   width: 70% !important;
-}
-
-#_BT_screenshotButton {
-  width: 50px !important;
 }
 
 #_BT_screenshotButton:hover {
   cursor: pointer;
 }
 
-._BT_specialTable2 tr>td:nth-child(1) {
-  width: 50% !important;
+._BT_specialTable2 tr > td {
+  width: 25% !important;
 }
 
-._BT_specialTable2 tr>td:nth-child(2) {
-  width: 50% !important;
+#_BT_playButton, 
+#_BT_screenshotButton {
+  width: 50px;
+  height: 50px;
+}
+
+#_BT_rewindButton, 
+#_BT_forwardButton {
+  width: 25px;
+  height: 25px;
+  display: block;
+  margin: auto;
+  padding: 7px;
 }
 
 ._BT_rulerButtons {
@@ -143,21 +150,19 @@
   width: 50px;
 }
 
-._BT_playButton {
-  fill: rgb(255, 255, 255);
+#_BT_playButton {
+  fill: #ff0000;
   outline: none;
   border: 0px;
-  border-radius: 100px;
-  background: rgb(255, 59, 48);
-  width: 50px;
-  height: 50px;
+  background: black;
   text-align: center;
+  transition: 0.5s;
   display: block;
   margin: auto;
-  transition: 0.5s;
+  padding: 7px;
 }
 
-._BT_playButton:hover {
+#_BT_playButton:hover {
   cursor: pointer;
 }
 
