@@ -7,7 +7,7 @@
 $(document).ready(function () {
   var _BT_version = "1.7.1";
   var _BT_adWidth, _BT_adHeight, _BT_storage;
-  var _BT_easterEgg = _BT_override = _BT_toastEnabled = 0;
+  var _BT_easterEgg = _BT_override = 0;
   var _BT_isInitialized = _BT_isExpanded = false;
 
   chrome.storage.sync.get(null, function (items) {
@@ -17,10 +17,6 @@ $(document).ready(function () {
       _BT_override = 1;
     }
     _BT_initialize(_BT_override);
-
-    if (items["uniqueID_toast"] == 1) {
-      _BT_toast(1);
-    }
   });
 
   function _BT_initialize(override_value) {
@@ -36,7 +32,7 @@ $(document).ready(function () {
     */
     if ($("#ad-container").length || override_value == 1) {
       if (_BT_storage["uniqueID_disable"] == "true") {
-        _BT_toastNotification("BannerTools is currently disabled. Click on the extension to launch it!");
+        console.log("BannerTools is currently disabled. Click on the extension to launch it!");
       } else {
         _BT_isInitialized = true;
 
@@ -76,6 +72,14 @@ $(document).ready(function () {
             $("#_BT_rewindButton").attr("src", chrome.extension.getURL('/assets/img/rewind.png'));
             $("#_BT_forwardButton").attr("src", chrome.extension.getURL('/assets/img/forward.png'));
 
+            $("#_BT_borderSwitch").children().attr("src", chrome.extension.getURL('/assets/img/border.png'));
+            $("#_BT_replaySwitch").children().attr("src", chrome.extension.getURL('/assets/img/repeat.png'));
+            $("#_BT_blackSwitch").children().attr("src", chrome.extension.getURL('/assets/img/light.png'));
+            $("#_BT_marginSwitch").children().attr("src", chrome.extension.getURL('/assets/img/margin.png'));
+            $("#_BT_showSwitch").children().attr("src", chrome.extension.getURL('/assets/img/reveal.png'));
+            $("#_BT_guideSwitch").children().attr("src", chrome.extension.getURL('/assets/img/guide.png'));
+            
+
             $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
             $("#_BT_adNameLabel").text(document.title);
             /*
@@ -101,11 +105,6 @@ $(document).ready(function () {
                 $("#_BT_borderSwitch").prop("checked", true);
               }
 
-              if (_BT_storage["uniqueID_toast"] == 1) {
-                _BT_toast(1);
-                $("#_BT_toastSwitch").prop("checked", true);
-              }
-
               $("#_BT_version").append(' v' + _BT_version);
             } else {
               $("#_BT_ img").click(function (event) {
@@ -113,16 +112,6 @@ $(document).ready(function () {
                   _BT_easterEgg++;
                 }
                 if (_BT_easterEgg == 3) {
-                  if (_BT_storage["uniqueID_replay"] == "hidden") {
-                    _BT_replay("hidden");
-                    $("#_BT_replaySwitch").prop("checked", true);
-                  }
-
-                  if (_BT_storage["uniqueID_border"] == 1) {
-                    _BT_border("1px solid red");
-                    $("#_BT_borderSwitch").prop("checked", true);
-                  }
-
                   $("._BT_easterEgg").toggle();
                   $("#_BT_version").append(' v' + _BT_version);
                   chrome.storage.sync.set({
@@ -155,8 +144,15 @@ $(document).ready(function () {
             }
 
             if (_BT_storage["uniqueID_guide"] == 1) {
+              $("#_BT_guideSwitch").attr("bt-value", "1");
+              $("#_BT_guideSwitch").css("border", "2px solid rgb(76,216,100)");
               _BT_guide(1);
-              $("#_BT_guideSwitch").prop("checked", true);
+            }
+
+            if (_BT_storage["uniqueID_border"] == 1) {
+              $("#_BT_borderSwitch").attr("bt-value", "1");
+              $("#_BT_borderSwitch").css("border", "2px solid rgb(76,216,100)");
+              _BT_border(1);
             }
 
             $("#_BT_disableSwitch").change(function () {
@@ -175,17 +171,37 @@ $(document).ready(function () {
               location.reload();
             });
 
-            $("#_BT_guideSwitch").change(function () {
-              (this.checked) ? (_BT_guide(1)) : (_BT_guide(0));
-            });
+            createListener("#_BT_borderSwitch", "_BT_border");
+            createListener("#_BT_guideSwitch", "_BT_guide");
+            createListener("#_BT_showSwitch", "_BT_overflow");
 
-            $("#_BT_borderSwitch").change(function () {
-              (this.checked) ? (_BT_border("1px solid red")) : (_BT_border(""));
-            });
+            function createListener(object, objectFunction) {
+              console.log("Creating listener for:", object);
+              $(object).click(function () {
+                var passingArg = parseInt($(object).attr('bt-value'));
 
-            $("#_BT_toastSwitch").change(function () {
-              (this.checked) ? (_BT_toast(1)) : (_BT_toast(0));
-            });
+                if (passingArg == 1) {
+                  passingArg = 0;
+                  $(object).attr("bt-value", "0");
+                  $(object).css("border", "2px solid rgb(255,59,48)");
+                }
+                else {
+                  passingArg = 1;
+                  $(object).attr("bt-value", "1");
+                  $(object).css("border", "2px solid rgb(76,216,100)");
+                }
+
+                console.log("Listener: passingArg",passingArg);
+                  switch (objectFunction) {
+                    case "_BT_border": _BT_border(passingArg);
+                      break;
+                    case "_BT_guide": _BT_guide(passingArg);
+                      break;
+                    case "_BT_overflow": _BT_overflow(passingArg);
+                      break;
+                  }
+              });
+            }
 
             $("#_BT_replaySwitch").change(function () {
               (this.checked) ? (_BT_replay("hidden")) : (_BT_replay(""));
@@ -197,10 +213,6 @@ $(document).ready(function () {
 
             $("#_BT_blackSwitch").change(function () {
               (this.checked) ? (_BT_backgroundColor("rgba(0,0,0,0.8)")) : (_BT_backgroundColor(""));
-            });
-
-            $("#_BT_showSwitch").change(function () {
-              (this.checked) ? (_BT_overflow("visible")) : (_BT_overflow(""));
             });
 
             $("#_BT_screenshotButton").click(function () {
@@ -279,7 +291,7 @@ $(document).ready(function () {
         });
       }
     } else {
-      _BT_toastNotification("BannerTools will remain disabled as it could not find 'ad-container' ID!");
+      console.log("BannerTools will remain disabled as it could not find 'ad-container' ID!");
     }
   }
   /*
@@ -290,13 +302,6 @@ $(document).ready(function () {
    | |___| (_) | | |  __/ | |  | |_| | | | | (__| |_| | (_) | | | \__ \
     \_____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
   */
-  function _BT_toast(_BT_toast_value) {
-    _BT_toastEnabled = _BT_toast_value;
-    chrome.storage.sync.set({
-      "uniqueID_toast": _BT_toast_value
-    });
-  }
-
   function _BT_injectScript(_BT_injectScript_value) {
     var script = '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + _BT_injectScript_value + '.js') + '"></script>';
     $("body").append(script);
@@ -308,7 +313,6 @@ $(document).ready(function () {
     _BT_replay("");
     _BT_border("");
     _BT_guide(0);
-    _BT_toast(0);
     _BT_backgroundColor("");
     _BT_overflow("");
     $("[id*=Switch]").prop("checked", false);
@@ -341,8 +345,16 @@ $(document).ready(function () {
   }
 
   function _BT_border(border_value) {
-    $(".content").children().css("border", border_value);
-    $(".content").children().children().css("border", border_value);
+    var borderStyle;
+    if (border_value == 1) {
+      borderStyle = "1px solid red";
+    }
+    else {
+      borderStyle = "";
+    }
+
+    $(".content").children().css("border", borderStyle);
+    $(".content").children().children().css("border", borderStyle);
 
     if ($(".draggable").length) {
       $(".draggable").css("border", "1px cyan solid");
@@ -387,7 +399,15 @@ $(document).ready(function () {
   }
 
   function _BT_overflow(overflow_value) {
-    $("#ad-container").css("overflow", overflow_value);
+    var overflowStyle;
+    if (border_value == 1) {
+      overflow_value = "visible";
+    }
+    else {
+      overflowStyle = "";
+    }
+
+    $("#ad-container").css("overflow", overflowStyle);
     chrome.storage.sync.set({
       "uniqueID_overflow": overflow_value
     });
@@ -422,20 +442,7 @@ $(document).ready(function () {
       _BT_replay("");
     }
   }
-
-  function _BT_toastNotification(_BT_ToastNotification_value) {
-    if (_BT_toastEnabled == 0) {
-      console.log(_BT_ToastNotification_value);
-      return;
-    }
-    var Toast = '<div id="_BT_toastMessage">' + _BT_ToastNotification_value + '</div>';
-    $("body").append(Toast);
-    $("#_BT_toastMessage").addClass("show");
-    setTimeout(function () {
-      $("#_BT_toastMessage").remove();
-    }, 3000);
-  }
-  /*
+ /*
     _   _             _             _   _               ______                            _     _______      _ _
    | \ | |           (_)           | | (_)             |  ____|                          | |   / / ____|    | | |
    |  \| | __ ___   ___  __ _  __ _| |_ _  ___  _ __   | |__  __  ___ __   __ _ _ __   __| |  / / |     ___ | | | __ _ _ __  ___  ___
@@ -476,12 +483,12 @@ $(document).ready(function () {
     _BT_isExpanded = true;
     document.getElementById("_BT_").style.width = "250px";
     $("#_BT_disableSwitch").prop("checked", true);
-    _BT_toastNotification("BannerTools has been " + _BT_openNav_value + "!");
+    console.log("BannerTools has been " + _BT_openNav_value + "!");
   }
 
   function _BT_closeNav(_BT_closeNav_value) {
     _BT_isExpanded = false;
     document.getElementById("_BT_").style.width = "0";
-    _BT_toastNotification("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
+    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
   }
 });

@@ -40,6 +40,23 @@
   text-align: right;
 }
 
+#_BT_featureGrid{
+}
+
+#_BT_featureGrid td {
+  height: 60px !important;
+  width: 50px !important;
+  border: 2px solid rgb(255,59,48);
+  /*border: 2px solid rgb(76,216,100);*/
+  /*background-color: rgb(255,255,255);*/
+  padding: 5px;
+}
+
+#_BT_featureGrid img {
+  display: block;
+  margin: auto;
+}
+
 ._BT_specialTable tr > td:nth-child(1) {
   width: 30% !important;
 }
