@@ -1,1 +1,3 @@
-banner.myTL.seek(banner.myTL.duration());
+if(banner.myTL){
+    banner.myTL.seek(banner.myTL.duration());
+}

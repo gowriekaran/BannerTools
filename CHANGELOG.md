@@ -1,4 +1,4 @@
-# Version 1.7.1
+# Version 2.0
 - Refactored Code
 - HTML is now an asset. Does need to be minifed and pasted into a js string variable like before.
 - Rewritten variables with "_BT_" prefix + camelCase format
@@ -7,7 +7,9 @@
 - Added comments above and below injected code to quickly spot BannerTools in the dev console
 - Screenshot button changed to an image as it is more user friendly
 - Added a reverse and forward button
+- UI Update
 - More to follow
+- CSS classes
 
 # Version 1.7
 - Removed options

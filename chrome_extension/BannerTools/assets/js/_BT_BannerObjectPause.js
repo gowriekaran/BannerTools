@@ -1,1 +1,3 @@
-banner.myTL.pause();
+if(banner.myTL){
+    banner.myTL.pause();
+}

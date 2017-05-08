@@ -1,9 +1,9 @@
 <!-- - - - - - - - - - <BannerTools> - - - - - - - - - - - -->
 <div id="_BT_rulerCanvas"></div>
 <div id="_BT_gridOverlayControls">
-    <button id="_BT_xRulerButton" class="_BT_button _BT_rulerButtons hvr-grow">Add X Ruler</button>
-    <button id="_BT_yRulerButton" class="_BT_button _BT_rulerButtons hvr-grow">Add Y Ruler</button>
-    <button id="_BT_rulerButton" class="_BT_button _BT_rulerButtons hvr-grow">Clear Rulers</button>
+    <button id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</button>
+    <button id="_BT_yRulerButton" class="_BT_rulerButtons hvr-grow">Add Y Ruler</button>
+    <button id="_BT_cRulerButton" class="_BT_rulerButtons hvr-grow">Clear Rulers</button>
 </div>
 <div id="_BT_">
     <div>
@@ -53,9 +53,6 @@
         <table class="_BT_specialTable2">
             <tr>
                 <td>
-                    <img id="_BT_screenshotButton" class="hvr-grow" />
-                </td>
-                <td>
                     <img id="_BT_rewindButton" class="hvr-grow" />
                 </td>
                 <td>
@@ -81,26 +78,33 @@
     <div>
         <table id="_BT_featureGrid">
             <tr>
-                <td id="_BT_borderSwitch" bt-value="0">
+                <td id="_BT_borderSwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
-                <td id="_BT_replaySwitch" bt-value="0">
+                <td id="_BT_replaySwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
-                <td id="_BT_blackSwitch" bt-value="0">
+                <td id="_BT_blackSwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
             </tr>
             <tr>
-                <td id="_BT_marginSwitch" bt-value="0">
+                <td id="_BT_marginSwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
-                <td id="_BT_showSwitch" bt-value="0">
+                <td id="_BT_showSwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
-                <td id="_BT_guideSwitch" bt-value="0">
+                <td id="_BT_guideSwitch" class="_BT_feature _BT_featureOff" bt-value="0">
                     <img class="hvr-push">
                 </td>
+            </tr>
+            <tr>
+                <td id="_BT_screenshotButton" class="_BT_feature _BT_featureOff" bt-value="0">
+                    <img class="hvr-push">
+                </td>
+                <td class="_BT_featureNothing"></td>
+                <td class="_BT_featureNothing"></td>
             </tr>
         </table>
     </div>

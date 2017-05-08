@@ -1,34 +1,17 @@
-/*
-  ______      _                 _                _____ _ _      _
- |  ____|    | |               (_)              / ____| (_)    | |
- | |__  __  _| |_ ___ _ __  ___ _  ___  _ __   | |    | |_  ___| | __
- |  __| \ \/ / __/ _ \ '_ \/ __| |/ _ \| '_ \  | |    | | |/ __| |/ /
- | |____ >  <| ||  __/ | | \__ \ | (_) | | | | | |____| | | (__|   <
- |______/_/\_\\__\___|_| |_|___/_|\___/|_| |_|  \_____|_|_|\___|_|\_\
-*/
 chrome.browserAction.onClicked.addListener(function (tab) {
 	chrome.storage.sync.set({
-		'uniqueID_disable': 'false'
+		'uniqueID_disable': 0
 	});
 	chrome.tabs.query({
 		active: true,
 		currentWindow: true
 	}, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, {
-			ExpandPanel: "true"
+			ExpandPanel: 1
 		});
 	});
 });
-/*
-  _____                            _
- |  __ \                          | |
- | |__) |___  __ _ _   _  ___  ___| |_ ___
- |  _  // _ \/ _` | | | |/ _ \/ __| __/ __|
- | | \ \  __/ (_| | |_| |  __/\__ \ |_\__ \
- |_|  \_\___|\__, |\__,_|\___||___/\__|___/
-                | |
-                |_|
-*/
+
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
 	if (request.cmd == "get_BT_exterior") {
 		$.ajax({
@@ -70,10 +53,10 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 					currentWindow: true
 				}, function (tabs) {
 					chrome.storage.sync.set({
-						'uniqueID_disable': 'false'
+						'uniqueID_disable': 0
 					});
 					chrome.tabs.sendMessage(tabs[0].id, {
-						screenshot: "false"
+						screenshot: 0
 					});
 				});
 			});
@@ -86,27 +69,18 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 		});
 	}
 })
-/*
-  _    _       _   _
- | |  | |     | | | |
- | |__| | ___ | |_| | _____ _   _ ___
- |  __  |/ _ \| __| |/ / _ \ | | / __|
- | |  | | (_) | |_|   <  __/ |_| \__ \
- |_|  |_|\___/ \__|_|\_\___|\__, |___/
-                             __/ |
-                            |___/
-*/
+
 chrome.commands.onCommand.addListener(function (command) {
 	if (command == "toggle-extension1") {
 		chrome.storage.sync.set({
-			'uniqueID_disable': 'false'
+			'uniqueID_disable': 0
 		});
 		chrome.tabs.query({
 			active: true,
 			currentWindow: true
 		}, function (tabs) {
 			chrome.tabs.sendMessage(tabs[0].id, {
-				ExpandPanel: "true"
+				ExpandPanel: 1
 			});
 		});
 	} else if (command == "toggle-extension2") {
@@ -115,7 +89,7 @@ chrome.commands.onCommand.addListener(function (command) {
 			currentWindow: true
 		}, function (tabs) {
 			chrome.tabs.sendMessage(tabs[0].id, {
-				ExpandPanel: "false"
+				ExpandPanel: 0
 			});
 		});
 	}

@@ -1,1 +1,3 @@
-banner.myTL.reverse();
+if(banner.myTL){
+    banner.myTL.reverse();
+}

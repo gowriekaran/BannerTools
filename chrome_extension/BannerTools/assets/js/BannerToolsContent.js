@@ -1,11 +1,7 @@
-/*
-  Created by: Gowriekaran Sinnadurai
-  I want to apologize for the nomenclature used.
-  I had to make sure they were as unique as possible to avoid potential conflictions.
-*/
+//  Created by: Gowriekaran Sinnadurai
 
 $(document).ready(function () {
-  var _BT_version = "1.7.1";
+  var _BT_version = "2.0.0";
   var _BT_adWidth, _BT_adHeight, _BT_storage;
   var _BT_easterEgg = _BT_override = 0;
   var _BT_isInitialized = _BT_isExpanded = false;
@@ -16,22 +12,12 @@ $(document).ready(function () {
     if (items["uniqueID_override"] == 1) {
       _BT_override = 1;
     }
-    _BT_initialize(_BT_override);
+    _BT_initialize();
   });
 
-  function _BT_initialize(override_value) {
-    /*
-      _____       _ _   _       _    _____      _
-     |_   _|     (_) | (_)     | |  / ____|    | |
-       | |  _ __  _| |_ _  __ _| | | (___   ___| |_ _   _ _ __
-       | | | '_ \| | __| |/ _` | |  \___ \ / _ \ __| | | | '_ \
-      _| |_| | | | | |_| | (_| | |  ____) |  __/ |_| |_| | |_) |
-     |_____|_| |_|_|\__|_|\__,_|_| |_____/ \___|\__|\__,_| .__/
-                                                         | |
-                                                         |_|
-    */
-    if ($("#ad-container").length || override_value == 1) {
-      if (_BT_storage["uniqueID_disable"] == "true") {
+  function _BT_initialize() {
+    if ($("#ad-container").length || _BT_override == 1) {
+      if (_BT_storage["uniqueID_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
       } else {
         _BT_isInitialized = true;
@@ -68,7 +54,6 @@ $(document).ready(function () {
             });
 
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
-            $("#_BT_screenshotButton").attr("src", chrome.extension.getURL('/assets/img/camera.png'));
             $("#_BT_rewindButton").attr("src", chrome.extension.getURL('/assets/img/rewind.png'));
             $("#_BT_forwardButton").attr("src", chrome.extension.getURL('/assets/img/forward.png'));
 
@@ -78,33 +63,13 @@ $(document).ready(function () {
             $("#_BT_marginSwitch").children().attr("src", chrome.extension.getURL('/assets/img/margin.png'));
             $("#_BT_showSwitch").children().attr("src", chrome.extension.getURL('/assets/img/reveal.png'));
             $("#_BT_guideSwitch").children().attr("src", chrome.extension.getURL('/assets/img/guide.png'));
-            
+            $("#_BT_screenshotButton").children().attr("src", chrome.extension.getURL('/assets/img/camera.png'));
 
             $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
             $("#_BT_adNameLabel").text(document.title);
-            /*
-              ______          _              ______
-             |  ____|        | |            |  ____|
-             | |__   __ _ ___| |_ ___ _ __  | |__   __ _  __ _
-             |  __| / _` / __| __/ _ \ '__| |  __| / _` |/ _` |
-             | |___| (_| \__ \ ||  __/ |    | |___| (_| | (_| |
-             |______\__,_|___/\__\___|_|    |______\__, |\__, |
-                                                    __/ | __/ |
-                                                   |___/ |___/
-            */
-            if (_BT_storage["uniqueID_easterEgg"] == "true") {
+
+            if (_BT_storage["uniqueID_easterEgg"] == 1) {
               $("._BT_easterEgg").toggle();
-
-              if (_BT_storage["uniqueID_replay"] == "hidden") {
-                _BT_replay("hidden");
-                $("#_BT_replaySwitch").prop("checked", true);
-              }
-
-              if (_BT_storage["uniqueID_border"] == "1px solid red") {
-                _BT_border("1px solid red");
-                $("#_BT_borderSwitch").prop("checked", true);
-              }
-
               $("#_BT_version").append(' v' + _BT_version);
             } else {
               $("#_BT_ img").click(function (event) {
@@ -115,48 +80,21 @@ $(document).ready(function () {
                   $("._BT_easterEgg").toggle();
                   $("#_BT_version").append(' v' + _BT_version);
                   chrome.storage.sync.set({
-                    "uniqueID_easterEgg": "true"
+                    "uniqueID_easterEgg": 1
                   });
                 }
               });
             }
-            /*
-               _____      _   _                              _    _____      _   _
-              / ____|    | | | |                            | |  / ____|    | | | |
-             | |  __  ___| |_| |_ ___ _ __    __ _ _ __   __| | | (___   ___| |_| |_ ___ _ __ ___
-             | | |_ |/ _ \ __| __/ _ \ '__|  / _` | '_ \ / _` |  \___ \ / _ \ __| __/ _ \ '__/ __|
-             | |__| |  __/ |_| ||  __/ |    | (_| | | | | (_| |  ____) |  __/ |_| ||  __/ |  \__ \
-              \_____|\___|\__|\__\___|_|     \__,_|_| |_|\__,_| |_____/ \___|\__|\__\___|_|  |___/
-            */
-            if (_BT_storage["uniqueID_margin"] == "100px") {
-              _BT_margin("100px");
-              $("#_BT_marginSwitch").prop("checked", true);
-            }
 
-            if (_BT_storage["uniqueID_backgroundColor"] == "rgba(0,0,0,0.8)") {
-              _BT_backgroundColor("rgba(0,0,0,0.8)");
-              $("#_BT_blackSwitch").prop("checked", true);
-            }
-
-            if (_BT_storage["uniqueID_overflow"] == "visible") {
-              _BT_overflow("visible");
-              $("#_BT_showSwitch").prop("checked", true);
-            }
-
-            if (_BT_storage["uniqueID_guide"] == 1) {
-              $("#_BT_guideSwitch").attr("bt-value", "1");
-              $("#_BT_guideSwitch").css("border", "2px solid rgb(76,216,100)");
-              _BT_guide(1);
-            }
-
-            if (_BT_storage["uniqueID_border"] == 1) {
-              $("#_BT_borderSwitch").attr("bt-value", "1");
-              $("#_BT_borderSwitch").css("border", "2px solid rgb(76,216,100)");
-              _BT_border(1);
-            }
+            if (_BT_storage["uniqueID_margin"]              == 1) {     feature("#_BT_marginSwitch",0);}
+            if (_BT_storage["uniqueID_backgroundColor"]     == 1) {     feature("#_BT_blackSwitch",0);}
+            if (_BT_storage["uniqueID_overflow"]            == 1) {     feature("#_BT_showSwitch",0);}
+            if (_BT_storage["uniqueID_guide"]               == 1) {     feature("#_BT_guideSwitch",0);}
+            if (_BT_storage["uniqueID_border"]              == 1) {     feature("#_BT_borderSwitch",0);}
+            if (_BT_storage["uniqueID_replay"]              == 1) {     feature("#_BT_replaySwitch",0);}
 
             $("#_BT_disableSwitch").change(function () {
-              if (!this.checked) _BT_disable("true");
+              if (!this.checked) _BT_disable(1);
             });
 
             $("#_BT_reset").click(function () {
@@ -171,49 +109,39 @@ $(document).ready(function () {
               location.reload();
             });
 
-            createListener("#_BT_borderSwitch", "_BT_border");
-            createListener("#_BT_guideSwitch", "_BT_guide");
-            createListener("#_BT_showSwitch", "_BT_overflow");
+            $("._BT_feature").click(function(){
+              feature("#" + this.id, $(this).attr('bt-value'));
+            });
 
-            function createListener(object, objectFunction) {
-              console.log("Creating listener for:", object);
-              $(object).click(function () {
-                var passingArg = parseInt($(object).attr('bt-value'));
-
-                if (passingArg == 1) {
-                  passingArg = 0;
-                  $(object).attr("bt-value", "0");
-                  $(object).css("border", "2px solid rgb(255,59,48)");
-                }
-                else {
-                  passingArg = 1;
-                  $(object).attr("bt-value", "1");
-                  $(object).css("border", "2px solid rgb(76,216,100)");
-                }
-
-                console.log("Listener: passingArg",passingArg);
-                  switch (objectFunction) {
-                    case "_BT_border": _BT_border(passingArg);
-                      break;
-                    case "_BT_guide": _BT_guide(passingArg);
-                      break;
-                    case "_BT_overflow": _BT_overflow(passingArg);
-                      break;
-                  }
-              });
+            function feature(object, arg){
+              if(arg == 0){
+                arg = 1;
+                $(object).addClass("_BT_featureOn");
+              }
+              else{
+                arg = 0;
+                $(object).removeClass("_BT_featureOn");
+              }
+              $(object).attr("bt-value", arg);
+              executeFeature(object, arg);
             }
 
-            $("#_BT_replaySwitch").change(function () {
-              (this.checked) ? (_BT_replay("hidden")) : (_BT_replay(""));
-            });
-
-            $("#_BT_marginSwitch").change(function () {
-              (this.checked) ? (_BT_margin("100px")) : (_BT_margin(""));
-            });
-
-            $("#_BT_blackSwitch").change(function () {
-              (this.checked) ? (_BT_backgroundColor("rgba(0,0,0,0.8)")) : (_BT_backgroundColor(""));
-            });
+            function executeFeature(object, arg){
+              switch (object) {
+                case "#_BT_borderSwitch": _BT_border(arg);
+                      break;
+                case "#_BT_guideSwitch": _BT_guide(arg);
+                      break;
+                case "#_BT_showSwitch": _BT_overflow(arg);
+                      break;
+                case "#_BT_marginSwitch": _BT_margin(arg);
+                      break;
+                case "#_BT_replaySwitch": _BT_replay(arg);
+                      break;
+                case "#_BT_blackSwitch": _BT_backgroundColor(arg);
+                      break;
+              }
+            }
 
             $("#_BT_screenshotButton").click(function () {
               _BT_screenshot(0);
@@ -239,12 +167,10 @@ $(document).ready(function () {
             });
 
             $("#_BT_rewindButton").on('click', function () {
-              console.log("reverse");
               _BT_injectScript("_BT_BannerObjectReverse");
             });
 
             $("#_BT_forwardButton").on('click', function () {
-              console.log("forward");              
               _BT_injectScript("_BT_BannerObjectPlay");
             });
 
@@ -253,7 +179,8 @@ $(document).ready(function () {
             }
 
             $("._BT_rulerButtons").click(function (e) {
-              if (this.id == "_BT_ruler_Button") {
+              console.log("Clicked");
+              if (this.id == "_BT_cRulerButton") {
                 $(".draggable").remove();
                 return;
               }
@@ -261,7 +188,7 @@ $(document).ready(function () {
               var maxAxisRange;
               var pos;
 
-              if (this.id == "_BT_xrulerButton") {
+              if (this.id == "_BT_xRulerButton") {
                 axis = "X";
                 pos = "left";
                 maxAxisRange = _BT_adWidth;
@@ -270,7 +197,6 @@ $(document).ready(function () {
                 pos = "top";
                 maxAxisRange = _BT_adHeight;
               }
-
               $("#_BT_rulerCanvas").append(_BT_getRuler(axis));
               $("._BT_ruler" + axis).draggable({
                 axis: axis,
@@ -294,130 +220,109 @@ $(document).ready(function () {
       console.log("BannerTools will remain disabled as it could not find 'ad-container' ID!");
     }
   }
-  /*
-     _____                 ______                _   _
-    / ____|               |  ____|              | | (_)
-   | |     ___  _ __ ___  | |__ _   _ _ __   ___| |_ _  ___  _ __  ___
-   | |    / _ \| '__/ _ \ |  __| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
-   | |___| (_) | | |  __/ | |  | |_| | | | | (__| |_| | (_) | | | \__ \
-    \_____\___/|_|  \___| |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
-  */
-  function _BT_injectScript(_BT_injectScript_value) {
-    var script = '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + _BT_injectScript_value + '.js') + '"></script>';
+
+  function _BT_injectScript(arg) {
+    var script = '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + arg + '.js') + '"></script>';
     $("body").append(script);
     $("._BT_injectedScript").remove();
   }
 
   function _BT_reset() {
-    _BT_margin("");
-    _BT_replay("");
-    _BT_border("");
+    $("[class*=_BT_featureOn]").removeClass("_BT_featureOn");
+    _BT_margin(0);
+    _BT_replay(0);
+    _BT_border(0);
     _BT_guide(0);
-    _BT_backgroundColor("");
-    _BT_overflow("");
+    _BT_backgroundColor(0);
+    _BT_overflow(0);
     $("[id*=Switch]").prop("checked", false);
     _BT_closeNav("disabled");
   }
 
-  function _BT_disable(disable_value) {
-    if (disable_value == "true") {
+  function _BT_disable(arg) {
+    if (arg == 1) {
       _BT_reset();
       chrome.storage.sync.set({
-        "uniqueID_disable": "true"
+        "uniqueID_disable": 1
       });
       location.reload();
     }
   }
 
-  function _BT_margin(margin_value) {
-    $("body").css("margin", margin_value);
-    $("#_BT_rulerCanvas").css("top", margin_value);
+  function _BT_margin(arg) {
+    (arg == 1) ? ($("body, #_BT_rulerCanvas").addClass("_BT_marginTop")) : ($("body, #_BT_rulerCanvas").removeClass("_BT_marginTop"));
+
     chrome.storage.sync.set({
-      "uniqueID_margin": margin_value
+      "uniqueID_margin": arg
     });
   }
 
-  function _BT_replay(replay_value) {
-    $(".replay-button").css("visibility", replay_value);
+  function _BT_replay(arg) {
+    (arg == 1) ? ($(".replay-button").css("visibility", "hidden")) : ($(".replay-button").css("visibility", ""));
+
     chrome.storage.sync.set({
-      "uniqueID_replay": replay_value
+      "uniqueID_replay": arg
     });
   }
 
-  function _BT_border(border_value) {
-    var borderStyle;
-    if (border_value == 1) {
-      borderStyle = "1px solid red";
-    }
-    else {
-      borderStyle = "";
-    }
-
-    $(".content").children().css("border", borderStyle);
-    $(".content").children().children().css("border", borderStyle);
+  function _BT_border(arg) {
+    (arg == 1) ? ($(".content").children().addClass("_BT_border")) : ($(".content").children().removeClass("_BT_border"));
+    (arg == 1) ? ($(".content").children().children().addClass("_BT_border")) : ($(".content").children().children().removeClass("_BT_border"));
 
     if ($(".draggable").length) {
-      $(".draggable").css("border", "1px cyan solid");
+      $(".draggable").removeClass("_BT_border");
     }
 
     chrome.storage.sync.set({
-      "uniqueID_border": border_value
+      "uniqueID_border": arg
     });
   }
 
-  function _BT_guide(guide_value) {
-    if (guide_value == 1) {
-      _BT_grid("visible");
-      _BT_rulers("block");
-    } else {
-      _BT_grid("hidden");
-      _BT_rulers("none");
-    }
+  function _BT_guide(arg) {
+    _BT_grid(arg);
+    _BT_rulers(arg);
+
     chrome.storage.sync.set({
-      "uniqueID_guide": guide_value
+      "uniqueID_guide": arg
     });
   }
 
-  function _BT_grid(grid_value) {
-    $("#_BT_gridOverlay").css("visibility", grid_value);
+  function _BT_grid(arg) {
+    (arg == 1) ? ($("#_BT_gridOverlay").addClass("_BT_visible")) : ($("#_BT_gridOverlay").removeClass("_BT_visible"));
   }
 
-  function _BT_rulers(rulers_value) {
-    if (rulers_value == "none") {
+  function _BT_rulers(arg) {
+    var style;
+    (arg == 1) ? (style = "block") : (style = "");
+    if(arg == 0){
       $(".draggable").remove();
     }
 
-    $("#_BT_rulerCanvas").css("display", rulers_value);
-    $("._BT_rulerButtons").css("display", rulers_value);
+    $("#_BT_rulerCanvasm, ._BT_rulerButtons").css("display", style);
   }
 
-  function _BT_backgroundColor(backgroundColor_value) {
-    $("body").css("backgroundColor", backgroundColor_value);
+  function _BT_backgroundColor(arg) {
+    (arg == 1) ? ($("body").addClass("_BT_backgroundColor")) : ($("body").removeClass("_BT_backgroundColor"));
     chrome.storage.sync.set({
-      "uniqueID_backgroundColor": backgroundColor_value
+      "uniqueID_backgroundColor": arg
     });
   }
 
-  function _BT_overflow(overflow_value) {
-    var overflowStyle;
-    if (border_value == 1) {
-      overflow_value = "visible";
-    }
-    else {
-      overflowStyle = "";
-    }
+  function _BT_overflow(arg) {
+    var style;
+    (arg == 1) ? (style = "visible") : (style = "");
 
-    $("#ad-container").css("overflow", overflowStyle);
+    $("#ad-container").css("overflow", style);
     chrome.storage.sync.set({
-      "uniqueID_overflow": overflow_value
+      "uniqueID_overflow": arg
     });
   }
 
-  function _BT_screenshot(screenshot_value) {
-    if (screenshot_value == 0) {
+  function _BT_screenshot(arg) {
+    if (arg == 0) {
       _BT_reset();
 
-      $("#ad-container").css("margin", screenshot_value);
+      $("#ad-container").css("margin", arg);
       _BT_replay("hidden");
 
       _BT_injectScript("_BT_BannerObjectLastFrame");
@@ -442,25 +347,17 @@ $(document).ready(function () {
       _BT_replay("");
     }
   }
- /*
-    _   _             _             _   _               ______                            _     _______      _ _
-   | \ | |           (_)           | | (_)             |  ____|                          | |   / / ____|    | | |
-   |  \| | __ ___   ___  __ _  __ _| |_ _  ___  _ __   | |__  __  ___ __   __ _ _ __   __| |  / / |     ___ | | | __ _ _ __  ___  ___
-   | . ` |/ _` \ \ / / |/ _` |/ _` | __| |/ _ \| '_ \  |  __| \ \/ / '_ \ / _` | '_ \ / _` | / /| |    / _ \| | |/ _` | '_ \/ __|/ _ \
-   | |\  | (_| |\ V /| | (_| | (_| | |_| | (_) | | | | | |____ >  <| |_) | (_| | | | | (_| |/ / | |___| (_) | | | (_| | |_) \__ \  __/
-   |_| \_|\__,_| \_/ |_|\__, |\__,_|\__|_|\___/|_| |_| |______/_/\_\ .__/ \__,_|_| |_|\__,_/_/   \_____\___/|_|_|\__,_| .__/|___/\___|
-                         __/ |                                     | |                                                | |
-                        |___/                                      |_|                                                |_|
-  */
+
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-      if (request.ExpandPanel == "true") {
+      if (request.ExpandPanel == 1) {
         if (_BT_isInitialized == false) {
           chrome.storage.sync.get("uniqueID_override", function (data) {
             if (data["uniqueID_override"] == 1) {
               _BT_override = 1;
             }
-            _BT_initialize(_BT_override);
+            _BT_storage["uniqueID_disable"] = 0;
+            _BT_initialize();
           });
         } else {
           if (_BT_isExpanded == false) {
@@ -469,26 +366,26 @@ $(document).ready(function () {
             _BT_closeNav("minimized");
           }
         }
-      } else if (request.ExpandPanel == "false") {
+      } else if (request.ExpandPanel == 0) {
         if (_BT_isInitialized == true) {
-          _BT_disable("true");
+          _BT_disable(1);
         }
-      } else if (request.screenshot == "false") {
+      } else if (request.screenshot == 0) {
         _BT_screenshot(1);
       }
     }
   );
 
-  function _BT_openNav(_BT_openNav_value) {
+  function _BT_openNav(arg) {
     _BT_isExpanded = true;
     document.getElementById("_BT_").style.width = "250px";
     $("#_BT_disableSwitch").prop("checked", true);
-    console.log("BannerTools has been " + _BT_openNav_value + "!");
+    console.log("BannerTools has been " + arg + "!");
   }
 
-  function _BT_closeNav(_BT_closeNav_value) {
+  function _BT_closeNav(arg) {
     _BT_isExpanded = false;
     document.getElementById("_BT_").style.width = "0";
-    console.log("BannerTools has been " + _BT_closeNav_value + "! Click on the extension to reopen it!");
+    console.log("BannerTools has been " + arg + "! Click on the extension to reopen it!");
   }
 });
