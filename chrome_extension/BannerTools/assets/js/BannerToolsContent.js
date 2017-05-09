@@ -1,7 +1,7 @@
 //  Created by: Gowriekaran Sinnadurai
 
 $(document).ready(function () {
-  var _BT_version = "2.0.0";
+  var _BT_version = "2.0.0 BETA";
   var _BT_adWidth, _BT_adHeight, _BT_storage;
   var _BT_easterEgg = _BT_override = 0;
   var _BT_isInitialized = _BT_isExpanded = false;
@@ -388,4 +388,6 @@ $(document).ready(function () {
     document.getElementById("_BT_").style.width = "0";
     console.log("BannerTools has been " + arg + "! Click on the extension to reopen it!");
   }
-});
+
+  $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">');
+})

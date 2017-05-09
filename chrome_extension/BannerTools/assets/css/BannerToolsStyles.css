@@ -1,6 +1,6 @@
 #_BT_ * {
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
 }
 
 #_BT_ {
@@ -9,7 +9,7 @@
   z-index: 1;
   top: 0;
   right: 0;
-  background-color: black;
+  background-color: #d2d755;
   overflow-x: hidden;
   transition: 0.5s;
   border-left: 2px solid white;
@@ -43,22 +43,28 @@
 #_BT_featureGrid td {
   height: 60px !important;
   width: 50px !important;
-  border: 2px solid rgb(255,59,48);
+  /*border: 2px solid rgb(255,59,48);*/
+  /*border: 2px solid black;*/
   padding: 5px;
   user-select: none;
 }
 
+#_BT_featureGrid td > img {
+  filter: invert(1);
+}
+
 ._BT_featureNothing{
-  border: 2px solid black !important;
+  border: 2px solid #d2d755 !important;
 }
 
 ._BT_featureOn {
-  border: 2px solid rgb(76,216,100) !important;
-  background-color: white !important;
+  /*border: 2px solid rgb(76,216,100) !important;*/
+  /*border: 2px solid white !important;*/
+  /*background-color: white !important;*/
 }
 
 ._BT_featureOn > img {
-  filter: invert(1) !important;
+  filter: invert(0) !important;
 }
 
 ._BT_visible {
@@ -128,8 +134,10 @@
 
 #_BT_reset,
 #_BT_override {
-  color: red;
-  text-decoration: underline;
+  /*color: red;*/
+  color: black;
+  font-weight: bold;
+  /*text-decoration: underline;*/
   cursor: pointer;
 }
 
@@ -190,15 +198,16 @@
 }
 
 #_BT_playButton {
-  fill: #ff0000;
+  /*fill: #ff0000;*/
+  fill: black;
   outline: none;
   border: 0px;
-  background: black;
   text-align: center;
   transition: 0.5s;
   display: block;
   margin: auto;
   padding: 7px;
+  background-color: rgba(0,0,0,0);
 }
 
 #_BT_playButton:hover {
@@ -206,7 +215,8 @@
 }
 
 #_BT_adDurationLabel {
-  color: rgb(76, 217, 100);
+  color: white;
+  /*color: rgb(76, 217, 100);*/
 }
 
 /*  iOS styles */
