@@ -2,34 +2,37 @@
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA";
-  var _BT_adWidth, _BT_adHeight, _BT_storage;
-  var _BT_easterEgg = _BT_override = 0;
+  var _BT_adWidth, _BT_adHeight, _BT_storage, _BT_override;
+  var _BT_easterEgg = 0;
   var _BT_isInitialized = _BT_isExpanded = false;
 
   chrome.storage.sync.get(null, function (items) {
     _BT_storage = items;
-
-    if (items["uniqueID_override"] == 1) {
-      _BT_override = 1;
-    }
+    items["uniqueID_override"] == 1 ? _BT_override = 1: _BT_override = 0;
     _BT_initialize();
   });
 
   function _BT_initialize() {
     if ($("#ad-container").length || _BT_override == 1) {
-      if (_BT_storage["uniqueID_disable"] == 1) {
-        console.log("BannerTools is currently disabled. Click on the extension to launch it!");
+      if (_BT_storage["uniqueID_disable"] == 1 || _BT_storage["uniqueID_minimized"] == 1) {
+        var status;
+        _BT_storage["uniqueID_disable"] == 1 ? status = "disabled" : status = "minimized";
+        console.log("BannerTools is currently " + status + ". Click on the extension to launch it!");
       } else {
         _BT_isInitialized = true;
 
-        var _BT_adSize = $("meta[name='ad.size']").attr("content");
+        if ($("meta[name='ad.size']").lenght){
+          var _BT_adSize = $("meta[name='ad.size']").attr("content");
+          var _BT_start_pos = _BT_adSize.indexOf("=") + 1;
+          var _BT_end_pos = _BT_adSize.indexOf(",", _BT_start_pos);
 
-        var _BT_start_pos = _BT_adSize.indexOf("=") + 1;
-        var _BT_end_pos = _BT_adSize.indexOf(",", _BT_start_pos);
-
-        _BT_adWidth = _BT_adSize.substring(_BT_start_pos, _BT_end_pos);
-        _BT_adHeight = _BT_adSize.split(",").pop();
-        _BT_adHeight = _BT_adSize.split("=").pop();
+          _BT_adWidth = _BT_adSize.substring(_BT_start_pos, _BT_end_pos);
+          _BT_adHeight = _BT_adSize.split(",").pop();
+          _BT_adHeight = _BT_adSize.split("=").pop();
+        }
+        else{
+          console.log("BannerTools could not find meta[name='ad.size']");
+        }
 
         chrome.extension.sendRequest({
           cmd: "get_BT_interior"
@@ -47,6 +50,8 @@ $(document).ready(function () {
             $("body").append(html);
 
             _BT_injectScript("_BT_BannerObjectDuration");
+            _BT_injectScript("_BT_BannerObjectRepeat");
+            _BT_injectScript("_BT_BannerObjectTotalDuration");
 
             $("#_BT_rulerCanvas").css({
               width: _BT_adWidth,
@@ -56,7 +61,6 @@ $(document).ready(function () {
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
             $("#_BT_rewindButton").attr("src", chrome.extension.getURL('/assets/img/rewind.png'));
             $("#_BT_forwardButton").attr("src", chrome.extension.getURL('/assets/img/forward.png'));
-
             $("#_BT_borderSwitch").children().attr("src", chrome.extension.getURL('/assets/img/border.png'));
             $("#_BT_replaySwitch").children().attr("src", chrome.extension.getURL('/assets/img/repeat.png'));
             $("#_BT_blackSwitch").children().attr("src", chrome.extension.getURL('/assets/img/light.png'));
@@ -64,8 +68,9 @@ $(document).ready(function () {
             $("#_BT_showSwitch").children().attr("src", chrome.extension.getURL('/assets/img/reveal.png'));
             $("#_BT_guideSwitch").children().attr("src", chrome.extension.getURL('/assets/img/guide.png'));
             $("#_BT_screenshotButton").children().attr("src", chrome.extension.getURL('/assets/img/camera.png'));
-
-            $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
+            if ($("meta[name='ad.size']").lenght){
+              $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
+            }
             $("#_BT_adNameLabel").text(document.title);
 
             if (_BT_storage["uniqueID_easterEgg"] == 1) {
@@ -236,14 +241,14 @@ $(document).ready(function () {
     _BT_backgroundColor(0);
     _BT_overflow(0);
     $("[id*=Switch]").prop("checked", false);
-    _BT_closeNav("disabled");
+    _BT_closeNav(1);
   }
 
   function _BT_disable(arg) {
     if (arg == 1) {
       _BT_reset();
       chrome.storage.sync.set({
-        "uniqueID_disable": 1
+        "uniqueID_disable": arg
       });
       location.reload();
     }
@@ -322,7 +327,7 @@ $(document).ready(function () {
     if (arg == 0) {
       _BT_reset();
 
-      $("#ad-container").css("margin", arg);
+      $("#ad-container").css("margin", 0);
       _BT_replay("hidden");
 
       _BT_injectScript("_BT_BannerObjectLastFrame");
@@ -352,18 +357,25 @@ $(document).ready(function () {
     function (request, sender, sendResponse) {
       if (request.ExpandPanel == 1) {
         if (_BT_isInitialized == false) {
+          chrome.storage.sync.set({
+            'uniqueID_disable': 0
+          });
+          chrome.storage.sync.set({
+            'uniqueID_minimized': 0
+          });
           chrome.storage.sync.get("uniqueID_override", function (data) {
             if (data["uniqueID_override"] == 1) {
               _BT_override = 1;
             }
             _BT_storage["uniqueID_disable"] = 0;
+            _BT_storage["uniqueID_minimized"] = 0;
             _BT_initialize();
           });
         } else {
           if (_BT_isExpanded == false) {
             _BT_openNav("maximized");
           } else {
-            _BT_closeNav("minimized");
+            _BT_closeNav(0);
           }
         }
       } else if (request.ExpandPanel == 0) {
@@ -378,15 +390,30 @@ $(document).ready(function () {
 
   function _BT_openNav(arg) {
     _BT_isExpanded = true;
-    document.getElementById("_BT_").style.width = "250px";
+    $("#_BT_").addClass("_BT_expand");
     $("#_BT_disableSwitch").prop("checked", true);
     console.log("BannerTools has been " + arg + "!");
   }
 
   function _BT_closeNav(arg) {
+    var status;
+    if(arg == 0){
+      chrome.storage.sync.set({
+        "uniqueID_minimized": 1
+      });
+
+      status = "minimized";
+    }
+    else{
+      chrome.storage.sync.set({
+        "uniqueID_minimized": 0
+      });
+
+      status = "disabled";
+    }
     _BT_isExpanded = false;
-    document.getElementById("_BT_").style.width = "0";
-    console.log("BannerTools has been " + arg + "! Click on the extension to reopen it!");
+    $("#_BT_").removeClass("_BT_expand");
+    console.log("BannerTools has been " + status + "! Click on the extension to reopen it!");
   }
 
   $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">');

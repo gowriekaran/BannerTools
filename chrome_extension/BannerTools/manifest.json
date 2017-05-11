@@ -60,7 +60,9 @@
 		"assets/js/_BT_BannerObjectLastFrame.js",
 		"assets/js/_BT_BannerObjectPlay.js",
 		"assets/js/_BT_BannerObjectPause.js",
+		"assets/js/_BT_BannerObjectRepeat.js",
 		"assets/js/_BT_BannerObjectReverse.js",
+		"assets/js/_BT_BannerObjectTotalDuration.js",
 		"assets/html/_BT_exterior.html",
 		"assets/html/_BT_interior.html"
 	],
