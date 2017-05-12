@@ -10,15 +10,9 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
-	if (request.cmd == "get_BT_exterior") {
+	if (request.cmd == "get_BT_") {
 		$.ajax({
-			url: chrome.extension.getURL("/assets/html/_BT_exterior.html"),
-			dataType: "html",
-			success: sendResponse
-		});
-	} else if (request.cmd == "get_BT_interior") {
-		$.ajax({
-			url: chrome.extension.getURL("/assets/html/_BT_interior.html"),
+			url: chrome.extension.getURL("/assets/html/_BT_.html"),
 			dataType: "html",
 			success: sendResponse
 		});

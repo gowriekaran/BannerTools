@@ -44,18 +44,6 @@
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
-		"assets/img/camera.png",
-		"assets/img/rewind.png",
-		"assets/img/forward.png",
-		"assets/img/border.png",
-		"assets/img/guide.png",
-		"assets/img/guideX.png",
-		"assets/img/guideY.png",
-		"assets/img/reveal.png",
-		"assets/img/repeat.png",
-		"assets/img/margin.png",
-		"assets/img/light.png",
-		"assets/img/toast.png",
 		"assets/js/_BT_BannerObjectDuration.js",
 		"assets/js/_BT_BannerObjectLastFrame.js",
 		"assets/js/_BT_BannerObjectPlay.js",
@@ -63,21 +51,6 @@
 		"assets/js/_BT_BannerObjectRepeat.js",
 		"assets/js/_BT_BannerObjectReverse.js",
 		"assets/js/_BT_BannerObjectTotalDuration.js",
-		"assets/html/_BT_exterior.html",
-		"assets/html/_BT_interior.html"
-	],
-	"commands": {
-		"toggle-extension1": {
-			"suggested_key": {
-				"default": "Alt+Z"
-			},
-			"description": "Minimize / Maximize BannerTools"
-		},
-		"toggle-extension2": {
-			"suggested_key": {
-				"default": "Alt+X"
-			},
-			"description": "Disable BannerTools"
-		}
-	}
+		"assets/html/_BT_.html"
+	]
 }

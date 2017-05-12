@@ -21,7 +21,7 @@ $(document).ready(function () {
       } else {
         _BT_isInitialized = true;
 
-        if ($("meta[name='ad.size']").lenght){
+        if ($("meta[name='ad.size']").length){
           var _BT_adSize = $("meta[name='ad.size']").attr("content");
           var _BT_start_pos = _BT_adSize.indexOf("=") + 1;
           var _BT_end_pos = _BT_adSize.indexOf(",", _BT_start_pos);
@@ -35,190 +35,181 @@ $(document).ready(function () {
         }
 
         chrome.extension.sendRequest({
-          cmd: "get_BT_interior"
+          cmd: "get_BT_"
         }, function (html) {
-          $(".replay-button").before(html);
+          $("body").append(html);
+
+          _BT_injectScript("_BT_BannerObjectDuration");
+          _BT_injectScript("_BT_BannerObjectRepeat");
+          _BT_injectScript("_BT_BannerObjectTotalDuration");
 
           $("#_BT_gridOverlay").css({
             width: _BT_adWidth,
             height: _BT_adHeight
           });
 
-          chrome.extension.sendRequest({
-            cmd: "get_BT_exterior"
-          }, function (html) {
-            $("body").append(html);
-
-            _BT_injectScript("_BT_BannerObjectDuration");
-            _BT_injectScript("_BT_BannerObjectRepeat");
-            _BT_injectScript("_BT_BannerObjectTotalDuration");
-
-            $("#_BT_rulerCanvas").css({
-              width: _BT_adWidth,
-              height: _BT_adHeight
-            });
-
-            $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
-            $("#_BT_rewindButton").attr("src", chrome.extension.getURL('/assets/img/rewind.png'));
-            $("#_BT_forwardButton").attr("src", chrome.extension.getURL('/assets/img/forward.png'));
-            $("#_BT_borderSwitch").children().attr("src", chrome.extension.getURL('/assets/img/border.png'));
-            $("#_BT_replaySwitch").children().attr("src", chrome.extension.getURL('/assets/img/repeat.png'));
-            $("#_BT_blackSwitch").children().attr("src", chrome.extension.getURL('/assets/img/light.png'));
-            $("#_BT_marginSwitch").children().attr("src", chrome.extension.getURL('/assets/img/margin.png'));
-            $("#_BT_showSwitch").children().attr("src", chrome.extension.getURL('/assets/img/reveal.png'));
-            $("#_BT_guideSwitch").children().attr("src", chrome.extension.getURL('/assets/img/guide.png'));
-            $("#_BT_screenshotButton").children().attr("src", chrome.extension.getURL('/assets/img/camera.png'));
-            if ($("meta[name='ad.size']").lenght){
-              $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
-            }
-            $("#_BT_adNameLabel").text(document.title);
-
-            if (_BT_storage["uniqueID_easterEgg"] == 1) {
-              $("._BT_easterEgg").toggle();
-              $("#_BT_version").append(' v' + _BT_version);
-            } else {
-              $("#_BT_ img").click(function (event) {
-                if (_BT_easterEgg < 4) {
-                  _BT_easterEgg++;
-                }
-                if (_BT_easterEgg == 3) {
-                  $("._BT_easterEgg").toggle();
-                  $("#_BT_version").append(' v' + _BT_version);
-                  chrome.storage.sync.set({
-                    "uniqueID_easterEgg": 1
-                  });
-                }
-              });
-            }
-
-            if (_BT_storage["uniqueID_margin"]              == 1) {     feature("#_BT_marginSwitch",0);}
-            if (_BT_storage["uniqueID_backgroundColor"]     == 1) {     feature("#_BT_blackSwitch",0);}
-            if (_BT_storage["uniqueID_overflow"]            == 1) {     feature("#_BT_showSwitch",0);}
-            if (_BT_storage["uniqueID_guide"]               == 1) {     feature("#_BT_guideSwitch",0);}
-            if (_BT_storage["uniqueID_border"]              == 1) {     feature("#_BT_borderSwitch",0);}
-            if (_BT_storage["uniqueID_replay"]              == 1) {     feature("#_BT_replaySwitch",0);}
-
-            $("#_BT_disableSwitch").change(function () {
-              if (!this.checked) _BT_disable(1);
-            });
-
-            $("#_BT_reset").click(function () {
-              chrome.storage.sync.clear();
-              location.reload();
-            });
-
-            $("#_BT_override").click(function () {
-              chrome.storage.sync.set({
-                "uniqueID_override": 1
-              });
-              location.reload();
-            });
-
-            $("._BT_feature").click(function(){
-              feature("#" + this.id, $(this).attr('bt-value'));
-            });
-
-            function feature(object, arg){
-              if(arg == 0){
-                arg = 1;
-                $(object).addClass("_BT_featureOn");
-              }
-              else{
-                arg = 0;
-                $(object).removeClass("_BT_featureOn");
-              }
-              $(object).attr("bt-value", arg);
-              executeFeature(object, arg);
-            }
-
-            function executeFeature(object, arg){
-              switch (object) {
-                case "#_BT_borderSwitch": _BT_border(arg);
-                      break;
-                case "#_BT_guideSwitch": _BT_guide(arg);
-                      break;
-                case "#_BT_showSwitch": _BT_overflow(arg);
-                      break;
-                case "#_BT_marginSwitch": _BT_margin(arg);
-                      break;
-                case "#_BT_replaySwitch": _BT_replay(arg);
-                      break;
-                case "#_BT_blackSwitch": _BT_backgroundColor(arg);
-                      break;
-              }
-            }
-
-            $("#_BT_screenshotButton").click(function () {
-              _BT_screenshot(0);
-            });
-
-            var flip = true,
-              pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
-              play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
-              $animation = $('#_BT_animation');
-
-            $("#_BT_playButton").on('click', function () {
-              flip = !flip;
-              $animation.attr({
-                "from": flip ? pause : play,
-                "to": flip ? play : pause
-              }).get(0).beginElement();
-
-              if (flip) {
-                _BT_injectScript("_BT_BannerObjectPlay");
-              } else {
-                _BT_injectScript("_BT_BannerObjectPause");
-              }
-            });
-
-            $("#_BT_rewindButton").on('click', function () {
-              _BT_injectScript("_BT_BannerObjectReverse");
-            });
-
-            $("#_BT_forwardButton").on('click', function () {
-              _BT_injectScript("_BT_BannerObjectPlay");
-            });
-
-            function _BT_getRuler(axis) {
-              return '<div class="_BT_ruler' + axis + ' draggable ui-widget-content"><span class="_BT_rulerPos"></span></div>';
-            }
-
-            $("._BT_rulerButtons").click(function (e) {
-              console.log("Clicked");
-              if (this.id == "_BT_cRulerButton") {
-                $(".draggable").remove();
-                return;
-              }
-              var axis;
-              var maxAxisRange;
-              var pos;
-
-              if (this.id == "_BT_xRulerButton") {
-                axis = "X";
-                pos = "left";
-                maxAxisRange = _BT_adWidth;
-              } else {
-                axis = "Y";
-                pos = "top";
-                maxAxisRange = _BT_adHeight;
-              }
-              $("#_BT_rulerCanvas").append(_BT_getRuler(axis));
-              $("._BT_ruler" + axis).draggable({
-                axis: axis,
-                containment: "#_BT_rulerCanvas",
-                drag: function () {
-                  var Position = $(this).css(pos);
-
-                  if (Position == (maxAxisRange - 1) + "px") {
-                    Position = (maxAxisRange + "px");
-                  }
-                  $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
-                }
-              });
-            });
-
-            _BT_openNav("enabled");
+          $("#_BT_rulerCanvas").css({
+            width: _BT_adWidth,
+            height: _BT_adHeight
           });
+
+          $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
+          if ($("meta[name='ad.size']").length){
+            $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
+          }
+          $("#_BT_adNameLabel").text(document.title.split('-')[0]);
+
+          if (_BT_storage["uniqueID_easterEgg"] == 1) {
+            $("._BT_easterEgg").toggle();
+            $("#_BT_version").append(' v' + _BT_version);
+          } else {
+            $("#_BT_ img").click(function (event) {
+              if (_BT_easterEgg < 4) {
+                _BT_easterEgg++;
+              }
+              if (_BT_easterEgg == 3) {
+                $("._BT_easterEgg").toggle();
+                $("#_BT_version").append(' v' + _BT_version);
+                chrome.storage.sync.set({
+                  "uniqueID_easterEgg": 1
+                });
+              }
+            });
+          }
+
+          if (_BT_storage["uniqueID_margin"]              == 1) {     feature("#_BT_marginSwitch",0);}
+          if (_BT_storage["uniqueID_backgroundColor"]     == 1) {     feature("#_BT_blackSwitch",0);}
+          if (_BT_storage["uniqueID_overflow"]            == 1) {     feature("#_BT_showSwitch",0);}
+          if (_BT_storage["uniqueID_guide"]               == 1) {     feature("#_BT_guideSwitch",0);}
+          if (_BT_storage["uniqueID_border"]              == 1) {     feature("#_BT_borderSwitch",0);}
+          if (_BT_storage["uniqueID_replay"]              == 1) {     feature("#_BT_replaySwitch",0);}
+
+          $("#_BT_disableSwitch").change(function () {
+            if (!this.checked) _BT_disable(1);
+          });
+
+          $("#_BT_reset").click(function () {
+            chrome.storage.sync.clear();
+            location.reload();
+          });
+
+          $("#_BT_override").click(function () {
+            chrome.storage.sync.set({
+              "uniqueID_override": 1
+            });
+            location.reload();
+          });
+
+          $("._BT_feature").click(function(){
+            feature("#" + this.id, $(this).attr('bt-value'));
+          });
+
+          function feature(object, arg){
+            if(arg == 0){
+              arg = 1;
+              $(object).children().addClass("_BT_featureOn");
+            }
+            else{
+              arg = 0;
+              $(object).children().removeClass("_BT_featureOn");
+            }
+            $(object).attr("bt-value", arg);
+            executeFeature(object, arg);
+          }
+
+          function executeFeature(object, arg){
+            switch (object) {
+              case "#_BT_borderSwitch": _BT_border(arg);
+                    break;
+              case "#_BT_guideSwitch": _BT_guide(arg);
+                    break;
+              case "#_BT_showSwitch": _BT_overflow(arg);
+                    break;
+              case "#_BT_marginSwitch": _BT_margin(arg);
+                    break;
+              case "#_BT_replaySwitch": _BT_replay(arg);
+                    break;
+              case "#_BT_blackSwitch": _BT_backgroundColor(arg);
+                    break;
+            }
+          }
+
+          $("#_BT_screenshotButton").click(function () {
+            _BT_screenshot(0);
+          });
+
+          var flip = true,
+            pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
+            play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
+            $animation = $('#_BT_animation');
+
+          $("#_BT_playButton").on('click', function () {
+            $(this).parent().find("svg").removeClass("_BT_featureOn");
+            $(this).children().find("svg").addClass("_BT_featureOn");
+            flip = !flip;
+            $animation.attr({
+              "from": flip ? pause : play,
+              "to": flip ? play : pause
+            }).get(0).beginElement();
+
+            if (flip) {
+              _BT_injectScript("_BT_BannerObjectPlay");
+            } else {
+              _BT_injectScript("_BT_BannerObjectPause");
+            }
+          });
+
+          $("#_BT_rewindButton").on('click', function () {
+            _BT_injectScript("_BT_BannerObjectReverse");
+            $(this).parent().find("svg").removeClass("_BT_featureOn");
+            $(this).children().addClass("_BT_featureOn");
+          });
+
+          $("#_BT_forwardButton").on('click', function () {
+            _BT_injectScript("_BT_BannerObjectPlay");
+            $(this).parent().find("svg").removeClass("_BT_featureOn");
+            $(this).children().addClass("_BT_featureOn");
+          });
+
+          function _BT_getRuler(axis) {
+            return '<div class="_BT_ruler' + axis + ' draggable ui-widget-content"><span class="_BT_rulerPos"></span></div>';
+          }
+
+          $("._BT_rulerButtons").click(function (e) {
+            if (this.id == "_BT_cRulerButton") {
+              $(".draggable").remove();
+              return;
+            }
+            var axis;
+            var maxAxisRange;
+            var pos;
+
+            if (this.id == "_BT_xRulerButton") {
+              axis = "X";
+              pos = "left";
+              maxAxisRange = _BT_adWidth;
+            } else {
+              axis = "Y";
+              pos = "top";
+              maxAxisRange = _BT_adHeight;
+            }
+            console.log(_BT_getRuler(axis));
+            $("#_BT_rulerCanvas").append(_BT_getRuler(axis));
+            $("._BT_ruler" + axis).draggable({
+              axis: axis,
+              containment: "#_BT_rulerCanvas",
+              drag: function () {
+                var Position = $(this).css(pos);
+
+                if (Position == (maxAxisRange - 1) + "px") {
+                  Position = (maxAxisRange + "px");
+                }
+                $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
+              }
+            });
+          });
+
+          _BT_openNav("enabled");
         });
       }
     } else {
@@ -255,7 +246,7 @@ $(document).ready(function () {
   }
 
   function _BT_margin(arg) {
-    (arg == 1) ? ($("body, #_BT_rulerCanvas").addClass("_BT_marginTop")) : ($("body, #_BT_rulerCanvas").removeClass("_BT_marginTop"));
+    (arg == 1) ? ($("body, #_BT_rulerCanvas, #_BT_gridOverlay").addClass("_BT_marginTop")) : ($("body, #_BT_rulerCanvas, #_BT_gridOverlay").removeClass("_BT_marginTop"));
 
     chrome.storage.sync.set({
       "uniqueID_margin": arg
@@ -294,6 +285,7 @@ $(document).ready(function () {
 
   function _BT_grid(arg) {
     (arg == 1) ? ($("#_BT_gridOverlay").addClass("_BT_visible")) : ($("#_BT_gridOverlay").removeClass("_BT_visible"));
+    (arg == 1) ? ($(".replay-button").css("z-index", "10000")) : ($(".replay-button").css("z-index", ""));
   }
 
   function _BT_rulers(arg) {
@@ -303,7 +295,7 @@ $(document).ready(function () {
       $(".draggable").remove();
     }
 
-    $("#_BT_rulerCanvasm, ._BT_rulerButtons").css("display", style);
+    $("#_BT_rulerCanvas, ._BT_rulerButtons").css("display", style);
   }
 
   function _BT_backgroundColor(arg) {
@@ -416,5 +408,5 @@ $(document).ready(function () {
     console.log("BannerTools has been " + status + "! Click on the extension to reopen it!");
   }
 
-  $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">');
+  $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
 })

@@ -10,6 +10,7 @@
 - UI Update
 - More to follow
 - CSS classes
+- Removed interior, should not touch dev code
 
 # Version 1.7
 - Removed options
