@@ -295,7 +295,7 @@ $(document).ready(function () {
       $(".draggable").remove();
     }
 
-    $("#_BT_rulerCanvas, ._BT_rulerButtons").css("display", style);
+    $("#_BT_rulerCanvas, ._BT_rulerButtonsContainer").css("display", style);
   }
 
   function _BT_backgroundColor(arg) {
