@@ -43,15 +43,20 @@ $(document).ready(function () {
           _BT_injectScript("_BT_BannerObjectRepeat");
           _BT_injectScript("_BT_BannerObjectTotalDuration");
 
-          $("#_BT_gridOverlay").css({
+          $("#_BT_gridOverlay, #_BT_rulerCanvas, #_BT_imageOverlay").css({
             width: _BT_adWidth,
             height: _BT_adHeight
           });
 
-          $("#_BT_rulerCanvas").css({
-            width: _BT_adWidth,
-            height: _BT_adHeight
-          });
+          // $('#_BT_imageOverlay').attr('src', _BT_storage["uniqueID_imageOverlay"]);
+          // console.log(localStorage['uniqueID_imageOverlay']);
+          if(localStorage['uniqueID_imageOverlay']){
+            $('#_BT_imageOverlay').attr('src', localStorage['uniqueID_imageOverlay']);
+            $('#_BT_imageOverlay').css("visibility", "visible");
+          }
+          else {
+            console.log("No uniqueID_imageOverlay in cache");
+          }
 
           $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
           if ($("meta[name='ad.size']").length){
@@ -207,6 +212,27 @@ $(document).ready(function () {
                 $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
               }
             });
+          });
+
+          $("#_BT_imageOverlayUpload").click(function() {
+            $('#_BT_imageOverlay').attr('src', "");
+            $('#_BT_imageOverlay').css("visibility", "hidden");
+            localStorage.removeItem("uniqueID_imageOverlay");
+          });
+
+          $("#_BT_imageOverlayUpload").change(function() {
+            if (this.files && this.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('#_BT_imageOverlay').css("visibility", "visible");
+                  $('#_BT_imageOverlay').attr('src', e.target.result);
+                  // chrome.storage.sync.set({
+                  //   "uniqueID_imageOverlay": e.target.result
+                  // });
+                  localStorage["uniqueID_imageOverlay"] = e.target.result;
+              };
+              reader.readAsDataURL(this.files[0]);
+            }
           });
 
           _BT_openNav("enabled");

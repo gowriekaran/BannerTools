@@ -1,7 +1,8 @@
 <!-- - - - - - - - - - <BannerTools> - - - - - - - - - - - -->
 <br>
-<div id="_BT_gridOverlay"></div>
-<div id="_BT_rulerCanvas"></div>
+<img id="_BT_imageOverlay" class="overlay" src="#" />
+<div id="_BT_gridOverlay" class="overlay"></div>
+<div id="_BT_rulerCanvas" class="overlay"></div>
 <div id="_BT_gridOverlayControls">
     <button id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</button>
     <button id="_BT_yRulerButton" class="_BT_rulerButtons hvr-grow">Add Y Ruler</button>
@@ -149,6 +150,9 @@
                 <td class="_BT_featureNothing"></td>
             </tr>
         </table>
+    </div>
+    <div>
+        <input id="_BT_imageOverlayUpload" type="file" name="filename" accept="image/jpeg, image/png">
     </div>
 </div>
 <!-- - - - - - - - - - </BannerTools> - - - - - - - - - - - -->
