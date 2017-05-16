@@ -120,12 +120,6 @@
 #_BT_gridOverlay {
   background-size: 10px 10px;
   background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  top: 0;
   opacity: 0.5;
   visibility: hidden;
 }
@@ -168,13 +162,21 @@
 }
 
 #_BT_rulerCanvas {
+  display: none;
+}
+
+#_BT_imageOverlay {
+  opacity: 0.5;
+  visibility: hidden;
+}
+
+.overlay {
   position: absolute;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   top: 0;
-  display: none;
 }
 
 ._BT_rulerX {
