@@ -39,23 +39,17 @@ $(document).ready(function () {
         }, function (html) {
           $("body").append(html);
 
-          _BT_injectScript("_BT_BannerObjectDuration");
-          _BT_injectScript("_BT_BannerObjectRepeat");
-          _BT_injectScript("_BT_BannerObjectTotalDuration");
+          _BT_injectScript({script:"_BT_BannerObjectDuration"});
+          _BT_injectScript({script:"_BT_BannerObjectRepeat"});
+          _BT_injectScript({script:"_BT_BannerObjectTotalDuration"});
 
-          $("#_BT_gridOverlay, #_BT_rulerCanvas, #_BT_imageOverlay").css({
+          $("._BT_featureOverlay").css({
             width: _BT_adWidth,
             height: _BT_adHeight
           });
 
-          // $('#_BT_imageOverlay').attr('src', _BT_storage["uniqueID_imageOverlay"]);
-          // console.log(localStorage['uniqueID_imageOverlay']);
-          if(localStorage['uniqueID_imageOverlay']){
-            $('#_BT_imageOverlay').attr('src', localStorage['uniqueID_imageOverlay']);
-            $('#_BT_imageOverlay').css("visibility", "visible");
-          }
-          else {
-            console.log("No uniqueID_imageOverlay in cache");
+          if(localStorage['uniqueID_imgOverlay']){
+            _BT_imgRef({arg: 1, data: localStorage['uniqueID_imgOverlay']});
           }
 
           $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
@@ -136,6 +130,10 @@ $(document).ready(function () {
                     break;
               case "#_BT_blackSwitch": _BT_backgroundColor(arg);
                     break;
+              case "#_BT_imgAddRefButton": $('#_BT_imgOverlayUpload').click();
+                    break;
+              case "#_BT_imgDelRefButton": _BT_imgRef({arg: 0, data: null});
+                    break;
             }
           }
 
@@ -158,20 +156,20 @@ $(document).ready(function () {
             }).get(0).beginElement();
 
             if (flip) {
-              _BT_injectScript("_BT_BannerObjectPlay");
+              _BT_injectScript({script:"_BT_BannerObjectPlay"});
             } else {
-              _BT_injectScript("_BT_BannerObjectPause");
+              _BT_injectScript({script:"_BT_BannerObjectPause"});
             }
           });
 
           $("#_BT_rewindButton").on('click', function () {
-            _BT_injectScript("_BT_BannerObjectReverse");
+            _BT_injectScript({script:"_BT_BannerObjectReverse"});
             $(this).parent().find("svg").removeClass("_BT_featureOn");
             $(this).children().addClass("_BT_featureOn");
           });
 
           $("#_BT_forwardButton").on('click', function () {
-            _BT_injectScript("_BT_BannerObjectPlay");
+            _BT_injectScript({script:"_BT_BannerObjectPlay"});
             $(this).parent().find("svg").removeClass("_BT_featureOn");
             $(this).children().addClass("_BT_featureOn");
           });
@@ -198,11 +196,10 @@ $(document).ready(function () {
               pos = "top";
               maxAxisRange = _BT_adHeight;
             }
-            console.log(_BT_getRuler(axis));
-            $("#_BT_rulerCanvas").append(_BT_getRuler(axis));
+            $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
             $("._BT_ruler" + axis).draggable({
               axis: axis,
-              containment: "#_BT_rulerCanvas",
+              containment: "#_BT_rulerOverlay",
               drag: function () {
                 var Position = $(this).css(pos);
 
@@ -214,24 +211,28 @@ $(document).ready(function () {
             });
           });
 
-          $("#_BT_imageOverlayUpload").click(function() {
-            $('#_BT_imageOverlay').attr('src', "");
-            $('#_BT_imageOverlay').css("visibility", "hidden");
-            localStorage.removeItem("uniqueID_imageOverlay");
-          });
-
-          $("#_BT_imageOverlayUpload").change(function() {
+          $("#_BT_imgOverlayUpload").change(function() {
             if (this.files && this.files[0]) {
               var reader = new FileReader();
               reader.onload = function (e) {
-                  $('#_BT_imageOverlay').css("visibility", "visible");
-                  $('#_BT_imageOverlay').attr('src', e.target.result);
-                  // chrome.storage.sync.set({
-                  //   "uniqueID_imageOverlay": e.target.result
-                  // });
-                  localStorage["uniqueID_imageOverlay"] = e.target.result;
+                  _BT_imgRef({arg: 1, data: e.target.result});
               };
               reader.readAsDataURL(this.files[0]);
+            }
+          });
+
+          $( function() {
+            $( "#slider" ).slider();
+          } );
+
+          $("#slider").slider({
+            range: 'min',
+            min: 0,
+            max: 100,
+            step:.1,
+            slide: function ( event, ui ) {
+              $( "#slider .ui-slider-range" ).css('background', 'rgb(24,73,103)');
+              _BT_injectScript({script: "_BT_BannerObjectSlider", arg: "<script> var arg = " + ui.value/100 + ";</script>"});
             }
           });
 
@@ -243,8 +244,11 @@ $(document).ready(function () {
     }
   }
 
-  function _BT_injectScript(arg) {
-    var script = '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + arg + '.js') + '"></script>';
+  function _BT_injectScript(obj) {
+    if(typeof obj.arg === 'undefined'){
+      obj.arg = "";
+    }
+    var script = obj.arg + '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + obj.script + '.js') + '"></script>';
     $("body").append(script);
     $("._BT_injectedScript").remove();
   }
@@ -271,12 +275,11 @@ $(document).ready(function () {
     }
   }
 
-  function _BT_margin(arg) {
-    (arg == 1) ? ($("body, #_BT_rulerCanvas, #_BT_gridOverlay").addClass("_BT_marginTop")) : ($("body, #_BT_rulerCanvas, #_BT_gridOverlay").removeClass("_BT_marginTop"));
-
-    chrome.storage.sync.set({
-      "uniqueID_margin": arg
-    });
+  function _BT_imgRef(obj){
+    (obj.arg == 1) ? ($("#_BT_imgOverlay").attr("src", obj.data)) : ($("#_BT_imgOverlay").attr("src", ""));
+    (obj.arg == 1) ? ($("#_BT_imgOverlay").addClass("_BT_visible")) : ($("#_BT_imgOverlay").removeClass("_BT_visible"));
+    (obj.arg == 1) ? ($("#_BT_imgDelRefButton").addClass("_BT_visible")) : ($("#_BT_imgDelRefButton").removeClass("_BT_visible"));
+    (obj.arg == 1) ? (localStorage["uniqueID_imgOverlay"] = obj.data) : (localStorage.removeItem("uniqueID_imgOverlay"));
   }
 
   function _BT_replay(arg) {
@@ -284,6 +287,14 @@ $(document).ready(function () {
 
     chrome.storage.sync.set({
       "uniqueID_replay": arg
+    });
+  }
+
+  function _BT_margin(arg) {
+    (arg == 1) ? ($("body, ._BT_featureOverlay").addClass("_BT_marginTop")) : ($("body, ._BT_featureOverlay").removeClass("_BT_marginTop"));
+
+    chrome.storage.sync.set({
+      "uniqueID_margin": arg
     });
   }
 
@@ -316,12 +327,10 @@ $(document).ready(function () {
 
   function _BT_rulers(arg) {
     var style;
-    (arg == 1) ? (style = "block") : (style = "");
+    (arg == 1) ? ($("#_BT_rulerOverlay, #_BT_rulerOverlayControls").addClass("_BT_visible")) : ($("#_BT_rulerOverlay, #_BT_rulerOverlayControls").removeClass("_BT_visible"));
     if(arg == 0){
       $(".draggable").remove();
     }
-
-    $("#_BT_rulerCanvas, ._BT_rulerButtonsContainer").css("display", style);
   }
 
   function _BT_backgroundColor(arg) {
@@ -348,7 +357,7 @@ $(document).ready(function () {
       $("#ad-container").css("margin", 0);
       _BT_replay("hidden");
 
-      _BT_injectScript("_BT_BannerObjectLastFrame");
+      _BT_injectScript({script:"_BT_BannerObjectLastFrame"});
       chrome.extension.sendRequest({
         cmd: "resetZoom"
       });

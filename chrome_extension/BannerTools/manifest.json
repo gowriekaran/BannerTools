@@ -33,7 +33,8 @@
 		],
 		"css": [
 			"assets/css/hover-min.css",
-			"assets/css/BannerToolsStyles.css"
+			"assets/css/BannerToolsStyles.css",
+			"assets/css/jquery-ui.min.css"
 		]
 	}],
 	"background": {
@@ -51,6 +52,7 @@
 		"assets/js/_BT_BannerObjectRepeat.js",
 		"assets/js/_BT_BannerObjectReverse.js",
 		"assets/js/_BT_BannerObjectTotalDuration.js",
+		"assets/js/_BT_BannerObjectSlider.js",
 		"assets/html/_BT_.html"
 	]
 }

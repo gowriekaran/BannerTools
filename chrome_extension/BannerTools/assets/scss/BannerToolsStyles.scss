@@ -1,0 +1,185 @@
+@import "variables";
+@import "iOS";
+
+#_BT_ {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: $backgroundColor;
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-left: 2px solid $primaryColor;
+  width: 0px;
+
+  * {
+    color: $textColor;
+    font-family: 'Roboto Condensed', sans-serif;
+    user-select: none;
+  }
+
+  > div:first-child {
+    background-color: $primaryColor;
+    box-shadow: 0px 0px 8px 2px #000000;
+  }
+
+  div:nth-of-type(n+2) {
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  tr > td:nth-child(1) {
+    width: 90%;
+  }
+
+  tr > td:nth-child(2) {
+    width: 10%;
+    text-align: right;
+  }
+
+  #_BT_logo {
+    width: 75px;
+    display: block;
+    margin: auto;
+    padding: 10px;
+  }
+
+  #_BT_reset,
+  #_BT_override {
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  ._BT_specialTable td {
+    width: 50% !important;
+  }
+
+  #_BT_featureGrid {
+    @extend .svgGrid;
+
+    button {
+      border: 0px;
+      display: block;
+      margin: auto;
+      background-color: rgba(0,0,0,0);
+      width: 50px;
+      height: 50px;
+    }
+
+    #_BT_imgDelRefButton {
+      visibility: hidden;
+    }
+  }
+}
+
+.svgGrid {
+  td {
+    height: 60px !important;
+    width: 50px !important;
+    padding: 5px;
+  }
+
+  svg {
+    display: block;
+    margin: auto;
+    text-align:center;
+    fill: $primaryColor;
+    transition: fill 0.5s;
+  }
+
+  svg:hover {
+    fill: $secondaryColor !important;
+    cursor: pointer;
+  }
+}
+
+#_BT_imgOverlay {
+  opacity: 0.5;
+}
+
+#_BT_gridOverlay {
+  background-size: 10px 10px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+._BT_featureOverlay {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  visibility: hidden;
+}
+
+#_BT_rulerOverlayControls {
+  @extend .svgGrid;
+  width: 100%;
+  visibility: hidden;
+
+  table {
+    background-color: $backgroundColor;
+    border: 2px solid $primaryColor;
+    width: $appWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+._BT_rulerX {
+  cursor: col-resize;
+  width: 0px;
+  height: 100%;
+  border-right: 1px cyan solid;
+  position: absolute;
+}
+
+._BT_rulerY {
+  cursor: row-resize;
+  height: 0px;
+  width: 100%;
+  border-top: 1px cyan solid;
+  position: absolute;
+}
+
+._BT_rulerPos {
+  position: absolute;
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-family: 'Roboto Condensed', sans-serif;
+  display: block;
+  width: 50px;
+}
+
+/* DOM Styles Manipulation */
+
+._BT_expand {
+  width: $appWidth !important;
+}
+
+._BT_featureOn {
+  fill: $secondaryColor !important;
+}
+
+._BT_visible {
+  visibility: visible !important;
+}
+
+._BT_backgroundColor {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+._BT_marginTop {
+  margin-top: 100px !important;
+}
+
+._BT_border {
+  border: 1px dashed red !important;
+}

@@ -1,20 +1,21 @@
 <!-- - - - - - - - - - <BannerTools> - - - - - - - - - - - -->
 <br>
-<img id="_BT_imageOverlay" class="overlay" src="#" />
-<div id="_BT_gridOverlay" class="overlay"></div>
-<div id="_BT_rulerCanvas" class="overlay"></div>
-<div id="_BT_gridOverlayControls">
-    <!--<button id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</button>-->
-    <!--<button id="_BT_yRulerButton" class="_BT_rulerButtons hvr-grow">Add Y Ruler</button>-->
-    <!--<button id="_BT_cRulerButton" class="_BT_rulerButtons hvr-grow">Clear Rulers</button>-->
-    <!--<div id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</div>
-    <div id="_BT_yRulerButton" class="_BT_rulerButtons hvr-grow">Add Y Ruler</div>
-    <div id="_BT_cRulerButton" class="_BT_rulerButtons hvr-grow">Clear Rulers</div>-->
-    <table class="_BT_rulerButtonsContainer">
+<img id="_BT_imgOverlay" class="_BT_featureOverlay" src="#" />
+<div id="_BT_gridOverlay" class="_BT_featureOverlay"></div>
+<div id="_BT_rulerOverlay" class="_BT_featureOverlay"></div>
+<div id="_BT_rulerOverlayControls">
+    <table>
         <tr>
-            <td id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</div>
-            <td id="_BT_xRulerButton" class="_BT_rulerButtons hvr-grow">Add X Ruler</div>
-            <td id="_BT_cRulerButton" class="_BT_rulerButtons hvr-grow">Clear Rulers</div>
+            <td id="_BT_xRulerButton" class="_BT_rulerButtons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path d="M24 24v-8h-24v8h24zm-22-6h2v2h1v-2h2v3h1v-3h2v2h1v-2h2v2h1v-2h2v3h1v-3h2v2h1v-2h2v4h-20v-4zm14-10h-8v4l-8-6 8-6v4h8v-4l8 6-8 6v-4z"/>
+                </svg>
+            </td>
+            <td id="_BT_yRulerButton" class="_BT_rulerButtons">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                    <path d="M24 0h-8v24h8v-24zm-6 22v-2h2v-1h-2v-2h3v-1h-3v-2h2v-1h-2v-2h2v-1h-2v-2h3v-1h-3v-2h2v-1h-2v-2h4v20h-4zm-10-14v8h4l-6 8-6-8h4v-8h-4l6-8 6 8h-4z"/>
+                </svg>
+            </td>
         </tr>
     </table>
 </div>
@@ -28,9 +29,9 @@
                 <td id="_BT_version">BannerTools</td>
                 <td>
                     <label class="_BT_switch">
-                  <input type="checkbox" id="_BT_disableSwitch">
-                  <div class="_BT_slider _BT_sliderRound"></div>
-               </label>
+                        <input type="checkbox" id="_BT_disableSwitch">
+                        <div class="_BT_slider _BT_sliderRound"></div>
+                    </label>
                 </td>
             </tr>
         </table>
@@ -69,6 +70,9 @@
                 <td id="_BT_adTotalDurationLabel">Not Found</td>
             </tr>
         </table>
+    </div>
+    <div>
+        <div id="slider"></div>
     </div>
     <div>
         <table id="_BT_featureGrid">
@@ -141,13 +145,21 @@
                         <path d="M18 5l-2-3h-8l-2 3h-6v17h24v-17h-6zm4 7h-4.079c.581 3.754-2.312 7-5.921 7-3.612 0-6.501-3.248-5.921-7h-4.079v-5h5.07l2-3h5.859l2 3h5.071v5zm-10-3c-2.243 0-4 1.73-4 3.939 0 2.239 1.794 4.061 4 4.061s4-1.822 4-4.061c0-2.209-1.757-3.939-4-3.939zm-.436 3.555c-.632.503-1.461.5-1.852-.006-.39-.506-.194-1.324.438-1.827.632-.502 1.461-.499 1.851.007.391.505.195 1.323-.437 1.826z"/>
                     </svg>
                 </td>
-                <td class="_BT_featureNothing"></td>
-                <td class="_BT_featureNothing"></td>
+                <td id="_BT_imgAddRefButton" class="_BT_feature _BT_featureOff" bt-value="0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path d="M1.859 6l-.489-2h21.256l-.491 2h-20.276zm1.581-4l-.439-2h17.994l-.439 2h-17.116zm20.56 16h-24l2 6h20l2-6zm-20.896-2l-.814-6h19.411l-.839 6h2.02l1.118-8h-24l1.085 8h2.019zm2.784-3.995c-.049-.555.419-1.005 1.043-1.005.625 0 1.155.449 1.185 1.004.03.555-.438 1.005-1.044 1.005-.605 0-1.136-.449-1.184-1.004zm7.575-.224l-1.824 2.68-1.813-1.312-2.826 2.851h10l-3.537-4.219z"/>
+                    </svg>
+                </td>
+                <td id="_BT_imgDelRefButton" class="_BT_feature _BT_featureOff" bt-value="0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path d="M19.5 12c-2.483 0-4.5 2.015-4.5 4.5s2.017 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.017-4.5-4.5-4.5zm2.5 5h-5v-1h5v1zm-18 0l4-5.96 2.48 1.96 2.52-4 1.853 2.964c-1.271 1.303-1.977 3.089-1.827 5.036h-9.026zm10.82 4h-14.82v-18h22v7.501c-.623-.261-1.297-.422-2-.476v-5.025h-18v14h11.502c.312.749.765 1.424 1.318 2zm-9.32-11c-.828 0-1.5-.671-1.5-1.5 0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5z"/>
+                    </svg>
+                </td>
             </tr>
         </table>
     </div>
-    <div>
-        <input id="_BT_imageOverlayUpload" type="file" name="filename" accept="image/jpeg, image/png">
+    <div hidden>
+        <input id="_BT_imgOverlayUpload" type="file" name="filename" accept="image/jpeg, image/png">
     </div>
 </div>
 <!-- - - - - - - - - - </BannerTools> - - - - - - - - - - - -->

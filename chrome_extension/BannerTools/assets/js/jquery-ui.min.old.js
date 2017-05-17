@@ -1,4 +1,4 @@
-/*! jQuery UI - v1.12.1 - 2017-05-17
+/*! jQuery UI - v1.12.1 - 2017-03-20
 * http://jqueryui.com
 * Includes: widget.js, data.js, keycode.js, scroll-parent.js, widgets/draggable.js, widgets/mouse.js, widgets/slider.js
 * Copyright jQuery Foundation and other contributors; Licensed MIT */
