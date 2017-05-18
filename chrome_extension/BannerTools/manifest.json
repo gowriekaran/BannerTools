@@ -52,7 +52,9 @@
 		"assets/js/_BT_BannerObjectRepeat.js",
 		"assets/js/_BT_BannerObjectReverse.js",
 		"assets/js/_BT_BannerObjectTotalDuration.js",
-		"assets/js/_BT_BannerObjectSlider.js",
+		"assets/js/_BT_BannerObjectProgress.js",
+		"assets/js/jquery-3.1.1.min.js",
+		"assets/js/jquery-ui.min.js",
 		"assets/html/_BT_.html"
 	]
 }

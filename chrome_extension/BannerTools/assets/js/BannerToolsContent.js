@@ -38,10 +38,13 @@ $(document).ready(function () {
           cmd: "get_BT_"
         }, function (html) {
           $("body").append(html);
+          $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-3.1.1.min.js') + "'></script>");
+          $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
 
-          _BT_injectScript({script:"_BT_BannerObjectDuration"});
-          _BT_injectScript({script:"_BT_BannerObjectRepeat"});
-          _BT_injectScript({script:"_BT_BannerObjectTotalDuration"});
+          _BT_injectScript({script: "_BT_BannerObjectProgress"});
+          _BT_injectScript({script:"_BT_BannerObjectDuration", remove: 1});
+          _BT_injectScript({script:"_BT_BannerObjectRepeat", remove: 1});
+          _BT_injectScript({script:"_BT_BannerObjectTotalDuration", remove: 1});
 
           $("._BT_featureOverlay").css({
             width: _BT_adWidth,
@@ -156,20 +159,20 @@ $(document).ready(function () {
             }).get(0).beginElement();
 
             if (flip) {
-              _BT_injectScript({script:"_BT_BannerObjectPlay"});
+              _BT_injectScript({script:"_BT_BannerObjectPlay", remove: 1});
             } else {
-              _BT_injectScript({script:"_BT_BannerObjectPause"});
+              _BT_injectScript({script:"_BT_BannerObjectPause", remove: 1});
             }
           });
 
           $("#_BT_rewindButton").on('click', function () {
-            _BT_injectScript({script:"_BT_BannerObjectReverse"});
+            _BT_injectScript({script:"_BT_BannerObjectReverse", remove: 1});
             $(this).parent().find("svg").removeClass("_BT_featureOn");
             $(this).children().addClass("_BT_featureOn");
           });
 
           $("#_BT_forwardButton").on('click', function () {
-            _BT_injectScript({script:"_BT_BannerObjectPlay"});
+            _BT_injectScript({script:"_BT_BannerObjectPlay", remove: 1});
             $(this).parent().find("svg").removeClass("_BT_featureOn");
             $(this).children().addClass("_BT_featureOn");
           });
@@ -221,21 +224,6 @@ $(document).ready(function () {
             }
           });
 
-          $( function() {
-            $( "#slider" ).slider();
-          } );
-
-          $("#slider").slider({
-            range: 'min',
-            min: 0,
-            max: 100,
-            step:.1,
-            slide: function ( event, ui ) {
-              $( "#slider .ui-slider-range" ).css('background', 'rgb(24,73,103)');
-              _BT_injectScript({script: "_BT_BannerObjectSlider", arg: "<script> var arg = " + ui.value/100 + ";</script>"});
-            }
-          });
-
           _BT_openNav("enabled");
         });
       }
@@ -245,12 +233,21 @@ $(document).ready(function () {
   }
 
   function _BT_injectScript(obj) {
+    if(typeof obj.remove === 'undefined'){
+      obj.remove = "";
+    }
     if(typeof obj.arg === 'undefined'){
       obj.arg = "";
     }
-    var script = obj.arg + '<script class="_BT_injectedScript" src="' + chrome.extension.getURL('/assets/js/' + obj.script + '.js') + '"></script>';
+    var className = "";
+    if (obj.remove == 1){
+      className = "_BT_injectedScript";
+    }
+    var script = obj.arg + '<script class="' + className + '" src="' + chrome.extension.getURL('/assets/js/' + obj.script + '.js') + '"></script>';
     $("body").append(script);
-    $("._BT_injectedScript").remove();
+    if (obj.remove == 1){
+      $("._BT_injectedScript").remove();
+    }
   }
 
   function _BT_reset() {
@@ -280,6 +277,10 @@ $(document).ready(function () {
     (obj.arg == 1) ? ($("#_BT_imgOverlay").addClass("_BT_visible")) : ($("#_BT_imgOverlay").removeClass("_BT_visible"));
     (obj.arg == 1) ? ($("#_BT_imgDelRefButton").addClass("_BT_visible")) : ($("#_BT_imgDelRefButton").removeClass("_BT_visible"));
     (obj.arg == 1) ? (localStorage["uniqueID_imgOverlay"] = obj.data) : (localStorage.removeItem("uniqueID_imgOverlay"));
+    if(obj.arg == 0){
+      $("#_BT_imgAddRefButton").children().removeClass("_BT_featureOn");
+      $("#_BT_imgAddRefButton").attr("bt-value", obj.arg);
+    }
   }
 
   function _BT_replay(arg) {
@@ -301,6 +302,20 @@ $(document).ready(function () {
   function _BT_border(arg) {
     (arg == 1) ? ($(".content").children().addClass("_BT_border")) : ($(".content").children().removeClass("_BT_border"));
     (arg == 1) ? ($(".content").children().children().addClass("_BT_border")) : ($(".content").children().children().removeClass("_BT_border"));
+
+    if(arg == 1){
+      $(".content").children().each(function(){
+        if($(this).width() == 0 || $(this).height() == 0 ){
+          $(this).removeClass("_BT_border");
+        }
+      });
+
+      $(".content").children().children().each(function(){
+        if($(this).width() == 0 || $(this).height() == 0 ){
+          $(this).removeClass("_BT_border");
+        }
+      });
+    }
 
     if ($(".draggable").length) {
       $(".draggable").removeClass("_BT_border");
@@ -357,7 +372,7 @@ $(document).ready(function () {
       $("#ad-container").css("margin", 0);
       _BT_replay("hidden");
 
-      _BT_injectScript({script:"_BT_BannerObjectLastFrame"});
+      _BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1});
       chrome.extension.sendRequest({
         cmd: "resetZoom"
       });
