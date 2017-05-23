@@ -31,7 +31,7 @@
   transition: .4s; }
 
 input:checked + ._BT_slider {
-  background-color: #3F51B5; }
+  background-color: #F44336; }
 
 input:focus + ._BT_slider {
   box-shadow: 0 0 1px #2196F3; }
@@ -56,7 +56,7 @@ input:checked + ._BT_slider:before {
   background-color: #EFEFEF;
   overflow-x: hidden;
   transition: 0.5s;
-  border-left: 2px solid #3F51B5;
+  border-left: 2px solid #F44336;
   width: 0px; }
   #_BT_ * {
     color: black;
@@ -66,10 +66,9 @@ input:checked + ._BT_slider:before {
     -ms-user-select: none;
     user-select: none; }
   #_BT_ > div:first-child {
-    background-color: #3F51B5;
+    background-color: #F44336;
     box-shadow: 0px 0px 8px 2px #000000; }
   #_BT_ div:nth-of-type(n+2) {
-    margin-top: 10px;
     padding: 10px; }
   #_BT_ table {
     width: 100%; }
@@ -90,30 +89,30 @@ input:checked + ._BT_slider:before {
     cursor: pointer; }
   #_BT_ ._BT_specialTable td {
     width: 50% !important; }
-  #_BT_ #_BT_featureGrid button {
+  #_BT_ #_BT_featureControls button {
     border: 0px;
     display: block;
     margin: auto;
     background-color: transparent;
     width: 50px;
     height: 50px; }
-  #_BT_ #_BT_featureGrid #_BT_imgDelRefButton {
+  #_BT_ #_BT_featureControls #_BT_imgDelRefButton {
     visibility: hidden; }
 
-.svgGrid td, #_BT_ #_BT_featureGrid td, #_BT_rulerOverlayControls td {
-  height: 60px !important;
+.svgControls td, #_BT_ #_BT_featureControls td, #_BT_rulerOverlayControls td {
+  height: 55px !important;
   width: 50px !important;
   padding: 5px; }
 
-.svgGrid svg, #_BT_ #_BT_featureGrid svg, #_BT_rulerOverlayControls svg {
+.svgControls svg, #_BT_ #_BT_featureControls svg, #_BT_rulerOverlayControls svg {
   display: block;
   margin: auto;
   text-align: center;
-  fill: #3F51B5;
+  fill: #F44336;
   transition: fill 0.5s; }
 
-.svgGrid svg:hover, #_BT_ #_BT_featureGrid svg:hover, #_BT_rulerOverlayControls svg:hover {
-  fill: #1A237E !important;
+.svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
+  fill: #B71C1C !important;
   cursor: pointer; }
 
 #_BT_imgOverlay {
@@ -138,7 +137,7 @@ input:checked + ._BT_slider:before {
   visibility: hidden; }
   #_BT_rulerOverlayControls table {
     background-color: #EFEFEF;
-    border: 2px solid #3F51B5;
+    border: 2px solid #F44336;
     width: 250px;
     margin-left: auto;
     margin-right: auto; }
@@ -165,12 +164,71 @@ input:checked + ._BT_slider:before {
   display: block;
   width: 50px; }
 
+#animationPlayback > div {
+  padding: 0px !important; }
+
+#animationPlayback > div:nth-child(1), #animationPlayback > div:nth-child(3) {
+  width: 20%;
+  top: 258px;
+  position: absolute; }
+
+#animationPlayback > div:nth-child(2) {
+  width: 60%;
+  margin-left: 52px; }
+  #animationPlayback > div:nth-child(2) .ui-slider-handle {
+    border-color: #F44336;
+    background-color: #F44336;
+    border-radius: 100px; }
+  #animationPlayback > div:nth-child(2) #slider .ui-slider-range {
+    background: #B71C1C; }
+
+#animationPlayback > div:nth-child(3) {
+  right: 12px;
+  text-align: right; }
+
+#_BT_imgRefGalleryContainer {
+  visibility: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
+  height: 75px;
+  background-color: #B71C1C;
+  padding: 10px; }
+  #_BT_imgRefGalleryContainer #_BT_imgRefGallery {
+    width: 230px;
+    height: 100%; }
+    #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer {
+      width: 75px;
+      height: 100%;
+      float: left;
+      position: relative;
+      padding: 0px !important;
+      margin-right: 10px; }
+      #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer img {
+        width: 100%;
+        height: 100%;
+        position: absolute; }
+      #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer span {
+        display: none;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        text-align: center; }
+      #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer *:hover {
+        cursor: pointer; }
+      #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer ._BT_selectedImgOverlay {
+        border: 1px solid white !important; }
+    #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer:hover span {
+      display: block; }
+
 /* DOM Styles Manipulation */
 ._BT_expand {
   width: 250px !important; }
 
 ._BT_featureOn {
-  fill: #1A237E !important; }
+  fill: #B71C1C !important; }
 
 ._BT_visible {
   visibility: visible !important; }

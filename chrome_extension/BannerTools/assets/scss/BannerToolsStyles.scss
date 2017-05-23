@@ -25,7 +25,6 @@
   }
 
   div:nth-of-type(n+2) {
-    margin-top: 10px;
     padding: 10px;
   }
 
@@ -60,8 +59,8 @@
     width: 50% !important;
   }
 
-  #_BT_featureGrid {
-    @extend .svgGrid;
+  #_BT_featureControls {
+    @extend .svgControls;
 
     button {
       border: 0px;
@@ -78,9 +77,9 @@
   }
 }
 
-.svgGrid {
+.svgControls {
   td {
-    height: 60px !important;
+    height: 55px !important;
     width: 50px !important;
     padding: 5px;
   }
@@ -120,7 +119,7 @@
 }
 
 #_BT_rulerOverlayControls {
-  @extend .svgGrid;
+  @extend .svgControls;
   width: 100%;
   visibility: hidden;
 
@@ -156,6 +155,84 @@
   font-family: 'Roboto Condensed', sans-serif;
   display: block;
   width: 50px;
+}
+
+#animationPlayback {
+  > div {
+    padding: 0px !important;
+  }
+
+  > div:nth-child(1), > div:nth-child(3){
+    width: 20%;
+    top: 258px;
+    position: absolute;
+  }
+
+  > div:nth-child(2){
+    width: 60%;
+    margin-left: 52px;
+    .ui-slider-handle {
+      border-color: $primaryColor;
+      background-color: $primaryColor;
+      border-radius: 100px;
+    }
+
+    #slider .ui-slider-range {
+      background: $secondaryColor;
+    }
+  }
+
+  > div:nth-child(3){
+    right: 12px;
+    text-align: right;
+  }
+}
+
+#_BT_imgRefGalleryContainer {
+  visibility: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 100%;
+  height: 75px;
+  background-color: $secondaryColor;
+  padding: 10px;
+  #_BT_imgRefGallery {
+    width: 230px;
+    height: 100%;
+    .imgContainer {
+      width: 75px;
+      height: 100%;
+      float: left;
+      position: relative;
+      padding: 0px !important;
+      margin-right: 10px;
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+      span {
+        display: none;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+      }
+      *:hover {
+        cursor: pointer;
+      }
+      ._BT_selectedImgOverlay{
+        border: 1px solid white !important;
+      }
+    }
+    .imgContainer:hover {
+      span{
+        display: block;
+      }
+    }
+  }
 }
 
 /* DOM Styles Manipulation */
