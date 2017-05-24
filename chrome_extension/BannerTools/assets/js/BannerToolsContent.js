@@ -47,10 +47,7 @@ $(document).ready(function () {
           $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
           $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
 
-          _BT_injectScript({script: "_BT_BannerObjectProgress"});
-          _BT_injectScript({script:"_BT_BannerObjectDuration", remove: 1});
-          _BT_injectScript({script:"_BT_BannerObjectRepeat", remove: 1});
-          _BT_injectScript({script:"_BT_BannerObjectTotalDuration", remove: 1});
+          _BT_injectScript({script: "_BT_HijackObject"});
 
           $("._BT_featureOverlay").css({
             width: _BT_adWidth,
@@ -66,13 +63,6 @@ $(document).ready(function () {
 
           buildFeatureControls();
           buildRulerControls();
-
-          if(localStorage['uniqueID_imgOverlay']){
-            addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);
-            $("#_BT_imgOverlay").attr("src", localStorage['uniqueID_imgOverlay']);
-            $("#_BT_imgOverlay, #_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
-            $('#_BT_imgRefGallery .img').addClass("_BT_selectedImgOverlay");
-          }
 
           if (_BT_storage["uniqueID_easterEgg"] == 1) {
             $("._BT_easterEgg").toggle();
@@ -98,6 +88,12 @@ $(document).ready(function () {
           if (_BT_storage["uniqueID_guide"]               == 1) {     feature("#_BT_guideSwitch",0);}
           if (_BT_storage["uniqueID_border"]              == 1) {     feature("#_BT_borderSwitch",0);}
           if (_BT_storage["uniqueID_replay"]              == 1) {     feature("#_BT_replaySwitch",0);}
+          if(localStorage['uniqueID_imgOverlay']){
+            addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);
+            $("#_BT_imgOverlay").attr("src", localStorage['uniqueID_imgOverlay']);
+            $("#_BT_imgOverlay, #_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
+            $('#_BT_imgRefGallery .img').addClass("_BT_selectedImgOverlay");
+          }
 
           $("#_BT_disableSwitch").change(function () {
             if (!this.checked) _BT_disable(1);
@@ -164,7 +160,7 @@ $(document).ready(function () {
             }
             $(this).parent().remove();
             if ($('#_BT_imgRefGallery').is(':empty')){
-              deleteImgOverlayAssets();
+              _BT_deleteImgOverlayAssets();
             }
           });
 
@@ -236,18 +232,20 @@ $(document).ready(function () {
             break;
       case "#_BT_blackSwitch": _BT_backgroundColor(arg);
             break;
-      case "#_BT_imgAddRefButton": imgOverlayAsset();
+      case "#_BT_imgAddRefButton": _BT_imgOverlayAsset();
             break;
-      case "#_BT_imgDelRefButton": deleteImgOverlayAssets();
+      case "#_BT_imgDelRefButton": _BT_deleteImgOverlayAssets();
             break;
       case "#_BT_screenshotButton": _BT_screenshot(0);
             break;
-      case "#_BT_playButton": animationPlayback(object);
+      case "#_BT_playButton": _BT_animationPlayback(object);
             break;
-      case "#_BT_firstFrameButton": animationPlayback(object);
+      case "#_BT_firstFrameButton": _BT_animationPlayback(object);
             break;
-      case "#_BT_lastFrameButton": animationPlayback(object);
+      case "#_BT_lastFrameButton": _BT_animationPlayback(object);
             break;
+      case "#_BT_boostButton": _BT_animationBoost(arg);
+        break;
     }
   }
 
@@ -306,6 +304,11 @@ $(document).ready(function () {
                         "_BT_screenshotButton",
                         "_BT_feature _BT_featureOff",
                         '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"> <path d="M18 5l-2-3h-8l-2 3h-6v17h24v-17h-6zm4 7h-4.079c.581 3.754-2.312 7-5.921 7-3.612 0-6.501-3.248-5.921-7h-4.079v-5h5.07l2-3h5.859l2 3h5.071v5zm-10-3c-2.243 0-4 1.73-4 3.939 0 2.239 1.794 4.061 4 4.061s4-1.822 4-4.061c0-2.209-1.757-3.939-4-3.939zm-.436 3.555c-.632.503-1.461.5-1.852-.006-.39-.506-.194-1.324.438-1.827.632-.502 1.461-.499 1.851.007.391.505.195 1.323-.437 1.826z"/> </svg>'
+                      ],
+                      [
+                        "_BT_boostButton",
+                        "_BT_feature _BT_featureOff",
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M15.91 13.34l2.636-4.026-.454-.406-3.673 3.099c-.675-.138-1.402.068-1.894.618-.736.823-.665 2.088.159 2.824.824.736 2.088.665 2.824-.159.492-.55.615-1.295.402-1.95zm-3.91-10.646v-2.694h4v2.694c-1.439-.243-2.592-.238-4 0zm8.851 2.064l1.407-1.407 1.414 1.414-1.321 1.321c-.462-.484-.964-.927-1.5-1.328zm-18.851 4.242h8v2h-8v-2zm-2 4h8v2h-8v-2zm3 4h7v2h-7v-2zm21-3c0 5.523-4.477 10-10 10-2.79 0-5.3-1.155-7.111-3h3.28c1.138.631 2.439 1 3.831 1 4.411 0 8-3.589 8-8s-3.589-8-8-8c-1.392 0-2.693.369-3.831 1h-3.28c1.811-1.845 4.321-3 7.111-3 5.523 0 10 4.477 10 10z"/></svg>'
                       ],
                       [
                         "_BT_imgAddRefButton",
@@ -391,7 +394,7 @@ $(document).ready(function () {
     _BT_closeNav(1);
     localStorage.removeItem('uniqueID_imgOverlay');
     localStorage.removeItem('uniqueID_checkpoint');
-    deleteImgOverlayAssets();
+    _BT_deleteImgOverlayAssets();
   }
 
   function _BT_disable(arg) {
@@ -404,7 +407,7 @@ $(document).ready(function () {
     }
   }
 
-  function animationPlayback(arg){
+  function _BT_animationPlayback(arg){
     $(arg).parent().find("svg").removeClass("_BT_featureOn");
     if(arg == "#_BT_playButton"){
         flip = !flip;
@@ -424,7 +427,7 @@ $(document).ready(function () {
     (arg == "#_BT_firstFrameButton") ? (_BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1})) : (_BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1}));
   }
 
-  function imgOverlayAsset(){
+  function _BT_imgOverlayAsset(){
     $("#_BT_imgAddRefButton").children().removeClass("_BT_featureOn");
     $("#_BT_imgAddRefButton").attr("bt-value", 0);
     if(!imgOverlayFirstRun){
@@ -449,7 +452,7 @@ $(document).ready(function () {
     $("#_BT_imgRefGallery").width(imgs.length * 87 + "px");
   }
 
-  function deleteImgOverlayAssets(){
+  function _BT_deleteImgOverlayAssets(){
     imgs = new Array();
     $("#_BT_imgRefGallery").empty();
     $("#_BT_imgOverlay").attr("src", "");
@@ -541,6 +544,14 @@ $(document).ready(function () {
     $("#ad-container").css("overflow", style);
     chrome.storage.sync.set({
       "uniqueID_overflow": arg
+    });
+  }
+
+  function _BT_animationBoost(arg) {
+    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script>var arg = 1;</script>"}));
+
+    chrome.storage.sync.set({
+      "uniqueID_animationBoost": arg
     });
   }
 

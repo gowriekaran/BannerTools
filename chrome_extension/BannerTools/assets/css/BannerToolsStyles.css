@@ -31,7 +31,7 @@
   transition: .4s; }
 
 input:checked + ._BT_slider {
-  background-color: #F44336; }
+  background-color: #01579B; }
 
 input:focus + ._BT_slider {
   box-shadow: 0 0 1px #2196F3; }
@@ -56,17 +56,14 @@ input:checked + ._BT_slider:before {
   background-color: #EFEFEF;
   overflow-x: hidden;
   transition: 0.5s;
-  border-left: 2px solid #F44336;
+  border-left: 2px solid #01579B;
   width: 0px; }
   #_BT_ * {
     color: black;
     font-family: 'Roboto Condensed', sans-serif;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none; }
   #_BT_ > div:first-child {
-    background-color: #F44336;
+    background-color: #01579B;
     box-shadow: 0px 0px 8px 2px #000000; }
   #_BT_ div:nth-of-type(n+2) {
     padding: 10px; }
@@ -87,6 +84,8 @@ input:checked + ._BT_slider:before {
     color: black;
     font-weight: bold;
     cursor: pointer; }
+  #_BT_ ._BT_warning {
+    color: red; }
   #_BT_ ._BT_info {
     font-style: italic; }
   #_BT_ #_BT_featureControls button {
@@ -113,10 +112,10 @@ input:checked + ._BT_slider:before {
   display: block;
   margin: auto;
   text-align: center;
-  fill: #F44336; }
+  fill: #01579B; }
 
 .svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
-  fill: #B71C1C !important;
+  fill: #0277BD !important;
   cursor: pointer; }
 
 #_BT_imgOverlay {
@@ -141,7 +140,7 @@ input:checked + ._BT_slider:before {
   visibility: hidden; }
   #_BT_rulerOverlayControls table {
     background-color: #EFEFEF;
-    border: 2px solid #F44336;
+    border: 2px solid #01579B;
     width: 250px;
     margin-left: auto;
     margin-right: auto; }
@@ -185,10 +184,10 @@ input:checked + ._BT_slider:before {
 #animationPlayback #slider {
   width: 90%; }
   #animationPlayback #slider .ui-slider-range {
-    background: #B71C1C; }
+    background: #0277BD; }
   #animationPlayback #slider .ui-slider-handle {
-    border-color: #F44336;
-    background-color: #F44336;
+    border-color: #01579B;
+    background-color: #01579B;
     border-radius: 100px; }
 
 #_BT_imgRefGalleryContainer {
@@ -197,7 +196,7 @@ input:checked + ._BT_slider:before {
   overflow-y: hidden;
   width: 90%;
   height: 75px;
-  background-color: #B71C1C;
+  background-color: #0277BD;
   padding: 10px;
   display: block;
   margin: auto; }
@@ -235,7 +234,7 @@ input:checked + ._BT_slider:before {
   width: 250px !important; }
 
 ._BT_featureOn {
-  fill: #B71C1C !important; }
+  fill: #0277BD !important; }
 
 ._BT_visible {
   visibility: visible !important; }

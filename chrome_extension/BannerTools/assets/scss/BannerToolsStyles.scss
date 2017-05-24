@@ -35,7 +35,6 @@
   tr > td:nth-child(1) {
     width: 90%;
   }
-
   tr > td:nth-child(2) {
     width: 10%;
     text-align: right;
@@ -53,6 +52,10 @@
     color: black;
     font-weight: bold;
     cursor: pointer;
+  }
+
+  ._BT_warning {
+    color: red;
   }
 
   ._BT_info {
