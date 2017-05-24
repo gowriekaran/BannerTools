@@ -87,8 +87,8 @@ input:checked + ._BT_slider:before {
     color: black;
     font-weight: bold;
     cursor: pointer; }
-  #_BT_ ._BT_specialTable td {
-    width: 50% !important; }
+  #_BT_ ._BT_info {
+    font-style: italic; }
   #_BT_ #_BT_featureControls button {
     border: 0px;
     display: block;
@@ -98,6 +98,11 @@ input:checked + ._BT_slider:before {
     height: 50px; }
   #_BT_ #_BT_featureControls #_BT_imgDelRefButton {
     visibility: hidden; }
+  #_BT_ ._BT_easterEgg div {
+    float: left;
+    padding: 0px !important; }
+  #_BT_ ._BT_easterEgg div:nth-of-type(2) {
+    float: right; }
 
 .svgControls td, #_BT_ #_BT_featureControls td, #_BT_rulerOverlayControls td {
   height: 55px !important;
@@ -108,8 +113,7 @@ input:checked + ._BT_slider:before {
   display: block;
   margin: auto;
   text-align: center;
-  fill: #F44336;
-  transition: fill 0.5s; }
+  fill: #F44336; }
 
 .svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
   fill: #B71C1C !important;
@@ -164,36 +168,39 @@ input:checked + ._BT_slider:before {
   display: block;
   width: 50px; }
 
-#animationPlayback > div {
+#animationPlayback div {
   padding: 0px !important; }
 
-#animationPlayback > div:nth-child(1), #animationPlayback > div:nth-child(3) {
-  width: 20%;
-  top: 258px;
-  position: absolute; }
+#animationPlayback div:first-child {
+  display: block;
+  margin: auto; }
 
-#animationPlayback > div:nth-child(2) {
-  width: 60%;
-  margin-left: 52px; }
-  #animationPlayback > div:nth-child(2) .ui-slider-handle {
+#animationPlayback #_BT_timeLine {
+  margin-top: 10px; }
+  #animationPlayback #_BT_timeLine div {
+    float: left; }
+  #animationPlayback #_BT_timeLine div:nth-of-type(2) {
+    float: right; }
+
+#animationPlayback #slider {
+  width: 90%; }
+  #animationPlayback #slider .ui-slider-range {
+    background: #B71C1C; }
+  #animationPlayback #slider .ui-slider-handle {
     border-color: #F44336;
     background-color: #F44336;
     border-radius: 100px; }
-  #animationPlayback > div:nth-child(2) #slider .ui-slider-range {
-    background: #B71C1C; }
-
-#animationPlayback > div:nth-child(3) {
-  right: 12px;
-  text-align: right; }
 
 #_BT_imgRefGalleryContainer {
   visibility: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
-  width: 100%;
+  width: 90%;
   height: 75px;
   background-color: #B71C1C;
-  padding: 10px; }
+  padding: 10px;
+  display: block;
+  margin: auto; }
   #_BT_imgRefGalleryContainer #_BT_imgRefGallery {
     width: 230px;
     height: 100%; }

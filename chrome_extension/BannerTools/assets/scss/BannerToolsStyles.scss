@@ -55,8 +55,8 @@
     cursor: pointer;
   }
 
-  ._BT_specialTable td {
-    width: 50% !important;
+  ._BT_info {
+    font-style: italic;
   }
 
   #_BT_featureControls {
@@ -75,6 +75,18 @@
       visibility: hidden;
     }
   }
+
+  ._BT_easterEgg {
+
+      div{
+        float: left;
+        padding: 0px !important;
+      }
+
+      div:nth-of-type(2){
+        float: right;
+      }
+  }
 }
 
 .svgControls {
@@ -89,7 +101,6 @@
     margin: auto;
     text-align:center;
     fill: $primaryColor;
-    transition: fill 0.5s;
   }
 
   svg:hover {
@@ -158,33 +169,38 @@
 }
 
 #animationPlayback {
-  > div {
+  div {
     padding: 0px !important;
   }
 
-  > div:nth-child(1), > div:nth-child(3){
-    width: 20%;
-    top: 258px;
-    position: absolute;
+  div:first-child {
+    display: block;
+    margin: auto;
   }
 
-  > div:nth-child(2){
-    width: 60%;
-    margin-left: 52px;
+  #_BT_timeLine {
+    margin-top: 10px;
+
+    div{
+      float: left;
+    }
+    div:nth-of-type(2){
+      float: right;
+    }
+  }
+
+  #slider {
+    width: 90%;
+
+    .ui-slider-range {
+      background: $secondaryColor;
+    }
+
     .ui-slider-handle {
       border-color: $primaryColor;
       background-color: $primaryColor;
       border-radius: 100px;
     }
-
-    #slider .ui-slider-range {
-      background: $secondaryColor;
-    }
-  }
-
-  > div:nth-child(3){
-    right: 12px;
-    text-align: right;
   }
 }
 
@@ -192,10 +208,12 @@
   visibility: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
-  width: 100%;
+  width: 90%;
   height: 75px;
   background-color: $secondaryColor;
   padding: 10px;
+  display: block;
+  margin: auto;
   #_BT_imgRefGallery {
     width: 230px;
     height: 100%;

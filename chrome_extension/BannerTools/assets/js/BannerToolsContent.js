@@ -58,10 +58,11 @@ $(document).ready(function () {
           });
 
           $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
+          var _BT_adSize = "";
           if ($("meta[name='ad.size']").length){
-            $("#_BT_adSpecsLabel").text(_BT_adWidth + " x " + _BT_adHeight);
+            _BT_adSize = "(" + _BT_adWidth + " x " + _BT_adHeight + ")";
           }
-          $("#_BT_adNameLabel").text(document.title.split('-')[0]);
+          $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
 
           buildFeatureControls();
           buildRulerControls();
@@ -151,6 +152,10 @@ $(document).ready(function () {
             });
           });
 
+          $(".replay-button").click(function(){
+            _BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1})
+          });
+
           $(document).on('click', '.delImg', function() {
             imgs.splice($(this).parent().attr("id"), 1);
             if($(this).attr("src") == localStorage['uniqueID_imgOverlay']){
@@ -165,11 +170,13 @@ $(document).ready(function () {
 
           $(document).on('click', '.img', function() {
             $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
+
             if(localStorage['uniqueID_imgOverlay'] == $(this).attr("src")){
               localStorage.removeItem('uniqueID_imgOverlay');
               $("#_BT_imgOverlay").attr("src", "");
               $(this).removeClass("_BT_selectedImgOverlay");
             }
+
             else{
               $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
               $("#_BT_imgOverlay").addClass("_BT_visible");
@@ -382,6 +389,9 @@ $(document).ready(function () {
     _BT_overflow(0);
     $("[id*=Switch]").prop("checked", false);
     _BT_closeNav(1);
+    localStorage.removeItem('uniqueID_imgOverlay');
+    localStorage.removeItem('uniqueID_checkpoint');
+    deleteImgOverlayAssets();
   }
 
   function _BT_disable(arg) {
@@ -431,7 +441,10 @@ $(document).ready(function () {
 
     if(imgs.length-1 < 1){
       $("#_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
+      $("#_BT_imgOverlay").attr("src", imgs[imgs.length-1]);
+      $("#_BT_imgOverlay").addClass("_BT_visible");
       localStorage['uniqueID_imgOverlay'] = imgs[imgs.length-1];
+      $(".imgContainer > .img").addClass("_BT_selectedImgOverlay");
     }
     $("#_BT_imgRefGallery").width(imgs.length * 87 + "px");
   }

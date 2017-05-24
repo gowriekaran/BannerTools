@@ -2,9 +2,14 @@ var playCount = 1;
 var autoPlay, interval;
 var intervalIsRunning = true;
 
+if(localStorage['uniqueID_checkpoint']){
+    banner.myTL.progress(localStorage['uniqueID_checkpoint']);
+    $("#_BT_checkPoint").html("Checkpoint: " + banner.myTL.time() + "s");
+}
+
 function animationInterval(){
     $("#slider").slider("value", banner.myTL.progress() * 100);
-    $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");
+    $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,4) + "s");
     if(banner.myTL.progress() == 1){
         playCount++;
 
@@ -34,7 +39,7 @@ if (typeof banner != "undefined") {
         step:.1,
         slide: function ( event, ui ) {
             banner.myTL.progress( ui.value/100 );
-            $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");
+            $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,4) + "s");
             if(!intervalIsRunning) {
                 intervalIsRunning = true;
                 playCount = 1;
@@ -46,3 +51,13 @@ if (typeof banner != "undefined") {
 } else {
     console.log("BannerTools could not find Banner object, Object Progress task aborted");
 }
+
+$("#_BT_currentTime").dblclick(function(){
+    localStorage['uniqueID_checkpoint'] = banner.myTL.progress();
+    $("#_BT_checkPoint").html("Checkpoint: " + banner.myTL.time() + "s");
+});
+
+$("#_BT_checkPoint").dblclick(function(){
+    localStorage.removeItem('uniqueID_checkpoint');
+    $("#_BT_checkPoint").html("");
+});
