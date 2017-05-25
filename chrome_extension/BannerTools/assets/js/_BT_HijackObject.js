@@ -4,12 +4,12 @@ var intervalIsRunning = true;
 
 if (localStorage['uniqueID_checkpoint']) {
     banner.myTL.progress(localStorage['uniqueID_checkpoint']);
-    $("#_BT_checkPoint").html("Checkpoint: " + banner.myTL.time() + "s");
+    $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
 }
 
 $("#_BT_currentTime").dblclick(function () {
     localStorage['uniqueID_checkpoint'] = banner.myTL.progress();
-    $("#_BT_checkPoint").html("Checkpoint: " + banner.myTL.time() + "s");
+    $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
 });
 
 $("#_BT_checkPoint").dblclick(function () {

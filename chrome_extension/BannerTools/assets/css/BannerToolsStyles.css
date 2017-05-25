@@ -61,6 +61,9 @@ input:checked + ._BT_slider:before {
   #_BT_ * {
     color: black;
     font-family: 'Roboto Condensed', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none; }
   #_BT_ > div:first-child {
     background-color: #01579B;
@@ -81,7 +84,7 @@ input:checked + ._BT_slider:before {
     padding: 10px; }
   #_BT_ #_BT_reset,
   #_BT_ #_BT_override {
-    color: black;
+    color: red;
     font-weight: bold;
     cursor: pointer; }
   #_BT_ ._BT_warning {
