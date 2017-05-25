@@ -1,3 +1,65 @@
+// Show context menus if enabled
+// Show context menus if override
+
+var isEnabled = false;
+var isOverride = false;
+
+chrome.storage.sync.get("uniqueID_override", function (data) {
+	if (data["uniqueID_override"] == 1) {
+		isOverride = true;
+		console.log("isOverride", isOverride);
+	}
+	chrome.storage.sync.get("uniqueID_disable", function (data) {
+		if (data["uniqueID_disable"] == 0) {
+			isEnabled = true;
+			console.log("isEnabled", isEnabled);
+		}
+		if ((isEnabled) || (isOverride)) {
+			console.log("Creating context item");
+			var contextMenuItem = {
+				"id": "iFrameItem",
+				"title": "Open with BT",
+				"contexts": ["all"],
+				"onclick": mycallback
+			};
+
+			var LastHoveredElement;
+
+			chrome.contextMenus.create(contextMenuItem);
+			// chrome.contextMenus.onClicked.addListener(function (e) {
+			// 	console.log(this);
+			// 	console.log("im in background script");
+
+			// 	// chrome.tabs.sendMessage(tab.id, "getLastHoveredElement", function (data) {
+			// 	// 	LastHoveredElement = data.value;
+			// 	// });
+
+			// });
+			function mycallback(info, tab) {
+				console.log("im in background script again");
+
+				chrome.tabs.sendMessage(tab.id, "getLastHoveredElement", function (data) {
+					console.log(data);
+					LastHoveredElement = data;
+				});
+				console.log(LastHoveredElement);
+			}
+		}
+	});
+});
+
+
+// searchUrbanDict = function (word) {
+// 	var query = word.selectionText;
+// 	chrome.tabs.create({ url: "http://www.urbandictionary.com/define.php?term=" + query });
+// };
+
+// chrome.contextMenus.create({
+// 	title: "Search in UrbanDictionary",
+// 	contexts: ["selection"],
+// 	onclick: searchUrbanDict
+// });
+
 chrome.browserAction.onClicked.addListener(function (tab) {
 	chrome.tabs.query({
 		active: true,
@@ -18,8 +80,8 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 		});
 	} else if (request.cmd == "screenshot") {
 		chrome.tabs.captureVisibleTab({
-				quality: 100
-			},
+			quality: 100
+		},
 			function (data) {
 				var content = document.createElement("canvas");
 				var image = new Image();

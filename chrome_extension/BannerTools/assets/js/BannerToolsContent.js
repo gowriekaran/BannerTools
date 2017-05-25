@@ -11,6 +11,8 @@ $(document).ready(function () {
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
       play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26";
 
+  var lastHoveredElement;
+
   chrome.storage.sync.get(null, function (items) {
     _BT_storage = items;
     items["uniqueID_override"] == 1 ? _BT_override = 1: _BT_override = 0;
@@ -25,6 +27,17 @@ $(document).ready(function () {
         console.log("BannerTools is currently " + status + ". Click on the extension to launch it!");
       } else {
         _BT_isInitialized = true;
+
+        $(function () {
+          if (document.location.href.indexOf('stag') > -1) {
+            console.log("Stage environment");
+            console.log("Logging all mouseover events");
+            $('.item').mouseover(function () {
+              console.log($(this));
+              lastHoveredElement = $(this);
+            });
+          }
+        });
 
         if ($("meta[name='ad.size']").length){
           var _BT_adSize = $("meta[name='ad.size']").attr("content");
@@ -587,6 +600,8 @@ $(document).ready(function () {
 
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
+      console.log(request);
+
       if (request.ExpandPanel == 1) {
         if (_BT_isInitialized == false) {
           chrome.storage.sync.set({
@@ -616,6 +631,9 @@ $(document).ready(function () {
         }
       } else if (request.screenshot == 0) {
         _BT_screenshot(1);
+      } else if (request == "getLastHoveredElement") {
+        console.log("im in content script", lastHoveredElement);
+        sendResponse({ value: lastHoveredElement });
       }
     }
   );
