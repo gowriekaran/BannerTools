@@ -1,6 +1,4 @@
-var playCount = 1;
-var autoPlay, interval;
-var intervalIsRunning = true;
+var interval;
 
 if (localStorage['uniqueID_checkpoint']) {
     banner.myTL.progress(localStorage['uniqueID_checkpoint']);
@@ -18,7 +16,6 @@ $("#_BT_checkPoint").dblclick(function () {
 });
 
 if (typeof banner != "undefined") {
-    autoPlay = banner.myTL.repeat() + 1;
     interval = setInterval(animationInterval, 1);
 
     $(function () {
@@ -34,8 +31,7 @@ if (typeof banner != "undefined") {
             banner.myTL.progress(ui.value / 100);
             $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
 
-            if (!intervalIsRunning) {
-                intervalIsRunning = true;
+            if (typeof interval == 'undefined') {
                 interval = setInterval(animationInterval, 0);
             }
         }
@@ -71,14 +67,12 @@ function animationInterval() {
     $("#slider").slider("value", banner.myTL.progress() * 100);
     $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
     if (banner.myTL.progress() == 1) {
-        playCount++;
-
-        if (playCount > autoPlay) {
-            intervalIsRunning = false;
+        if (banner.played == 1) {
             stopInterval(interval);
         }
         else {
-            banner.myTL.progress(0);
+            stopInterval(interval);
+            interval = setInterval(animationInterval, 1);
         }
     }
 }
