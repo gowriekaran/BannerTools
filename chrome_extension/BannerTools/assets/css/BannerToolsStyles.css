@@ -84,7 +84,6 @@ input:checked + ._BT_slider:before {
     padding: 10px; }
   #_BT_ #_BT_reset,
   #_BT_ #_BT_forceRun {
-    color: #B71C1C;
     font-weight: bold;
     cursor: pointer; }
   #_BT_ ._BT_warning {

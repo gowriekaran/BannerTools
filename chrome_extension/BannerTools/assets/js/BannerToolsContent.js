@@ -46,7 +46,8 @@ $(document).ready(function () {
           $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
           $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
 
-          _BT_injectScript({script: "_BT_HijackObject"});
+          _BT_injectScript({script: "_BT_BannerObjectSlider"});
+          _BT_injectScript({script: "_BT_BannerObjectStartup"});
 
           $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
 
@@ -95,7 +96,7 @@ $(document).ready(function () {
             });
           }
 
-          $("#_BT_disableSwitch").change(function () {
+          $("#_BT_disableButton").change(function () {
             _BT_disable();
           });
 
@@ -210,13 +211,14 @@ $(document).ready(function () {
   }
 
   function _BT_unpack(arg){
-    if (arg["uniqueID_margin"]              == 1) {     feature("#_BT_marginSwitch",0);}
-    if (arg["uniqueID_backgroundColor"]     == 1) {     feature("#_BT_blackSwitch",0);}
-    if (arg["uniqueID_overflow"]            == 1) {     feature("#_BT_showSwitch",0);}
-    if (arg["uniqueID_guide"]               == 1) {     feature("#_BT_guideSwitch",0);}
-    if (arg["uniqueID_border"]              == 1) {     feature("#_BT_borderSwitch",0);}
-    if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replaySwitch",0);}
+    if (arg["uniqueID_margin"]              == 1) {     feature("#_BT_marginButton",0);}
+    if (arg["uniqueID_backgroundColor"]     == 1) {     feature("#_BT_blackButton",0);}
+    if (arg["uniqueID_overflow"]            == 1) {     feature("#_BT_showButton",0);}
+    if (arg["uniqueID_guide"]               == 1) {     feature("#_BT_guideButton",0);}
+    if (arg["uniqueID_border"]              == 1) {     feature("#_BT_borderButton",0);}
+    if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replayButton",0);}
     if (arg["uniqueID_animationBoost"]      == 1) {     feature("#_BT_boostButton",0);}
+    if (arg["uniqueID_checkpoint"]          == 1) {     feature("#_BT_checkpointButton",0);}
     if(localStorage['uniqueID_imgOverlay']){                    addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);}
   }
 
@@ -235,17 +237,17 @@ $(document).ready(function () {
 
   function executeFeature(object, arg){
     switch (object) {
-      case "#_BT_borderSwitch": _BT_border(arg);
+      case "#_BT_borderButton": _BT_border(arg);
             break;
-      case "#_BT_guideSwitch": _BT_guide(arg);
+      case "#_BT_guideButton": _BT_guide(arg);
             break;
-      case "#_BT_showSwitch": _BT_overflow(arg);
+      case "#_BT_showButton": _BT_overflow(arg);
             break;
-      case "#_BT_marginSwitch": _BT_margin(arg);
+      case "#_BT_marginButton": _BT_margin(arg);
             break;
-      case "#_BT_replaySwitch": _BT_replay(arg);
+      case "#_BT_replayButton": _BT_replay(arg);
             break;
-      case "#_BT_blackSwitch": _BT_backgroundColor(arg);
+      case "#_BT_blackButton": _BT_backgroundColor(arg);
             break;
       case "#_BT_imgAddRefButton": _BT_imgOverlayAsset();
             break;
@@ -260,6 +262,8 @@ $(document).ready(function () {
       case "#_BT_lastFrameButton": _BT_animationPlayback(object);
             break;
       case "#_BT_boostButton": _BT_animationBoost(arg);
+        break;
+      case "#_BT_checkpointButton": _BT_checkpoint(arg);
         break;
     }
   }
@@ -413,6 +417,15 @@ $(document).ready(function () {
     _BT_storage["uniqueID_replay"] = arg;
   }
 
+  function _BT_checkpoint(arg) {
+    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script>var arg = 1;</script>"}));
+
+    chrome.storage.sync.set({
+      "uniqueID_checkpoint": arg
+    });
+    _BT_storage["uniqueID_checkpoint"] = arg;
+  }
+
   function _BT_margin(arg) {
     (arg == 1) ? ($("body, ._BT_featureOverlay").addClass("_BT_marginTop")) : ($("body, ._BT_featureOverlay").removeClass("_BT_marginTop"));
 
@@ -516,12 +529,12 @@ $(document).ready(function () {
         localStorage.removeItem('uniqueID_imgOverlay');
       }
 
-      feature("#_BT_marginSwitch",1);
-      feature("#_BT_blackSwitch",1);
-      feature("#_BT_showSwitch",1);
-      feature("#_BT_guideSwitch",1);
-      feature("#_BT_borderSwitch",1);
-      feature("#_BT_replaySwitch",1);
+      feature("#_BT_marginButton",1);
+      feature("#_BT_blackButton",1);
+      feature("#_BT_showButton",1);
+      feature("#_BT_guideButton",1);
+      feature("#_BT_borderButton",1);
+      feature("#_BT_replayButton",1);
       feature("#_BT_boostButton",1);
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
@@ -618,7 +631,7 @@ $(document).ready(function () {
   function _BT_openNav(arg) {
     _BT_isExpanded = true;
     $("#_BT_").addClass("_BT_expand");
-    $("#_BT_disableSwitch").prop("checked", true);
+    $("#_BT_disableButton").prop("checked", true);
     console.log("BannerTools has been " + arg + "!");
   }
 
