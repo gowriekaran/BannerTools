@@ -1,29 +1,27 @@
-// Show context menus if enabled
-// Show context menus if override
+// var isEnabled = false;
+// var isforceRun = false;
 
-var isEnabled = false;
-var isOverride = false;
-
-chrome.storage.sync.get("uniqueID_override", function (data) {
-	if (data["uniqueID_override"] == 1) {
-		isOverride = true;
-		console.log("isOverride", isOverride);
-	}
-	chrome.storage.sync.get("uniqueID_disable", function (data) {
-		if (data["uniqueID_disable"] == 0) {
-			isEnabled = true;
-			console.log("isEnabled", isEnabled);
-		}
-		if ((isEnabled) || (isOverride)) {
+// chrome.storage.sync.get("uniqueID_forceRun", function (data) {
+// 	if (data["uniqueID_forceRun"] == 1) {
+// 		isforceRun = true;
+// 		console.log("isforceRun", isforceRun);
+// 	}
+// 	chrome.storage.sync.get("uniqueID_disable", function (data) {
+// 		if (data["uniqueID_disable"] == 0) {
+// 			isEnabled = true;
+// 			console.log("isEnabled", isEnabled);
+// 		}
+// 		if ((isEnabled) || (isforceRun)) {
 			console.log("Creating context item");
+
 			var contextMenuItem = {
 				"id": "iFrameItem",
 				"title": "Open with BT",
 				"contexts": ["all"],
-				"onclick": mycallback
+				"onclick": callBack
 			};
 
-			var LastHoveredElement;
+			var lastHoveredElement;
 
 			chrome.contextMenus.create(contextMenuItem);
 			// chrome.contextMenus.onClicked.addListener(function (e) {
@@ -31,22 +29,23 @@ chrome.storage.sync.get("uniqueID_override", function (data) {
 			// 	console.log("im in background script");
 
 			// 	// chrome.tabs.sendMessage(tab.id, "getLastHoveredElement", function (data) {
-			// 	// 	LastHoveredElement = data.value;
+			// 	// 	lastHoveredElement = data.value;
 			// 	// });
 
 			// });
-			function mycallback(info, tab) {
+			function callBack(info, tab) {
 				console.log("im in background script again");
 
 				chrome.tabs.sendMessage(tab.id, "getLastHoveredElement", function (data) {
 					console.log(data);
-					LastHoveredElement = data;
+					lastHoveredElement = data;
+					console.log(lastHoveredElement);
 				});
-				console.log(LastHoveredElement);
+
 			}
-		}
-	});
-});
+// 		}
+// 	});
+// });
 
 
 // searchUrbanDict = function (word) {
@@ -66,7 +65,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 		currentWindow: true
 	}, function (tabs) {
 		chrome.tabs.sendMessage(tabs[0].id, {
-			ExpandPanel: 1
+			_BT_pluginClick: 1
 		});
 	});
 });
@@ -88,8 +87,8 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 
 				image.onload = function () {
 					var canvas = content;
-					canvas.width = request.matches[0];
-					canvas.height = request.matches[1];
+					canvas.width = request.specs[0];
+					canvas.height = request.specs[1];
 
 					var context = canvas.getContext("2d");
 					context.drawImage(image, 0, 0);

@@ -48,14 +48,14 @@
   }
 
   #_BT_reset,
-  #_BT_override {
-    color: red;
+  #_BT_forceRun {
+    color: #B71C1C;
     font-weight: bold;
     cursor: pointer;
   }
 
   ._BT_warning {
-    color: red;
+    color: #B71C1C;
   }
 
   ._BT_info {

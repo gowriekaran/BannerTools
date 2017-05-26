@@ -47,6 +47,7 @@
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
 		"assets/js/_BT_HijackObject.js",
+		"assets/js/_BT_stageHack.js",
 		"assets/js/_BT_BannerObjectFirstFrame.js",
 		"assets/js/_BT_BannerObjectLastFrame.js",
 		"assets/js/_BT_BannerObjectPlay.js",

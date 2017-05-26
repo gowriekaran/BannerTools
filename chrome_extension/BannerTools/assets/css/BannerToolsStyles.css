@@ -83,12 +83,12 @@ input:checked + ._BT_slider:before {
     margin: auto;
     padding: 10px; }
   #_BT_ #_BT_reset,
-  #_BT_ #_BT_override {
-    color: red;
+  #_BT_ #_BT_forceRun {
+    color: #B71C1C;
     font-weight: bold;
     cursor: pointer; }
   #_BT_ ._BT_warning {
-    color: red; }
+    color: #B71C1C; }
   #_BT_ ._BT_info {
     font-style: italic; }
   #_BT_ #_BT_featureControls button {
@@ -118,7 +118,7 @@ input:checked + ._BT_slider:before {
   fill: #01579B; }
 
 .svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
-  fill: #0277BD !important;
+  fill: #B71C1C !important;
   cursor: pointer; }
 
 #_BT_imgOverlay {
@@ -187,7 +187,7 @@ input:checked + ._BT_slider:before {
 #animationPlayback #slider {
   width: 90%; }
   #animationPlayback #slider .ui-slider-range {
-    background: #0277BD; }
+    background: #B71C1C; }
   #animationPlayback #slider .ui-slider-handle {
     border-color: #01579B;
     background-color: #01579B;
@@ -199,7 +199,7 @@ input:checked + ._BT_slider:before {
   overflow-y: hidden;
   width: 90%;
   height: 75px;
-  background-color: #0277BD;
+  background-color: #B71C1C;
   padding: 10px;
   display: block;
   margin: auto; }
@@ -237,7 +237,7 @@ input:checked + ._BT_slider:before {
   width: 250px !important; }
 
 ._BT_featureOn {
-  fill: #0277BD !important; }
+  fill: #B71C1C !important; }
 
 ._BT_visible {
   visibility: visible !important; }
