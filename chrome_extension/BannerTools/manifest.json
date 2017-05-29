@@ -46,6 +46,7 @@
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
+		"assets/img/adgear.png",
 		"assets/js/_BT_BannerObjectSlider.js",
 		"assets/js/_BT_BannerObjectStartup.js",
 		"assets/js/_BT_stageHack.js",

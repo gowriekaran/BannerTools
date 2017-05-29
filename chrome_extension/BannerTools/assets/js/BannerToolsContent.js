@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
-      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement,
+      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement, isAdGear,
       _BT_easterEgg = 0,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
@@ -35,195 +35,205 @@ $(document).ready(function () {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
       }
       else {
-        if (_BT_storage["uniqueID_minimized"] == 1) {
-          console.log("BannerTools is currently minimized. Click on the extension to launch it!");
+        var _BT_adSize = "";
+        if ($("meta[name='ad.size']").length) {
+          var _BT_adSizeMeta = $("meta[name='ad.size']").attr("content");
+          var _BT_start_pos = _BT_adSizeMeta.indexOf("=") + 1;
+          var _BT_end_pos = _BT_adSizeMeta.indexOf(",", _BT_start_pos);
+
+          _BT_adWidth = _BT_adSizeMeta.substring(_BT_start_pos, _BT_end_pos);
+          _BT_adHeight = _BT_adSizeMeta.split(",").pop();
+          _BT_adHeight = _BT_adSizeMeta.split("=").pop();
+
+          _BT_adSize = "(" + _BT_adWidth + " x " + _BT_adHeight + ")";
         }
-        _BT_isRunning = true;
+        else {
+          console.log("BannerTools could not find meta[name='ad.size']");
+        }
 
-        chrome.extension.sendRequest({
-          cmd: "get_BT_"
-        }, function (html) {
-          $("body").append(html);
-          $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-3.1.1.min.js') + "'></script>");
-          $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
-          $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
+        $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-3.1.1.min.js') + "'></script>");
+        $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
 
-          _BT_injectScript({script: "_BT_BannerObjectSlider"});
-          _BT_injectScript({script: "_BT_BannerObjectStartup"});
-
-          $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
-
-          var _BT_adSize = "";
-          if ($("meta[name='ad.size']").length){
-            var _BT_adSizeMeta = $("meta[name='ad.size']").attr("content");
-            var _BT_start_pos = _BT_adSizeMeta.indexOf("=") + 1;
-            var _BT_end_pos = _BT_adSizeMeta.indexOf(",", _BT_start_pos);
-
-            _BT_adWidth = _BT_adSizeMeta.substring(_BT_start_pos, _BT_end_pos);
-            _BT_adHeight = _BT_adSizeMeta.split(",").pop();
-            _BT_adHeight = _BT_adSizeMeta.split("=").pop();
-
-             _BT_adSize = "(" + _BT_adWidth + " x " + _BT_adHeight + ")";
-          }
-          else{
-            console.log("BannerTools could not find meta[name='ad.size']");
-          }
-
-          //CHECK IF ADGEAR
-          var AdGearURL = "script[src*='"+"https://h5.adgear.com/v1/js/html5.min.js"+"']";
-          if ($(AdGearURL).length !== 0) {
-            console.log("AdGear Banner");
-            $("body").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
+        if (localStorage["isAdGear"] == 1) {
+            $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
             $(document).ready(function () {
+              $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
               _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
-              $("body").append('<div id="_BT_AdGearPreviewContainer"><div id="_BT_AdGearPreviewLogo"></div><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
-              $("#_BT_AdGearPreview").toggle();
-              $("#_BT_AdGearPreviewLogo").click(function(){
-                $("#_BT_AdGearPreview").toggle();
+              $("#ad-container").remove();
+              $("body").prepend('<input type="text" id="_BT_AdGearURL" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Go</button>');
+              $("body").prepend('<img id="_BT_AdGearButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+              $("body").prepend('<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg></div>');
+              $("#_BT_AdGearButton").click(function () {
+                localStorage["isAdGear"] = 0;
+                location.reload();
               });
-          });
-          }
-          else {
-            console.log("Not AdGear");
-          }
-          //
-
-          $("._BT_featureOverlay").css({
-            width: _BT_adWidth,
-            height: _BT_adHeight
-          });
-
-          $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
-
-          buildFeatureControls();
-          buildRulerControls();
-
-          if (_BT_storage["uniqueID_easterEgg"] == 1) {
-            $("._BT_easterEgg").toggle();
-            $("#_BT_version").append(' v' + _BT_version);
-          }
-          else {
-            $("#_BT_ img").click(function (event) {
-              if (_BT_easterEgg < 4) {
-                _BT_easterEgg++;
-              }
-              if (_BT_easterEgg == 3) {
-                $("._BT_easterEgg").toggle();
-                $("#_BT_version").append(' v' + _BT_version);
-                chrome.storage.sync.set({
-                  "uniqueID_easterEgg": 1
-                });
-              }
             });
-          }
+        }
+        else {
+          _BT_isRunning = true;
 
-          $("#_BT_disableButton").change(function () {
-            _BT_disable();
-          });
+          chrome.extension.sendRequest({
+            cmd: "get_BT_"
+          }, function (html) {
+            $("body").append(html);
+            $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
 
-          $("#_BT_reset").click(function () {
-            chrome.storage.sync.clear();
-            localStorage.removeItem('uniqueID_checkpoint');
-            localStorage.removeItem('uniqueID_imgOverlay');
-            location.reload();
-          });
+            _BT_injectScript({ script: "_BT_BannerObjectSlider" });
+            _BT_injectScript({ script: "_BT_BannerObjectStartup" });
 
-          $("#_BT_forceRun").click(function () {
-            chrome.storage.sync.set({
-              "uniqueID_forceRun": 1
-            });
-            location.reload();
-          });
+            $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
 
-          $("._BT_rulerButtons").click(function (e) {
-            if (this.id == "_BT_cRulerButton") {
-              $(".draggable").remove();
-              return;
-            }
-            var axis;
-            var maxAxisRange;
-            var pos;
-
-            if (this.id == "_BT_xRulerButton") {
-              axis = "X";
-              pos = "left";
-              maxAxisRange = _BT_adWidth;
+            //CHECK IF ADGEAR
+            if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
+              console.log("AdGear Banner");
+              $("#_BT_").append('<img id="_BT_AdGearButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+              $("#_BT_AdGearButton").click(function () {
+                localStorage["isAdGear"] = 1;
+                location.reload();
+              });
             }
             else {
-              axis = "Y";
-              pos = "top";
-              maxAxisRange = _BT_adHeight;
+              console.log("Not AdGear");
             }
-            $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
-            $("._BT_ruler" + axis).draggable({
-              axis: axis,
-              containment: "#_BT_rulerOverlay",
-              drag: function () {
-                var Position = $(this).css(pos);
+            //
 
-                if (Position == (maxAxisRange - 1) + "px") {
-                  Position = (maxAxisRange + "px");
+            $("._BT_featureOverlay").css({
+              width: _BT_adWidth,
+              height: _BT_adHeight
+            });
+
+            $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
+
+            buildFeatureControls();
+            buildRulerControls();
+
+            if (_BT_storage["uniqueID_easterEgg"] == 1) {
+              $("._BT_easterEgg").toggle();
+              $("#_BT_version").append(' v' + _BT_version);
+            }
+            else {
+              $("#_BT_ img").click(function (event) {
+                if (_BT_easterEgg < 4) {
+                  _BT_easterEgg++;
                 }
-                $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
+                if (_BT_easterEgg == 3) {
+                  $("._BT_easterEgg").toggle();
+                  $("#_BT_version").append(' v' + _BT_version);
+                  chrome.storage.sync.set({
+                    "uniqueID_easterEgg": 1
+                  });
+                }
+              });
+            }
+
+            $("#_BT_disableSwitch").change(function () {
+              _BT_disable();
+            });
+
+            $("#_BT_reset").click(function () {
+              chrome.storage.sync.clear();
+              localStorage.removeItem('uniqueID_checkpoint');
+              localStorage.removeItem('uniqueID_imgOverlay');
+              location.reload();
+            });
+
+            $("#_BT_forceRun").click(function () {
+              chrome.storage.sync.set({
+                "uniqueID_forceRun": 1
+              });
+              location.reload();
+            });
+
+            $("._BT_rulerButtons").click(function (e) {
+              if (this.id == "_BT_cRulerButton") {
+                $(".draggable").remove();
+                return;
+              }
+              var axis;
+              var maxAxisRange;
+              var pos;
+
+              if (this.id == "_BT_xRulerButton") {
+                axis = "X";
+                pos = "left";
+                maxAxisRange = _BT_adWidth;
+              }
+              else {
+                axis = "Y";
+                pos = "top";
+                maxAxisRange = _BT_adHeight;
+              }
+              $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
+              $("._BT_ruler" + axis).draggable({
+                axis: axis,
+                containment: "#_BT_rulerOverlay",
+                drag: function () {
+                  var Position = $(this).css(pos);
+
+                  if (Position == (maxAxisRange - 1) + "px") {
+                    Position = (maxAxisRange + "px");
+                  }
+                  $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
+                }
+              });
+            });
+
+            $(".replay-button").click(function () {
+              _BT_injectScript({ script: "_BT_BannerObjectFirstFrame", remove: 1 });
+            });
+
+            $(document).on('click', '.delImg', function () {
+              imgs.splice($(this).parent().attr("id"), 1);
+              if ($(this).attr("src") == localStorage['uniqueID_imgOverlay']) {
+                localStorage.removeItem('uniqueID_imgOverlay');
+                $("#_BT_imgOverlay").attr("src", "");
+              }
+              $(this).parent().remove();
+              if ($('#_BT_imgRefGallery').is(':empty')) {
+                _BT_deleteImgOverlayAssets();
               }
             });
-          });
 
-          $(".replay-button").click(function(){
-            _BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1});
-          });
+            $(document).on('click', '.img', function () {
+              $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
 
-          $(document).on('click', '.delImg', function() {
-            imgs.splice($(this).parent().attr("id"), 1);
-            if($(this).attr("src") == localStorage['uniqueID_imgOverlay']){
-              localStorage.removeItem('uniqueID_imgOverlay');
-              $("#_BT_imgOverlay").attr("src", "");
-            }
-            $(this).parent().remove();
-            if ($('#_BT_imgRefGallery').is(':empty')){
-              _BT_deleteImgOverlayAssets();
-            }
-          });
+              if (localStorage['uniqueID_imgOverlay'] == $(this).attr("src")) {
+                $("#_BT_imgOverlay").attr("src", "");
+                $("#_BT_imgOverlay").removeClass("_BT_visible");
+                localStorage.removeItem('uniqueID_imgOverlay');
+                $(this).removeClass("_BT_selectedImgOverlay");
+              }
 
-          $(document).on('click', '.img', function() {
-            $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
+              else {
+                $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
+                $("#_BT_imgOverlay").addClass("_BT_visible");
+                localStorage['uniqueID_imgOverlay'] = $(this).attr("src");
+                $(this).addClass("_BT_selectedImgOverlay");
+              }
+            });
 
-            if(localStorage['uniqueID_imgOverlay'] == $(this).attr("src")){
-              $("#_BT_imgOverlay").attr("src", "");
-              $("#_BT_imgOverlay").removeClass("_BT_visible");
-              localStorage.removeItem('uniqueID_imgOverlay');
-              $(this).removeClass("_BT_selectedImgOverlay");
-            }
+            $(document).on('click', '._BT_feature', function () {
+              feature("#" + this.id, $(this).attr('bt-value'));
+            });
 
-            else{
-              $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
-              $("#_BT_imgOverlay").addClass("_BT_visible");
-              localStorage['uniqueID_imgOverlay'] = $(this).attr("src");
-              $(this).addClass("_BT_selectedImgOverlay");
-            }
-          });
+            function uploadImgOverlayAsset() {
+              $(this).remove();
+              $('<input id="_BT_imgOverlayUpload" type="file" name="filename" accept="image/jpeg, image/png">').change(uploadImgOverlayAsset).appendTo("#_BT_imgOverlayUploadInput");
 
-          $(document).on('click', '._BT_feature', function () {
-            feature("#" + this.id, $(this).attr('bt-value'));
-          });
-
-          function uploadImgOverlayAsset(){
-            $(this).remove();
-            $('<input id="_BT_imgOverlayUpload" type="file" name="filename" accept="image/jpeg, image/png">').change(uploadImgOverlayAsset).appendTo("#_BT_imgOverlayUploadInput");
-
-            if (this.files && this.files[0]) {
-              var reader = new FileReader();
-              reader.onload = function (e) {
+              if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
                   addImgOverlayAsset(e.target.result);
-              };
-              reader.readAsDataURL(this.files[0]);
+                };
+                reader.readAsDataURL(this.files[0]);
+              }
             }
-          }
 
-          $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
+            $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
 
-          _BT_openNav("enabled");
-        });
+            _BT_openNav(_BT_storage["uniqueID_minimized"]);
+          });
+        }
       }
     }
     else {
@@ -240,7 +250,7 @@ $(document).ready(function () {
     if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replayButton",0);}
     if (arg["uniqueID_animationBoost"]      == 1) {     feature("#_BT_boostButton",0);}
     if (arg["uniqueID_checkpoint"]          == 1) {     feature("#_BT_checkpointButton",0);}
-    if(localStorage['uniqueID_imgOverlay']){                    addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);}
+    if(localStorage['uniqueID_imgOverlay']){            addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);}
   }
 
   function feature(object, arg){
@@ -596,13 +606,12 @@ $(document).ready(function () {
 
       localStorage.removeItem('_BT_storageJSON');
       $("#ad-container").css("margin", "auto");
-      _BT_openNav("enabled");
+      _BT_openNav(_BT_storage["uniqueID_minimized"]);
     }
   }
 
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
-      console.log(request);
       if (request._BT_pluginClick == 1) {
         if (_BT_isRunning == false) {
           chrome.storage.sync.set({
@@ -624,7 +633,7 @@ $(document).ready(function () {
         }
         else {
           if (_BT_isExpanded == false) {
-            _BT_openNav("maximized");
+            _BT_openNav(0);
             chrome.storage.sync.set({
               'uniqueID_minimized': 0
             });
@@ -650,10 +659,18 @@ $(document).ready(function () {
   );
 
   function _BT_openNav(arg) {
-    _BT_isExpanded = true;
-    $("#_BT_").addClass("_BT_expand");
-    $("#_BT_disableButton").prop("checked", true);
-    console.log("BannerTools has been " + arg + "!");
+    var status;
+    (arg == 0) ? status = "maximized" : status = "minimized";
+    if (arg == 0) {
+      _BT_isExpanded = true;
+      $("#_BT_").addClass("_BT_expand");
+      $("#_BT_disableSwitch").prop("checked", true);
+      chrome.storage.sync.set({
+        "uniqueID_minimized": 0
+      });
+      _BT_storage["uniqueID_minimized"] = 0;
+    }
+    console.log("BannerTools has been " + status + "!");
   }
 
   function _BT_closeNav(arg) {
