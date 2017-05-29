@@ -131,6 +131,25 @@
   visibility: hidden;
 }
 
+#_BT_AdGearPreviewContainer {
+    * {
+      display: block;
+      margin: auto;
+    }
+
+    #_BT_AdGearPreviewLogo {
+      background: url("http://www.adgear.com/images/sprite.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+      height: 32px;
+      width: 120px;
+      margin-bottom: 10px;
+      transition: transform 0.5s;
+      &:hover {
+        cursor: pointer;
+        transform: translateY(-10px);
+      }
+    }
+}
+
 #_BT_rulerOverlayControls {
   @extend .svgControls;
   width: 100%;

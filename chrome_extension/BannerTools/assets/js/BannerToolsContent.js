@@ -70,13 +70,21 @@ $(document).ready(function () {
           }
 
           //CHECK IF ADGEAR
-          var adGear = true;
-          if(adGear){
+          var AdGearURL = "script[src*='"+"https://h5.adgear.com/v1/js/html5.min.js"+"']";
+          if ($(AdGearURL).length !== 0) {
+            console.log("AdGear Banner");
             $("body").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
             $(document).ready(function () {
               _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
-              $("body").append('<iframe id="testad" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe>');
-            });
+              $("body").append('<div id="_BT_AdGearPreviewContainer"><div id="_BT_AdGearPreviewLogo"></div><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
+              $("#_BT_AdGearPreview").toggle();
+              $("#_BT_AdGearPreviewLogo").click(function(){
+                $("#_BT_AdGearPreview").toggle();
+              });
+          });
+          }
+          else {
+            console.log("Not AdGear");
           }
           //
 

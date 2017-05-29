@@ -8,7 +8,7 @@ var loader_obj = {};
 
     // Click URLs
     loader_obj['click_urls'] = {};
-    loader_obj['click_urls']['clickTAG'] = clickTag || 'http://www.example.com/redirect/clickTag/';
+    loader_obj['click_urls']['clickTAG'] = 'https://www.google.com';
 
     // // Expandable
     // loader_obj['expandable'] = {};
@@ -16,4 +16,4 @@ var loader_obj = {};
     // loader_obj['expandable']['width'] = 600;
     // loader_obj['expandable']['height'] = 300;
 
-ADGEAR.html5.basicLoader("testad", banner_url, loader_obj);
+ADGEAR.html5.basicLoader("_BT_AdGearPreview", banner_url, loader_obj);
