@@ -4,8 +4,9 @@
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
-      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement, isAdGear,
+      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement,
       _BT_easterEgg = 0,
+      _BT_currSpeed,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
       flip = imgOverlayFirstRun = true,
@@ -62,9 +63,18 @@ $(document).ready(function () {
               $("#ad-container").remove();
               $("body").prepend('<input type="text" id="_BT_AdGearURL" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Go</button>');
               $("body").prepend('<img id="_BT_AdGearButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
-              $("body").prepend('<div><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg></div>');
-              $("#_BT_AdGearButton").click(function () {
+              $("body").prepend('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg></div>');
+              $("#_BT_AdGearButton, #_BT_AdGearHomeButton").click(function () {
                 localStorage["isAdGear"] = 0;
+                location.reload();
+              });
+              $('input').blur(function () {
+                localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
+                location.reload();
+              });
+
+              $('button').click(function () {
+                localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
                 location.reload();
               });
             });
@@ -537,7 +547,28 @@ $(document).ready(function () {
   }
 
   function _BT_animationBoost(arg) {
-    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
+    console.log(arg);
+    if (typeof _BT_currSpeed === 'undefined') {
+      _BT_currSpeed = 0.5;
+    }
+    else if ((arg == 0) && (_BT_currSpeed != 0.5)) {
+      _BT_animationBoost(1);
+      return;
+    }
+
+    if (_BT_currSpeed == 0.5) {
+      _BT_currSpeed = 1;
+    } else if (_BT_currSpeed == 1) {
+      _BT_currSpeed = 2;
+    } else if (_BT_currSpeed == 2) {
+          _BT_currSpeed = 5;
+    } else if (_BT_currSpeed == 5) {
+            _BT_currSpeed = 10;
+    } else {
+      _BT_currSpeed = 0.5;
+    }
+    console.log(_BT_currSpeed);
+    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currSpeed + ";</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
 
     chrome.storage.sync.set({
       "uniqueID_animationBoost": arg

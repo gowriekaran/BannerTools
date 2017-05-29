@@ -139,6 +139,15 @@ input:checked + ._BT_slider:before {
   margin: auto;
   margin-top: 20px; }
 
+#_BT_AdGearHomeButton {
+  margin-top: 5px;
+  margin-left: 5px;
+  width: 32px;
+  width: 32px;
+  fill: #01579B; }
+  #_BT_AdGearHomeButton:hover {
+    cursor: pointer; }
+
 #_BT_AdGearPreviewContainer * {
   display: block;
   margin: auto; }

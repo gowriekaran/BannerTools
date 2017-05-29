@@ -23,14 +23,4 @@ $(document).ready(function () {
     $(document).ready(function () {
         ADGEAR.html5.basicLoader("_BT_AdGearPreview", banner_url, loader_obj);
     });
-
-    $('input').blur(function () {
-        localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
-        location.reload();
-    });
-
-    $('button').click(function () {
-        localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
-        location.reload();
-    });
 });
