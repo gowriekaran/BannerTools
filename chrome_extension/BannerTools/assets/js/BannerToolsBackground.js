@@ -77,6 +77,12 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 			dataType: "html",
 			success: sendResponse
 		});
+	} else if (request.cmd == "get_AdGear_") {
+		$.ajax({
+			url: chrome.extension.getURL("/assets/html/AdGear.html"),
+			dataType: "html",
+			success: sendResponse
+		});
 	} else if (request.cmd == "screenshot") {
 		chrome.tabs.captureVisibleTab({
 			quality: 100

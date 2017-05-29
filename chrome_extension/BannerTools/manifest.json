@@ -57,6 +57,7 @@
 		"assets/js/_BT_BannerObjectCheckpoint.js",
 		"assets/js/jquery-3.1.1.min.js",
 		"assets/js/jquery-ui.min.js",
+		"assets/js/AdGear.js",
 		"assets/html/_BT_.html",
 		"assets/json/_BT_features.json",
 		"assets/json/_BT_rulers.json"

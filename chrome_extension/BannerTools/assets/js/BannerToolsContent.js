@@ -18,6 +18,7 @@ $(document).ready(function () {
     _BT_run();
   });
 
+//
   $(function () {
     if (document.location.href.indexOf('stag') > -1) {
       console.log("Stage enviroment");
@@ -26,6 +27,7 @@ $(document).ready(function () {
       });
     }
   });
+//
 
   function _BT_run() {
     if ($("#ad-container").length || _BT_forceRun == 1) {
@@ -66,6 +68,17 @@ $(document).ready(function () {
           else{
             console.log("BannerTools could not find meta[name='ad.size']");
           }
+
+          //CHECK IF ADGEAR
+          var adGear = true;
+          if(adGear){
+            $("body").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
+            $(document).ready(function () {
+              _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
+              $("body").append('<iframe id="testad" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe>');
+            });
+          }
+          //
 
           $("._BT_featureOverlay").css({
             width: _BT_adWidth,
@@ -418,7 +431,7 @@ $(document).ready(function () {
   }
 
   function _BT_checkpoint(arg) {
-    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script>var arg = 1;</script>"}));
+    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
 
     chrome.storage.sync.set({
       "uniqueID_checkpoint": arg
@@ -506,7 +519,7 @@ $(document).ready(function () {
   }
 
   function _BT_animationBoost(arg) {
-    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script>var arg = 1;</script>"}));
+    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
 
     chrome.storage.sync.set({
       "uniqueID_animationBoost": arg
