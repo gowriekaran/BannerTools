@@ -6,7 +6,7 @@ $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
       _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement,
       _BT_easterEgg = 0,
-      _BT_currSpeed,
+      _BT_currentSpeed = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
       flip = imgOverlayFirstRun = true,
@@ -107,11 +107,7 @@ $(document).ready(function () {
             }
             //
 
-            $("._BT_featureOverlay").css({
-              width: _BT_adWidth,
-              height: _BT_adHeight
-            });
-
+            $("._BT_featureOverlay").css({width: _BT_adWidth, height: _BT_adHeight});
             $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
 
             buildFeatureControls();
@@ -129,9 +125,7 @@ $(document).ready(function () {
                 if (_BT_easterEgg == 3) {
                   $("._BT_easterEgg").toggle();
                   $("#_BT_version").append(' v' + _BT_version);
-                  chrome.storage.sync.set({
-                    "uniqueID_easterEgg": 1
-                  });
+                  setToGoogleStorage({"uniqueID_easterEgg": 1});
                 }
               });
             }
@@ -148,9 +142,7 @@ $(document).ready(function () {
             });
 
             $("#_BT_forceRun").click(function () {
-              chrome.storage.sync.set({
-                "uniqueID_forceRun": 1
-              });
+              setToGoogleStorage({"uniqueID_forceRun": 1});
               location.reload();
             });
 
@@ -273,10 +265,10 @@ $(document).ready(function () {
       $(object).children().removeClass("_BT_featureOn");
     }
     $(object).attr("bt-value", arg);
-    executeFeature(object, arg);
+    getFunction(object, arg);
   }
 
-  function executeFeature(object, arg){
+  function getFunction(object, arg){
     switch (object) {
       case "#_BT_borderButton": _BT_border(arg);
             break;
@@ -383,9 +375,7 @@ $(document).ready(function () {
   }
 
   function _BT_disable() {
-    chrome.storage.sync.set({
-      "uniqueID_disable": 1
-    });
+    setToGoogleStorage({"uniqueID_disable": 1});
     _BT_storage["uniqueID_disable"] = 1;
     location.reload();
   }
@@ -452,27 +442,21 @@ $(document).ready(function () {
   function _BT_replay(arg) {
     (arg == 1) ? ($(".replay-button").css("visibility", "hidden")) : ($(".replay-button").css("visibility", ""));
 
-    chrome.storage.sync.set({
-      "uniqueID_replay": arg
-    });
+    setToGoogleStorage({"uniqueID_replay": arg});
     _BT_storage["uniqueID_replay"] = arg;
   }
 
   function _BT_checkpoint(arg) {
     (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
 
-    chrome.storage.sync.set({
-      "uniqueID_checkpoint": arg
-    });
+    setToGoogleStorage({"uniqueID_checkpoint": arg});
     _BT_storage["uniqueID_checkpoint"] = arg;
   }
 
   function _BT_margin(arg) {
     (arg == 1) ? ($("body, ._BT_featureOverlay").addClass("_BT_marginTop")) : ($("body, ._BT_featureOverlay").removeClass("_BT_marginTop"));
 
-    chrome.storage.sync.set({
-      "uniqueID_margin": arg
-    });
+    setToGoogleStorage({"uniqueID_margin": arg});
     _BT_storage["uniqueID_margin"] = arg;
   }
 
@@ -498,9 +482,7 @@ $(document).ready(function () {
       $(".draggable").removeClass("_BT_border");
     }
 
-    chrome.storage.sync.set({
-      "uniqueID_border": arg
-    });
+    setToGoogleStorage({"uniqueID_border": arg});
     _BT_storage["uniqueID_border"] = arg;
   }
 
@@ -508,9 +490,7 @@ $(document).ready(function () {
     _BT_grid(arg);
     _BT_rulers(arg);
 
-    chrome.storage.sync.set({
-      "uniqueID_guide": arg
-    });
+    setToGoogleStorage({"uniqueID_guide": arg});
     _BT_storage["uniqueID_guide"] = arg;
   }
 
@@ -529,9 +509,7 @@ $(document).ready(function () {
 
   function _BT_backgroundColor(arg) {
     (arg == 1) ? ($("body").addClass("_BT_backgroundColor")) : ($("body").removeClass("_BT_backgroundColor"));
-    chrome.storage.sync.set({
-      "uniqueID_backgroundColor": arg
-    });
+    setToGoogleStorage({"uniqueID_backgroundColor": arg});
     _BT_storage["uniqueID_backgroundColor"] = arg;
   }
 
@@ -540,40 +518,41 @@ $(document).ready(function () {
     (arg == 1) ? (style = "visible") : (style = "");
 
     $("#ad-container").css("overflow", style);
-    chrome.storage.sync.set({
-      "uniqueID_overflow": arg
-    });
+    setToGoogleStorage({"uniqueID_overflow": arg});
     _BT_storage["uniqueID_overflow"] = arg;
   }
 
   function _BT_animationBoost(arg) {
-    console.log(arg);
-    if (typeof _BT_currSpeed === 'undefined') {
-      _BT_currSpeed = 0.5;
+    console.log("arg", arg);
+    if(_BT_storage["uniqueID_animationBoostValue"]){
+      _BT_currentSpeed = _BT_storage["uniqueID_animationBoostValue"];
     }
-    else if ((arg == 0) && (_BT_currSpeed != 0.5)) {
-      _BT_animationBoost(1);
-      return;
-    }
+    console.log("_BT_currentSpeed", _BT_currentSpeed);
+    _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
 
-    if (_BT_currSpeed == 0.5) {
-      _BT_currSpeed = 1;
-    } else if (_BT_currSpeed == 1) {
-      _BT_currSpeed = 2;
-    } else if (_BT_currSpeed == 2) {
-          _BT_currSpeed = 5;
-    } else if (_BT_currSpeed == 5) {
-            _BT_currSpeed = 10;
+    var _BT_nextSpeed;
+    if (_BT_currentSpeed == 0.5) {
+      _BT_nextSpeed = 1;
+    } else if (_BT_currentSpeed == 1) {
+      _BT_nextSpeed = 2;
+    } else if (_BT_currentSpeed == 2) {
+      _BT_nextSpeed = 5;
+    } else if (_BT_currentSpeed == 5) {
+      _BT_nextSpeed = 10;
     } else {
-      _BT_currSpeed = 0.5;
+      _BT_nextSpeed = 0.5;
     }
-    console.log(_BT_currSpeed);
-    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currSpeed + ";</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
+    console.log("_BT_nextSpeed", _BT_nextSpeed);
 
-    chrome.storage.sync.set({
-      "uniqueID_animationBoost": arg
-    });
+    // _BT_currentSpeed = _BT_nextSpeed;
+
+    (_BT_currentSpeed == 1) ? arg = 0: arg = 1;
+    (_BT_currentSpeed == 1) ? $("#_BT_boostButton").children().removeClass("_BT_featureOn"): $("#_BT_boostButton").children().addClass("_BT_featureOn");
+
+    setToGoogleStorage({"uniqueID_animationBoost": arg});
+    setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
     _BT_storage["uniqueID_animationBoost"] = arg;
+    _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
   }
 
   function _BT_screenshot(arg) {
@@ -641,20 +620,18 @@ $(document).ready(function () {
     }
   }
 
+  function setToGoogleStorage(arg){
+    chrome.storage.sync.set(arg);
+  }
+
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
       if (request._BT_pluginClick == 1) {
         if (_BT_isRunning == false) {
-          chrome.storage.sync.set({
-            'uniqueID_disable': 0
-          });
+          setToGoogleStorage({"uniqueID_disable": 0});
+          setToGoogleStorage({"uniqueID_minimized": 0});
           _BT_storage["uniqueID_disable"] = 0;
-
-          chrome.storage.sync.set({
-            'uniqueID_minimized': 0
-          });
           _BT_storage["uniqueID_minimized"] = 0;
-
           chrome.storage.sync.get("uniqueID_forceRun", function (data) {
             if (data["uniqueID_forceRun"] == 1) {
               _BT_forceRun = 1;
@@ -665,9 +642,7 @@ $(document).ready(function () {
         else {
           if (_BT_isExpanded == false) {
             _BT_openNav(0);
-            chrome.storage.sync.set({
-              'uniqueID_minimized': 0
-            });
+            setToGoogleStorage({"uniqueID_minimized": 0});
           }
           else {
             _BT_closeNav(0);
@@ -696,9 +671,7 @@ $(document).ready(function () {
       _BT_isExpanded = true;
       $("#_BT_").addClass("_BT_expand");
       $("#_BT_disableSwitch").prop("checked", true);
-      chrome.storage.sync.set({
-        "uniqueID_minimized": 0
-      });
+      setToGoogleStorage({"uniqueID_minimized": 0});
       _BT_storage["uniqueID_minimized"] = 0;
     }
     console.log("BannerTools has been " + status + "!");
@@ -706,9 +679,7 @@ $(document).ready(function () {
 
   function _BT_closeNav(arg) {
     var status;
-    chrome.storage.sync.set({
-      "uniqueID_minimized": 1
-    });
+    setToGoogleStorage({"uniqueID_minimized": 1});
     (arg == 0) ? status = "minimized" : status = "disabled";
     _BT_isExpanded = false;
     $("#_BT_").removeClass("_BT_expand");
