@@ -177,7 +177,7 @@
     }
 }
 
-#_BT_AdGearURL {
+#_BT_AdGearURLInput {
     height: 15px;
     width: 300px;
     padding: 5px;
@@ -186,13 +186,26 @@
     color: $textColor;
 }
 
-#_BT_AdGearButton {
+#_BT_AdGearLogoButton {
   transition: transform 0.5s;
 
   &:hover {
     cursor: pointer;
     transform: translateY(-10px);
   }
+}
+
+#_BT_currentSpeed {
+  visibility: hidden;
+  position: absolute;
+  top: 5px;
+  right: $appWidth + 8px;
+  color: $primaryColor;
+  background-color: $backgroundColor;
+  border: 2px solid $primaryColor;
+  padding: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
 }
 
 #_BT_rulerOverlayControls {

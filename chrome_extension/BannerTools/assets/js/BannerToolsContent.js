@@ -9,7 +9,7 @@ $(document).ready(function () {
       _BT_currentSpeed = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
-      flip = imgOverlayFirstRun = true,
+      flip = imgOverlayFirstRun = initialBoost = true,
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
       play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26";
 
@@ -61,15 +61,16 @@ $(document).ready(function () {
               $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
               _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
               $("#ad-container").remove();
-              $("body").prepend('<input type="text" id="_BT_AdGearURL" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Go</button>');
-              $("body").prepend('<img id="_BT_AdGearButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+              $("body").prepend('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Go</button>');
+              $("body").prepend('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
               $("body").prepend('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg></div>');
-              $("#_BT_AdGearButton, #_BT_AdGearHomeButton").click(function () {
+              $("#_BT_AdGearLogoButton, #_BT_AdGearHomeButton").click(function () {
                 localStorage["isAdGear"] = 0;
                 location.reload();
               });
+
               $('input').blur(function () {
-                localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
+                localStorage["AdGearURL"] = $("#_BT_AdGearURLInput").val();
                 location.reload();
               });
 
@@ -93,11 +94,10 @@ $(document).ready(function () {
 
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
 
-            //CHECK IF ADGEAR
             if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
               console.log("AdGear Banner");
-              $("#_BT_").append('<img id="_BT_AdGearButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
-              $("#_BT_AdGearButton").click(function () {
+              $("#_BT_").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+              $("#_BT_AdGearLogoButton").click(function () {
                 localStorage["isAdGear"] = 1;
                 location.reload();
               });
@@ -105,7 +105,6 @@ $(document).ready(function () {
             else {
               console.log("Not AdGear");
             }
-            //
 
             $("._BT_featureOverlay").css({width: _BT_adWidth, height: _BT_adHeight});
             $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
@@ -294,7 +293,7 @@ $(document).ready(function () {
             break;
       case "#_BT_lastFrameButton": _BT_animationPlayback(object);
             break;
-      case "#_BT_boostButton": _BT_animationBoost(arg);
+      case "#_BT_boostButton": _BT_animationBoost(1);
         break;
       case "#_BT_checkpointButton": _BT_checkpoint(arg);
         break;
@@ -523,36 +522,47 @@ $(document).ready(function () {
   }
 
   function _BT_animationBoost(arg) {
-    console.log("arg", arg);
-    if(_BT_storage["uniqueID_animationBoostValue"]){
-      _BT_currentSpeed = _BT_storage["uniqueID_animationBoostValue"];
+    if(arg == 0){
+      $("#_BT_currentSpeed").removeClass("_BT_visible");
     }
-    console.log("_BT_currentSpeed", _BT_currentSpeed);
-    _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
+    else{
+      $("#_BT_currentSpeed").addClass("_BT_visible");
+      if(_BT_storage["uniqueID_animationBoostValue"]){
+        _BT_currentSpeed = _BT_storage["uniqueID_animationBoostValue"];
+      }
+      if(!initialBoost){
+        var _BT_nextSpeed;
+        if (_BT_currentSpeed == 0.5) {
+          _BT_nextSpeed = 1;
+        } else if (_BT_currentSpeed == 1) {
+          _BT_nextSpeed = 2;
+        } else if (_BT_currentSpeed == 2) {
+          _BT_nextSpeed = 5;
+        } else if (_BT_currentSpeed == 5) {
+          _BT_nextSpeed = 10;
+        } else {
+          _BT_nextSpeed = 0.5;
+        }
+        _BT_currentSpeed = _BT_nextSpeed;
+      }
+      else{
+        initialBoost = false;
+        setToGoogleStorage({"uniqueID_animationBoost": 1});
+        _BT_storage["uniqueID_animationBoost"] = 1;
+        $("#_BT_boostButton").children().addClass("_BT_featureOn");
+      }
+      var suffix = ".0";
+      if(_BT_currentSpeed == 0.5){
+        suffix = "";
+      }
 
-    var _BT_nextSpeed;
-    if (_BT_currentSpeed == 0.5) {
-      _BT_nextSpeed = 1;
-    } else if (_BT_currentSpeed == 1) {
-      _BT_nextSpeed = 2;
-    } else if (_BT_currentSpeed == 2) {
-      _BT_nextSpeed = 5;
-    } else if (_BT_currentSpeed == 5) {
-      _BT_nextSpeed = 10;
-    } else {
-      _BT_nextSpeed = 0.5;
+      $("#_BT_boostButton").children().remove("_BT_featureOn");
+      $("#_BT_boostButton").children().addClass("_BT_featureOn");
+      $("#_BT_currentSpeed").text("x" + _BT_currentSpeed + suffix);
+      _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
+      setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
+      _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
     }
-    console.log("_BT_nextSpeed", _BT_nextSpeed);
-
-    // _BT_currentSpeed = _BT_nextSpeed;
-
-    (_BT_currentSpeed == 1) ? arg = 0: arg = 1;
-    (_BT_currentSpeed == 1) ? $("#_BT_boostButton").children().removeClass("_BT_featureOn"): $("#_BT_boostButton").children().addClass("_BT_featureOn");
-
-    setToGoogleStorage({"uniqueID_animationBoost": arg});
-    setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
-    _BT_storage["uniqueID_animationBoost"] = arg;
-    _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
   }
 
   function _BT_screenshot(arg) {
@@ -576,14 +586,15 @@ $(document).ready(function () {
       feature("#_BT_guideButton",1);
       feature("#_BT_borderButton",1);
       feature("#_BT_replayButton",1);
-      feature("#_BT_boostButton",1);
+      // feature("#_BT_boostButton",1);
+      _BT_animationBoost(0);
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
 
       $("#ad-container").css("margin", 0);
       _BT_replay(1);
 
-      _BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1});
+      // _BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1});
       chrome.extension.sendRequest({
         cmd: "resetZoom"
       });
@@ -603,6 +614,7 @@ $(document).ready(function () {
     else {
       _BT_storage = JSON.parse(localStorage['_BT_storageJSON']);
       _BT_unpack(_BT_storage);
+      // _BT_animationBoost(1);
 
       if(localStorage['uniqueID_checkpointBackup']){
         localStorage['uniqueID_checkpoint'] = localStorage['uniqueID_checkpointBackup'];
