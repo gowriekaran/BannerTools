@@ -1,12 +1,28 @@
 $appWidth: 250px;
 
 $primaryColor: #2979FF;
+$primaryColor2: #2979FF;
 $secondaryColor: #FAFAFA;
 $thirdColor: #9E9E9E;
-$backgroundColor: #212121;
-// $textColor: $primaryColor;
-$warningColor: #F44336;
-$textColor: white;
+// $textColor: black;
+
+$headerColor: $primaryColor;
+$backgroundColor: $secondaryColor;
+$borderColor: $primaryColor;
+$switchColor: $primaryColor;
+$textColor: black;
+$warningTextColor: #F44336;
+$sliderColor:#9E9E9E;
+$sliderHandleColor:$primaryColor;
+$sliderBorderColor: black;
+$sliderBackgroundColor:#E0E0E0;
+$sliderRangeColor: #BDBDBD;
+$featureColor: #9E9E9E;
+$featureHoverColor: $primaryColor2;
+$featureOnColor: $primaryColor;
+$imgGalleryColor: $primaryColor2;
+$rulerColor: #49fb35;
+$spanColor: $secondaryColor;
 
 //GOLD
 // primaryColor: #212121;

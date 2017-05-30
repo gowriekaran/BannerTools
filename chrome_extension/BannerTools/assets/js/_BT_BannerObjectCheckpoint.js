@@ -1,4 +1,4 @@
-if (typeof banner != "undefined") {
+if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
     if(arg == 2){
         if (!localStorage['uniqueID_checkpoint']){
             localStorage['uniqueID_checkpoint'] = banner.myTL.progress();

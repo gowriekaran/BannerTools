@@ -1,4 +1,4 @@
-if (typeof banner != "undefined") {
+if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
     banner.myTL.timeScale(arg);
 }
 else {

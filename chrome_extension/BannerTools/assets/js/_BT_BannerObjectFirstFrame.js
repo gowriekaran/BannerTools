@@ -1,4 +1,4 @@
-if(typeof banner != "undefined"){
+if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
     banner.myTL.progress(0);
     $("#slider").slider("value", banner.myTL.progress() * 100);
     $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");

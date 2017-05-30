@@ -38,7 +38,7 @@
 }
 
 input:checked+._BT_slider {
-  background-color: $primaryColor
+  background-color: $switchColor;
 }
 
 input:focus+._BT_slider {

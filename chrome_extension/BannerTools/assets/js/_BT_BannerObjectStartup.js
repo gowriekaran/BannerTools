@@ -1,4 +1,4 @@
-if(typeof banner != "undefined"){
+if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
     if (localStorage['uniqueID_checkpoint']) {
         banner.myTL.progress(localStorage['uniqueID_checkpoint']);
         $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");

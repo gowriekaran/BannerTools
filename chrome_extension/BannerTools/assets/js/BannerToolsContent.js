@@ -190,7 +190,7 @@ $(document).ready(function () {
                 drag: function () {
                   var Position = $(this).css(pos);
 
-                  if (Position == (maxAxisRange - 1) + "px") {
+                  if (Position == (maxAxisRange - 2) + "px") {
                     Position = (maxAxisRange + "px");
                   }
                   $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
@@ -230,12 +230,12 @@ $(document).ready(function () {
               feature("#" + this.id, $(this).attr('bt-value'));
             });
 
-            $(document).on('mouseover', '._BT_feature', function () {
+            $(document).on('mouseover', '._BT_feature, ._BT_rulerButtons', function () {
               if (_BT_helpOn) $("#_BT_helpDesk").addClass("_BT_opacity");
               if (_BT_helpOn) featureHelp($(this).attr('bt-featurename'), $(this).attr('bt-featuredesc'));
             });
 
-            $(document).on('mouseout', '._BT_feature', function () {
+            $(document).on('mouseout', '._BT_feature, ._BT_rulerButtons', function () {
               $("#_BT_helpDesk").removeClass("_BT_opacity");
             });
 
@@ -272,7 +272,7 @@ $(document).ready(function () {
     if (arg["uniqueID_guide"]               == 1) {     feature("#_BT_guideButton",0);}
     if (arg["uniqueID_border"]              == 1) {     feature("#_BT_borderButton",0);}
     if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replayButton",0);}
-    if (arg["uniqueID_help"]          == 1) {           feature("#_BT_helpButton",0);}
+    if (arg["uniqueID_help"]                == 1) {     feature("#_BT_helpButton",0);}
     if (localStorage['uniqueID_imgOverlay']) { addImgOverlayAsset(localStorage['uniqueID_imgOverlay']); }
     feature("#_BT_boostButton", 0);
     if (localStorage['uniqueID_checkpoint']) {
@@ -335,6 +335,7 @@ $(document).ready(function () {
   function _BT_help(arg) {
     (arg == 1) ? _BT_helpOn = true : _BT_helpOn = false;
     if (_BT_helpOn) $("#_BT_helpDesk").addClass("_BT_opacity");
+    else $("#_BT_helpDesk").removeClass("_BT_opacity");
     setToGoogleStorage({ "uniqueID_help": arg });
     _BT_storage["uniqueID_help"] = arg;
   }
@@ -587,7 +588,7 @@ $(document).ready(function () {
       }
 
       if (_BT_currentSpeed != 1) {
-        $("#_BT_boostButton").children().removeClass("_BT_featureOn");
+        $("#_BT_boostButton").children().addClass("_BT_featureOn");
       }
     }
     var suffix = ".0";
@@ -621,6 +622,7 @@ $(document).ready(function () {
       feature("#_BT_guideButton",1);
       feature("#_BT_borderButton",1);
       feature("#_BT_replayButton",1);
+      feature("#_BT_helpButton",1);
       _BT_animationBoost(0);
       initialBoost = true;
       _BT_deleteImgOverlayAssets();
@@ -719,6 +721,7 @@ $(document).ready(function () {
   function _BT_closeNav(arg) {
     var status;
     setToGoogleStorage({"uniqueID_minimized": 1});
+    _BT_storage["uniqueID_minimized"] = 1;
     (arg == 0) ? status = "minimized" : status = "disabled";
     _BT_isExpanded = false;
     $("#_BT_").removeClass("_BT_expand");

@@ -1,6 +1,6 @@
 var interval;
 
-if (typeof banner != "undefined") {
+if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
     interval = setInterval(animationInterval, 1);
 
     $(function () {

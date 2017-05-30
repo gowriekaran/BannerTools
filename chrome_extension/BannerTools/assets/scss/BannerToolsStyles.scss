@@ -9,11 +9,12 @@
   top: 5px;
   left: 5px;
   background-color: $backgroundColor;
-  border: 2px solid $primaryColor;
+  border: 2px solid $borderColor;
   padding: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   opacity: 0;
   transition: opacity 0.5s;
+  color: $textColor;
 }
 
 #_BT_ {
@@ -25,7 +26,7 @@
   background-color: $backgroundColor;
   overflow-x: hidden;
   transition: 0.5s;
-  border-left: 2px solid $primaryColor;
+  border-left: 2px solid $borderColor;
   width: 0px;
 
   * {
@@ -35,7 +36,7 @@
   }
 
   > div:first-child {
-    background-color: $primaryColor;
+    background-color: $headerColor;
     box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.5);
   }
 
@@ -69,7 +70,7 @@
   }
 
   ._BT_warning {
-    color: $warningColor;
+    color: $warningTextColor;
   }
 
   ._BT_info {
@@ -117,11 +118,11 @@
     display: block;
     margin: auto;
     text-align:center;
-    fill: $primaryColor;
+    fill: $featureColor;
   }
 
   svg:hover {
-    fill: $secondaryColor !important;
+    fill: $featureHoverColor !important;
     cursor: pointer;
   }
 }
@@ -153,7 +154,7 @@
 
   table {
     background-color: $backgroundColor;
-    border: 2px solid $primaryColor;
+    border: 2px solid $borderColor;
     width: $appWidth;
     margin-left: auto;
     margin-right: auto;
@@ -164,7 +165,9 @@
   cursor: col-resize;
   width: 0px;
   height: 100%;
-  border-right: 1px cyan solid !important;
+  border-right: 1px $rulerColor solid !important;
+  background: $rulerColor !important;
+  border-color: $rulerColor !important;
   position: absolute;
 }
 
@@ -172,7 +175,9 @@
   cursor: row-resize;
   height: 0px;
   width: 100%;
-  border-top: 1px cyan solid !important;
+  border-top: 1px $rulerColor solid !important;
+  background: $rulerColor !important;
+  border-color: $rulerColor !important;
   position: absolute;
 }
 
@@ -208,21 +213,27 @@
 
   #slider {
     width: 90%;
-    border-color: $backgroundColor;
-    background: $secondaryColor;
+    border-color: $sliderBorderColor;
+    background: $sliderBackgroundColor;
+    height: 5px;
 
     .ui-slider {
-      background: $primaryColor;
+      background: $sliderColor;
+      height: 5px;
     }
 
     .ui-slider-range {
-      background: $thirdColor;
+      background: $sliderRangeColor;
+      height: 5px;
     }
 
     .ui-slider-handle {
-      border-color: $primaryColor;
-      background-color: $primaryColor;
+      border-color: $sliderHandleColor;
+      background-color: $sliderHandleColor;
       border-radius: 100px;
+      width: 10px;
+      height: 10px;
+      top: -4px;
     }
   }
 }
@@ -233,7 +244,7 @@
   overflow-y: hidden;
   width: 90%;
   height: 75px;
-  background-color: $thirdColor;
+  background-color: $imgGalleryColor;
   padding: 10px;
   display: block;
   margin: auto;
@@ -261,7 +272,7 @@
         width: 20px;
         height: 20px;
         text-align: center;
-        color: black;
+        color: $spanColor;
       }
       *:hover {
         cursor: pointer;
