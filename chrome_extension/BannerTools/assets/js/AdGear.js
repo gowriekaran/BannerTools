@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $("#_BT_AdGearURL").val("https://www.google.com");
-    if (localStorage["AdGearURL"]) {
-        $("#_BT_AdGearURL").val(localStorage["AdGearURL"]);
+    $("#_BT_AdGearURLInput").val("https://www.google.com");
+    if (localStorage["AdGearURLInput"]) {
+        $("#_BT_AdGearURLInput").val(localStorage["AdGearURLInput"]);
     }
     var banner_url = window.location.href;
     var width = _BT_adWidth;
@@ -13,7 +13,7 @@ $(document).ready(function () {
 
     // Click URLs
     loader_obj['click_urls'] = {};
-    loader_obj['click_urls']['clickTAG'] = $("#_BT_AdGearURL").val();
+    loader_obj['click_urls']['clickTAG'] = $("#_BT_AdGearURLInput").val();
 
     // // Expandable
     // loader_obj['expandable'] = {};
@@ -21,6 +21,6 @@ $(document).ready(function () {
     // loader_obj['expandable']['width'] = 600;
     // loader_obj['expandable']['height'] = 300;
     $(document).ready(function () {
-        ADGEAR.html5.basicLoader("_BT_AdGearPreview", banner_url, loader_obj);
+        setTimeout(function () { ADGEAR.html5.basicLoader("_BT_AdGearPreview", banner_url, loader_obj); }, 250);
     });
 });

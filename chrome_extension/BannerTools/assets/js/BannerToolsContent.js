@@ -4,9 +4,9 @@
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
-      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement,
+      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement, _BT_helpOn,
       _BT_easterEgg = 0,
-      _BT_currentSpeed = 1,
+      _BT_currentSpeed = _BT_bannerIsPlaying = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
       flip = imgOverlayFirstRun = initialBoost = true,
@@ -34,8 +34,7 @@ $(document).ready(function () {
     if ($("#ad-container").length || _BT_forceRun == 1) {
       if (_BT_storage["uniqueID_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
-      }
-      else {
+      } else {
         var _BT_adSize = "";
         if ($("meta[name='ad.size']").length) {
           var _BT_adSizeMeta = $("meta[name='ad.size']").attr("content");
@@ -47,8 +46,7 @@ $(document).ready(function () {
           _BT_adHeight = _BT_adSizeMeta.split("=").pop();
 
           _BT_adSize = "(" + _BT_adWidth + " x " + _BT_adHeight + ")";
-        }
-        else {
+        } else {
           console.log("BannerTools could not find meta[name='ad.size']");
         }
 
@@ -58,29 +56,39 @@ $(document).ready(function () {
         if (localStorage["isAdGear"] == 1) {
             $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
             $(document).ready(function () {
+              $("body").append('<div id="_BT_AdGearHomeButton" class="hvr-grow"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 13v10h-6v-6h-6v6h-6v-10h-3l12-12 12 12h-3zm-1-5.907v-5.093h-3v2.093l3 3z"/></svg></div>');
+              $("body").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
+              $("body").append('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Update CTA</button>');
               $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
               _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
               $("#ad-container").remove();
-              $("body").prepend('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Go</button>');
-              $("body").prepend('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
-              $("body").prepend('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h7v-5h4v5h7v-10h3zm-5 8h-3v-5h-8v5h-3v-10.26l7-6.912 7 6.99v10.182z"/></svg></div>');
               $("#_BT_AdGearLogoButton, #_BT_AdGearHomeButton").click(function () {
                 localStorage["isAdGear"] = 0;
                 location.reload();
               });
 
               $('input').blur(function () {
-                localStorage["AdGearURL"] = $("#_BT_AdGearURLInput").val();
-                location.reload();
+                reloadAdgear();
               });
 
               $('button').click(function () {
-                localStorage["AdGearURL"] = $("#_BT_AdGearURL").val();
-                location.reload();
+                reloadAdgear();
               });
+
+              $(window).keypress(function (e) {
+                if (e.keyCode === 13) {
+                  e.preventDefault();
+                  reloadAdgear();
+                }
+              });
+
+              function reloadAdgear() {
+                console.log($("#_BT_AdGearURLInput").val());
+                localStorage["AdGearURLInput"] = $("#_BT_AdGearURLInput").val();
+                location.reload();
+              }
             });
-        }
-        else {
+        } else {
           _BT_isRunning = true;
 
           chrome.extension.sendRequest({
@@ -96,13 +104,12 @@ $(document).ready(function () {
 
             if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
               console.log("AdGear Banner");
-              $("#_BT_").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+              $("#_BT_").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
               $("#_BT_AdGearLogoButton").click(function () {
                 localStorage["isAdGear"] = 1;
                 location.reload();
               });
-            }
-            else {
+            } else {
               console.log("Not AdGear");
             }
 
@@ -115,12 +122,9 @@ $(document).ready(function () {
             if (_BT_storage["uniqueID_easterEgg"] == 1) {
               $("._BT_easterEgg").toggle();
               $("#_BT_version").append(' v' + _BT_version);
-            }
-            else {
+            } else {
               $("#_BT_ img").click(function (event) {
-                if (_BT_easterEgg < 4) {
-                  _BT_easterEgg++;
-                }
+                if (_BT_easterEgg < 4) _BT_easterEgg++;
                 if (_BT_easterEgg == 3) {
                   $("._BT_easterEgg").toggle();
                   $("#_BT_version").append(' v' + _BT_version);
@@ -145,7 +149,23 @@ $(document).ready(function () {
               location.reload();
             });
 
-            $("._BT_rulerButtons").click(function (e) {
+            $(".replay-button").click(function () {
+              _BT_injectScript({ script: "_BT_BannerObjectFirstFrame", remove: 1 });
+            });
+
+            $(window).keypress(function (e) {
+              if (e.keyCode === 0 || e.keyCode === 32) {
+                e.preventDefault();
+                if (_BT_bannerIsPlaying) {
+                  _BT_bannerIsPlaying = 0;
+                } else {
+                  _BT_bannerIsPlaying = 1;
+                }
+                _BT_animationPlayback("#_BT_playButton");
+              }
+            });
+
+            $(document).on('click', '._BT_rulerButtons', function () {
               if (this.id == "_BT_cRulerButton") {
                 $(".draggable").remove();
                 return;
@@ -158,8 +178,7 @@ $(document).ready(function () {
                 axis = "X";
                 pos = "left";
                 maxAxisRange = _BT_adWidth;
-              }
-              else {
+              } else {
                 axis = "Y";
                 pos = "top";
                 maxAxisRange = _BT_adHeight;
@@ -177,10 +196,6 @@ $(document).ready(function () {
                   $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
                 }
               });
-            });
-
-            $(".replay-button").click(function () {
-              _BT_injectScript({ script: "_BT_BannerObjectFirstFrame", remove: 1 });
             });
 
             $(document).on('click', '.delImg', function () {
@@ -203,9 +218,7 @@ $(document).ready(function () {
                 $("#_BT_imgOverlay").removeClass("_BT_visible");
                 localStorage.removeItem('uniqueID_imgOverlay');
                 $(this).removeClass("_BT_selectedImgOverlay");
-              }
-
-              else {
+              } else {
                 $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
                 $("#_BT_imgOverlay").addClass("_BT_visible");
                 localStorage['uniqueID_imgOverlay'] = $(this).attr("src");
@@ -215,6 +228,15 @@ $(document).ready(function () {
 
             $(document).on('click', '._BT_feature', function () {
               feature("#" + this.id, $(this).attr('bt-value'));
+            });
+
+            $(document).on('mouseover', '._BT_feature', function () {
+              if (_BT_helpOn) $("#_BT_helpDesk").addClass("_BT_opacity");
+              if (_BT_helpOn) featureHelp($(this).attr('bt-featurename'), $(this).attr('bt-featuredesc'));
+            });
+
+            $(document).on('mouseout', '._BT_feature', function () {
+              $("#_BT_helpDesk").removeClass("_BT_opacity");
             });
 
             function uploadImgOverlayAsset() {
@@ -231,13 +253,14 @@ $(document).ready(function () {
             }
 
             $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
-
+            if (!_BT_storage["uniqueID_minimized"]) {
+              _BT_storage["uniqueID_minimized"] = 0;
+            }
             _BT_openNav(_BT_storage["uniqueID_minimized"]);
           });
         }
       }
-    }
-    else {
+    } else {
       console.log("BannerTools will remain disabled as it could not find 'ad-container' ID!");
     }
   }
@@ -249,22 +272,29 @@ $(document).ready(function () {
     if (arg["uniqueID_guide"]               == 1) {     feature("#_BT_guideButton",0);}
     if (arg["uniqueID_border"]              == 1) {     feature("#_BT_borderButton",0);}
     if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replayButton",0);}
-    if (arg["uniqueID_animationBoost"]      == 1) {     feature("#_BT_boostButton",0);}
-    if (arg["uniqueID_checkpoint"]          == 1) {     feature("#_BT_checkpointButton",0);}
-    if(localStorage['uniqueID_imgOverlay']){            addImgOverlayAsset(localStorage['uniqueID_imgOverlay']);}
+    if (arg["uniqueID_help"]          == 1) {           feature("#_BT_helpButton",0);}
+    if (localStorage['uniqueID_imgOverlay']) { addImgOverlayAsset(localStorage['uniqueID_imgOverlay']); }
+    feature("#_BT_boostButton", 0);
+    if (localStorage['uniqueID_checkpoint']) {
+      if (arg["uniqueID_checkpoint"] == 1) {              feature("#_BT_checkpointButton", 0); }
+    }
   }
 
   function feature(object, arg){
     if(arg == 0){
       arg = 1;
       $(object).children().addClass("_BT_featureOn");
-    }
-    else{
+    } else{
       arg = 0;
       $(object).children().removeClass("_BT_featureOn");
     }
     $(object).attr("bt-value", arg);
     getFunction(object, arg);
+  }
+
+  function featureHelp(name, desc) {
+    $("#_BT_featureName").text(name);
+    $("#_BT_featureDesc").text(desc);
   }
 
   function getFunction(object, arg){
@@ -297,7 +327,16 @@ $(document).ready(function () {
         break;
       case "#_BT_checkpointButton": _BT_checkpoint(arg);
         break;
+      case "#_BT_helpButton": _BT_help(arg);
+        break;
     }
+  }
+
+  function _BT_help(arg) {
+    (arg == 1) ? _BT_helpOn = true : _BT_helpOn = false;
+    if (_BT_helpOn) $("#_BT_helpDesk").addClass("_BT_opacity");
+    setToGoogleStorage({ "uniqueID_help": arg });
+    _BT_storage["uniqueID_help"] = arg;
   }
 
   function _BT_getRuler(axis) {
@@ -311,7 +350,9 @@ $(document).ready(function () {
           features.push([
             data[key]["id"],
             data[key]["class"],
-            data[key]["svgIcon"]
+            data[key]["svgIcon"],
+            data[key]["featureName"],
+            data[key]["featureDesc"]
           ]);
       });
       $("#_BT_featureControls").append(buildControls(features, 3));
@@ -326,7 +367,9 @@ $(document).ready(function () {
         features.push([
           data[key]["id"],
           data[key]["class"],
-          data[key]["svgIcon"]
+          data[key]["svgIcon"],
+          data[key]["featureName"],
+          data[key]["featureDesc"]
         ]);
       });
       $("#_BT_rulerOverlayControls>table").append(buildControls(features, 2));
@@ -341,11 +384,10 @@ $(document).ready(function () {
 
     html = openRow;
     for (var counter = 0; counter < features.length; counter++){
-      var feature = "<td id='" + features[counter][0] + "' class='" + features[counter][1] + "' bt-value='0'>" + features[counter][2] + "</td>";
+      var feature = "<td id='" + features[counter][0] + "' class='" + features[counter][1] + "' bt-value='0' bt-featureName='" + features[counter][3] + "'bt-featureDesc='" + features[counter][4] + "'>" + features[counter][2] + "</td>";
       if(featuresInRowCount < 3){
         html += feature;
-      }
-      else{
+      } else{
         html += closeRow + openRow + feature;
         featuresInRowCount = 0;
       }
@@ -389,10 +431,11 @@ $(document).ready(function () {
         }).get(0).beginElement();
 
         if (flip) {
-          _BT_injectScript({script:"_BT_BannerObjectPlay", remove: 1});
-        }
-        else {
-          _BT_injectScript({script:"_BT_BannerObjectPause", remove: 1});
+          _BT_injectScript({ script: "_BT_BannerObjectPlay", remove: 1 });
+          _BT_bannerIsPlaying = 1;
+        } else {
+          _BT_injectScript({ script: "_BT_BannerObjectPause", remove: 1 });
+          _BT_bannerIsPlaying = 0;
           $(arg).children().children().addClass("_BT_featureOn");
         }
         return;
@@ -405,8 +448,7 @@ $(document).ready(function () {
     $("#_BT_imgAddRefButton").attr("bt-value", 0);
     if(!imgOverlayFirstRun){
       $("#_BT_imgOverlayUpload").change();
-    }
-    else{
+    } else{
       $("#_BT_imgOverlayUpload").click();
     }
   }
@@ -522,50 +564,43 @@ $(document).ready(function () {
   }
 
   function _BT_animationBoost(arg) {
-    if(arg == 0){
-      $("#_BT_currentSpeed").removeClass("_BT_visible");
-    }
-    else{
-      $("#_BT_currentSpeed").addClass("_BT_visible");
-      if(_BT_storage["uniqueID_animationBoostValue"]){
+    $("#_BT_boostButton").children().removeClass("_BT_featureOn");
+    if (arg == 0) {
+      _BT_currentSpeed = 1;
+    } else {
+      if (_BT_storage["uniqueID_animationBoostValue"]) {
         _BT_currentSpeed = _BT_storage["uniqueID_animationBoostValue"];
       }
-      if(!initialBoost){
+
+      if (!initialBoost) {
         var _BT_nextSpeed;
-        if (_BT_currentSpeed == 0.5) {
-          _BT_nextSpeed = 1;
-        } else if (_BT_currentSpeed == 1) {
-          _BT_nextSpeed = 2;
-        } else if (_BT_currentSpeed == 2) {
-          _BT_nextSpeed = 5;
-        } else if (_BT_currentSpeed == 5) {
-          _BT_nextSpeed = 10;
-        } else {
-          _BT_nextSpeed = 0.5;
-        }
+        if (_BT_currentSpeed == 0.5)    _BT_nextSpeed = 1;
+        else if (_BT_currentSpeed == 1) _BT_nextSpeed = 2;
+        else if (_BT_currentSpeed == 2) _BT_nextSpeed = 5;
+        else if (_BT_currentSpeed == 5) _BT_nextSpeed = 10;
+        else                            _BT_nextSpeed = 0.5;
         _BT_currentSpeed = _BT_nextSpeed;
-      }
-      else{
+      } else {
         initialBoost = false;
-        setToGoogleStorage({"uniqueID_animationBoost": 1});
+        setToGoogleStorage({ "uniqueID_animationBoost": 1 });
         _BT_storage["uniqueID_animationBoost"] = 1;
-        $("#_BT_boostButton").children().addClass("_BT_featureOn");
-      }
-      var suffix = ".0";
-      if(_BT_currentSpeed == 0.5){
-        suffix = "";
       }
 
-      $("#_BT_boostButton").children().remove("_BT_featureOn");
-      $("#_BT_boostButton").children().addClass("_BT_featureOn");
-      $("#_BT_currentSpeed").text("x" + _BT_currentSpeed + suffix);
-      _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
-      setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
-      _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
+      if (_BT_currentSpeed != 1) {
+        $("#_BT_boostButton").children().removeClass("_BT_featureOn");
+      }
     }
+    var suffix = ".0";
+    if (_BT_currentSpeed == 0.5) suffix = "";
+    $("#_BT_currentSpeed").text("Speed: x" + _BT_currentSpeed + suffix);
+
+    _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
+    setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
+    _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
   }
 
   function _BT_screenshot(arg) {
+    $("#_BT_screenshotButton").children().removeClass("_BT_featureOn");
     if (arg == 0) {
       var _BT_storageJSON = JSON.stringify(_BT_storage);
       localStorage['_BT_storageJSON'] = _BT_storageJSON;
@@ -586,15 +621,14 @@ $(document).ready(function () {
       feature("#_BT_guideButton",1);
       feature("#_BT_borderButton",1);
       feature("#_BT_replayButton",1);
-      // feature("#_BT_boostButton",1);
       _BT_animationBoost(0);
+      initialBoost = true;
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
 
       $("#ad-container").css("margin", 0);
       _BT_replay(1);
 
-      // _BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1});
       chrome.extension.sendRequest({
         cmd: "resetZoom"
       });
@@ -610,11 +644,9 @@ $(document).ready(function () {
           specs: specs
         });
       }, 1000);
-    }
-    else {
+    } else {
       _BT_storage = JSON.parse(localStorage['_BT_storageJSON']);
       _BT_unpack(_BT_storage);
-      // _BT_animationBoost(1);
 
       if(localStorage['uniqueID_checkpointBackup']){
         localStorage['uniqueID_checkpoint'] = localStorage['uniqueID_checkpointBackup'];
@@ -650,26 +682,21 @@ $(document).ready(function () {
             }
             _BT_run();
           });
-        }
-        else {
+        } else {
           if (_BT_isExpanded == false) {
             _BT_openNav(0);
             setToGoogleStorage({"uniqueID_minimized": 0});
-          }
-          else {
+          } else {
             _BT_closeNav(0);
           }
         }
-      }
-      else if (request._BT_pluginClick == 0) {
+      } else if (request._BT_pluginClick == 0) {
         if (_BT_isRunning == true) {
           _BT_disable();
         }
-      }
-      else if (request.screenshot == 0) {
+      } else if (request.screenshot == 0) {
         _BT_screenshot(1);
-      }
-      else if (request == "getLastHoveredElement") {
+      } else if (request == "getLastHoveredElement") {
         console.log("im in content script", lastHoveredElement);
         sendResponse({ value: lastHoveredElement });
       }
