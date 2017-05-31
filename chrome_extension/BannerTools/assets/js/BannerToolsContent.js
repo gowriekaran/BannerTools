@@ -1,6 +1,4 @@
 //  Created by: Gowriekaran Sinnadurai
-// document.domain = 'staging.mhweb.ca';
-// console.log(document.domain);
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
@@ -18,17 +16,6 @@ $(document).ready(function () {
     items["uniqueID_forceRun"] == 1 ? _BT_forceRun = 1: _BT_forceRun = 0;
     _BT_run();
   });
-
-//
-  $(function () {
-    if (document.location.href.indexOf('stag') > -1) {
-      console.log("Stage enviroment");
-      $('.item').click(function(){
-        _BT_injectScript({script: "_BT_stageHack"});
-      });
-    }
-  });
-//
 
   function _BT_run() {
     if ($("#ad-container").length || _BT_forceRun == 1) {
