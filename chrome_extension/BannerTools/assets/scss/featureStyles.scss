@@ -29,3 +29,11 @@
 ._BT_border {
   border: 1px dashed red !important;
 }
+
+._BT_selectedImgOverlay{
+  opacity: 0.4 !important;
+}
+
+._BT_warning {
+  color: $warningTextColor;
+}

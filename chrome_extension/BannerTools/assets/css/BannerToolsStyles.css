@@ -20,6 +20,12 @@
 ._BT_border {
   border: 1px dashed red !important; }
 
+._BT_selectedImgOverlay {
+  opacity: 0.4 !important; }
+
+._BT_warning {
+  color: #F44336; }
+
 body {
   background-color: #FAFAFA; }
 
@@ -178,8 +184,6 @@ input:checked + ._BT_slider:before {
   #_BT_ #_BT_forceRun {
     font-weight: bold;
     cursor: pointer; }
-  #_BT_ ._BT_warning {
-    color: #F44336; }
   #_BT_ ._BT_info {
     font-style: italic; }
   #_BT_ #_BT_featureControls button {
@@ -334,7 +338,5 @@ input:checked + ._BT_slider:before {
         color: #FAFAFA; }
       #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer *:hover {
         cursor: pointer; }
-      #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer ._BT_selectedImgOverlay {
-        border: 1px solid white !important; }
     #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer:hover span {
       display: block; }
