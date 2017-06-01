@@ -69,10 +69,6 @@
     cursor: pointer;
   }
 
-  ._BT_warning {
-    color: $warningTextColor;
-  }
-
   ._BT_info {
     font-style: italic;
   }
@@ -276,9 +272,6 @@
       }
       *:hover {
         cursor: pointer;
-      }
-      ._BT_selectedImgOverlay{
-        border: 1px solid white !important;
       }
     }
     .imgContainer:hover {

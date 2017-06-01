@@ -141,14 +141,15 @@ $(document).ready(function () {
             });
 
             $(window).keypress(function (e) {
-              if (e.keyCode === 0 || e.keyCode === 32) {
-                e.preventDefault();
-                if (_BT_bannerIsPlaying) {
-                  _BT_bannerIsPlaying = 0;
-                } else {
-                  _BT_bannerIsPlaying = 1;
-                }
-                _BT_animationPlayback("#_BT_playButton");
+              switch(e.keyCode) {
+                case 0:   _BT_animationPlayback(1);
+                          break;
+                case 32:  _BT_animationPlayback(1);
+                          break;
+                case 113: _BT_animationPlayback(2);
+                          break;
+                case 101: _BT_animationPlayback(3);
+                          break;
               }
             });
 
@@ -157,10 +158,8 @@ $(document).ready(function () {
                 $(".draggable").remove();
                 return;
               }
-              var axis;
-              var maxAxisRange;
-              var pos;
 
+              var axis, maxAxisRange, pos;
               if (this.id == "_BT_xRulerButton") {
                 axis = "X";
                 pos = "left";
@@ -260,11 +259,11 @@ $(document).ready(function () {
     if (arg["uniqueID_border"]              == 1) {     feature("#_BT_borderButton",0);}
     if (arg["uniqueID_replay"]              == 1) {     feature("#_BT_replayButton",0);}
     if (arg["uniqueID_help"]                == 1) {     feature("#_BT_helpButton",0);}
-    if (localStorage['uniqueID_imgOverlay']) { addImgOverlayAsset(localStorage['uniqueID_imgOverlay']); }
-    feature("#_BT_boostButton", 0);
-    if (localStorage['uniqueID_checkpoint']) {
-      if (arg["uniqueID_checkpoint"] == 1) {              feature("#_BT_checkpointButton", 0); }
+    if (localStorage['uniqueID_imgOverlay']) {          addImgOverlayAsset(localStorage['uniqueID_imgOverlay']); }
+    if ((localStorage['uniqueID_checkpoint']) && (arg["uniqueID_checkpoint"] == 1)) {
+      feature("#_BT_checkpointButton", 0);
     }
+    feature("#_BT_boostButton", 0);
   }
 
   function feature(object, arg){
@@ -304,11 +303,11 @@ $(document).ready(function () {
             break;
       case "#_BT_screenshotButton": _BT_screenshot(0);
             break;
-      case "#_BT_playButton": _BT_animationPlayback(object);
+      case "#_BT_playButton": _BT_animationPlayback(1);
             break;
-      case "#_BT_firstFrameButton": _BT_animationPlayback(object);
+      case "#_BT_firstFrameButton": _BT_animationPlayback(2);
             break;
-      case "#_BT_lastFrameButton": _BT_animationPlayback(object);
+      case "#_BT_lastFrameButton": _BT_animationPlayback(3);
             break;
       case "#_BT_boostButton": _BT_animationBoost(1);
         break;
@@ -411,7 +410,7 @@ $(document).ready(function () {
 
   function _BT_animationPlayback(arg){
     $(arg).parent().find("svg").removeClass("_BT_featureOn");
-    if(arg == "#_BT_playButton"){
+    if(arg == 1){
         flip = !flip;
         $('#_BT_playPause').attr({
           "from": flip ? pause : play,
@@ -428,7 +427,7 @@ $(document).ready(function () {
         }
         return;
     }
-    (arg == "#_BT_firstFrameButton") ? (_BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1})) : (_BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1}));
+    (arg == 2) ? (_BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1})) : (_BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1}));
   }
 
   function _BT_imgOverlayAsset(){
@@ -553,6 +552,7 @@ $(document).ready(function () {
 
   function _BT_animationBoost(arg) {
     $("#_BT_boostButton").children().removeClass("_BT_featureOn");
+    $("#_BT_currentSpeed").removeClass("_BT_warning");
     if (arg == 0) {
       _BT_currentSpeed = 1;
     } else {
@@ -576,6 +576,7 @@ $(document).ready(function () {
 
       if (_BT_currentSpeed != 1) {
         $("#_BT_boostButton").children().addClass("_BT_featureOn");
+        $("#_BT_currentSpeed").addClass("_BT_warning");
       }
     }
     var suffix = ".0";
