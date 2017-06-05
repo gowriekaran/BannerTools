@@ -3,7 +3,7 @@
   width: 250px !important; }
 
 ._BT_featureOn {
-  fill: #2979FF !important; }
+  fill: black !important; }
 
 ._BT_visible {
   visibility: visible !important; }
@@ -38,8 +38,10 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  fill: #2979FF;
+  fill: black;
+  -webkit-transition: -webkit-transform 0.5s;
   transition: -webkit-transform 0.5s;
+  -o-transition: transform 0.5s;
   transition: transform 0.5s;
   transition: transform 0.5s, -webkit-transform 0.5s; }
   #_BT_AdGearHomeButton:hover {
@@ -54,7 +56,7 @@ body {
 
 #_BT_AdGearURLButton {
   background-color: #FAFAFA;
-  border: 2px solid #2979FF;
+  border: 2px solid black;
   width: 100px;
   margin-left: auto;
   margin-right: auto;
@@ -64,6 +66,7 @@ body {
   color: black;
   padding: 5px; }
   #_BT_AdGearURLButton:active {
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1); }
   #_BT_AdGearURLButton:hover {
     cursor: pointer; }
@@ -77,7 +80,9 @@ body {
   color: black; }
 
 #_BT_AdGearLogoButton {
+  -webkit-transition: -webkit-transform 0.5s;
   transition: -webkit-transform 0.5s;
+  -o-transition: transform 0.5s;
   transition: transform 0.5s;
   transition: transform 0.5s, -webkit-transform 0.5s; }
   #_BT_AdGearLogoButton:hover {
@@ -102,6 +107,7 @@ body {
   bottom: 0;
   background-color: #ccc;
   -webkit-transition: .4s;
+  -o-transition: .4s;
   transition: .4s; }
 
 ._BT_slider:before {
@@ -113,12 +119,14 @@ body {
   bottom: 2px;
   background-color: #fff;
   -webkit-transition: .4s;
+  -o-transition: .4s;
   transition: .4s; }
 
 input:checked + ._BT_slider {
-  background-color: #2979FF; }
+  background-color: black; }
 
 input:focus + ._BT_slider {
+  -webkit-box-shadow: 0 0 1px #2196F3;
   box-shadow: 0 0 1px #2196F3; }
 
 input:checked + ._BT_slider:before {
@@ -138,10 +146,12 @@ input:checked + ._BT_slider:before {
   top: 5px;
   left: 5px;
   background-color: #FAFAFA;
-  border: 2px solid #2979FF;
+  border: 2px solid black;
   padding: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
   transition: opacity 0.5s;
   color: black; }
 
@@ -153,8 +163,10 @@ input:checked + ._BT_slider:before {
   right: 0;
   background-color: #FAFAFA;
   overflow-x: hidden;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
   transition: 0.5s;
-  border-left: 2px solid #2979FF;
+  border-left: 2px solid black;
   width: 0px; }
   #_BT_ * {
     color: black;
@@ -164,7 +176,8 @@ input:checked + ._BT_slider:before {
     -ms-user-select: none;
     user-select: none; }
   #_BT_ > div:first-child {
-    background-color: #2979FF;
+    background-color: black;
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.5); }
   #_BT_ div:nth-of-type(n+2) {
     padding: 10px; }
@@ -195,10 +208,10 @@ input:checked + ._BT_slider:before {
     height: 50px; }
   #_BT_ #_BT_featureControls #_BT_imgDelRefButton {
     visibility: hidden; }
-  #_BT_ ._BT_easterEgg div {
+  #_BT_ ._BT_settings div {
     float: left;
     padding: 0px !important; }
-  #_BT_ ._BT_easterEgg div:nth-of-type(2) {
+  #_BT_ ._BT_settings div:nth-of-type(2) {
     float: right; }
 
 .svgControls td, #_BT_ #_BT_featureControls td, #_BT_rulerOverlayControls td {
@@ -213,7 +226,7 @@ input:checked + ._BT_slider:before {
   fill: #9E9E9E; }
 
 .svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
-  fill: #2979FF !important;
+  fill: black !important;
   cursor: pointer; }
 
 #_BT_imgOverlay {
@@ -221,6 +234,8 @@ input:checked + ._BT_slider:before {
 
 #_BT_gridOverlay {
   background-size: 10px 10px;
+  background-image: -webkit-linear-gradient(left, grey 1px, transparent 1px), -webkit-linear-gradient(top, grey 1px, transparent 1px);
+  background-image: -o-linear-gradient(left, grey 1px, transparent 1px), -o-linear-gradient(top, grey 1px, transparent 1px);
   background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
   opacity: 0.5; }
 
@@ -238,7 +253,7 @@ input:checked + ._BT_slider:before {
   visibility: hidden; }
   #_BT_rulerOverlayControls table {
     background-color: #FAFAFA;
-    border: 2px solid #2979FF;
+    border: 2px solid black;
     width: 250px;
     margin-left: auto;
     margin-right: auto; }
@@ -295,8 +310,8 @@ input:checked + ._BT_slider:before {
     background: #BDBDBD;
     height: 5px; }
   #animationPlayback #slider .ui-slider-handle {
-    border-color: #2979FF;
-    background-color: #2979FF;
+    border-color: black;
+    background-color: black;
     border-radius: 100px;
     width: 10px;
     height: 10px;
@@ -308,7 +323,7 @@ input:checked + ._BT_slider:before {
   overflow-y: hidden;
   width: 90%;
   height: 75px;
-  background-color: #2979FF;
+  background-color: black;
   padding: 10px;
   display: block;
   margin: auto;

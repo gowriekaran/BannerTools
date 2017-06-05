@@ -1,7 +1,7 @@
-@import "variables";
-@import "featureStyles";
-@import "adGear";
-@import "iOS";
+@import "_BT_variables";
+@import "_BT_featureStyles";
+@import "_BT_adGear";
+@import "_BT_iOS";
 
 #_BT_helpDesk {
   width: $appWidth;
@@ -90,7 +90,7 @@
     }
   }
 
-  ._BT_easterEgg {
+  ._BT_settings {
 
       div{
         float: left;

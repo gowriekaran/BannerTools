@@ -2,23 +2,25 @@
 
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
-      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, _BT_forceRun, lastHoveredElement, _BT_helpOn,
-      _BT_easterEgg = 0,
-      _BT_currentSpeed = _BT_bannerIsPlaying = 1,
+      _BT_adWidth, _BT_adHeight, _BT_storage, _BT_storageBackup, lastHoveredElement, _BT_helpOn,
+      _BT_currentSpeed = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
       flip = imgOverlayFirstRun = initialBoost = true,
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
       play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26";
 
-  chrome.storage.sync.get(null, function (items) {
-    _BT_storage = items;
-    items["uniqueID_forceRun"] == 1 ? _BT_forceRun = 1: _BT_forceRun = 0;
-    _BT_run();
-  });
+  _BT_prepare();
+
+  function _BT_prepare(){
+    chrome.storage.sync.get(null, function (items) {
+      _BT_storage = items;
+      _BT_run();
+    });
+  }
 
   function _BT_run() {
-    if ($("#ad-container").length || _BT_forceRun == 1) {
+    if ($("#ad-container").length || items["uniqueID_forceRun"] == 1) {
       if (_BT_storage["uniqueID_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
       } else {
@@ -47,7 +49,7 @@ $(document).ready(function () {
               $("body").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
               $("body").append('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><button id="_BT_AdGearURLButton">Update CTA</button>');
               $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + _BT_adWidth + '" height="' + _BT_adHeight + '" frameborder="0" scrolling="no"></iframe></div>');
-              _BT_injectScript({ script: "AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
+              _BT_injectScript({ script: "_BT_AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + _BT_adWidth + ";var _BT_adHeight = " + _BT_adHeight + ";</script>" })
               $("#ad-container").remove();
               $("#_BT_AdGearLogoButton, #_BT_AdGearHomeButton").click(function () {
                 localStorage["isAdGear"] = 0;
@@ -84,10 +86,10 @@ $(document).ready(function () {
             $("body").append(html);
             $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
 
-            _BT_injectScript({ script: "_BT_BannerObjectSlider" });
-            _BT_injectScript({ script: "_BT_BannerObjectStartup" });
+            _BT_injectScript({ script: "_BT_BannerObject" });
 
             $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
+            $("#_BT_version").append(' v' + _BT_version);
 
             if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
               console.log("AdGear Banner");
@@ -106,20 +108,6 @@ $(document).ready(function () {
             buildFeatureControls();
             buildRulerControls();
 
-            if (_BT_storage["uniqueID_easterEgg"] == 1) {
-              $("._BT_easterEgg").toggle();
-              $("#_BT_version").append(' v' + _BT_version);
-            } else {
-              $("#_BT_ img").click(function (event) {
-                if (_BT_easterEgg < 4) _BT_easterEgg++;
-                if (_BT_easterEgg == 3) {
-                  $("._BT_easterEgg").toggle();
-                  $("#_BT_version").append(' v' + _BT_version);
-                  setToGoogleStorage({"uniqueID_easterEgg": 1});
-                }
-              });
-            }
-
             $("#_BT_disableSwitch").change(function () {
               _BT_disable();
             });
@@ -137,7 +125,7 @@ $(document).ready(function () {
             });
 
             $(".replay-button").click(function () {
-              _BT_injectScript({ script: "_BT_BannerObjectFirstFrame", remove: 1 });
+              _BT_script({function: "firstFrame()"});
             });
 
             $(window).keypress(function (e) {
@@ -385,6 +373,7 @@ $(document).ready(function () {
   }
 
   function _BT_injectScript(obj) {
+    console.log("awdwad");
     if(typeof obj.remove === 'undefined'){
       obj.remove = "";
     }
@@ -400,6 +389,13 @@ $(document).ready(function () {
     if (obj.remove == 1){
       $("._BT_injectedScript").remove();
     }
+  }
+
+  function _BT_script(obj){
+    var script = '<script class="_BT_injectedScript">' + obj.function + '</script>';
+    console.log(script);
+    $("body").append(script);
+    $("._BT_injectedScript").remove();
   }
 
   function _BT_disable() {
@@ -418,16 +414,14 @@ $(document).ready(function () {
         }).get(0).beginElement();
 
         if (flip) {
-          _BT_injectScript({ script: "_BT_BannerObjectPlay", remove: 1 });
-          _BT_bannerIsPlaying = 1;
+          _BT_script({function: "playAnimation()"});
         } else {
-          _BT_injectScript({ script: "_BT_BannerObjectPause", remove: 1 });
-          _BT_bannerIsPlaying = 0;
+          _BT_script({function: "pauseAnimation()"});
           $(arg).children().children().addClass("_BT_featureOn");
         }
         return;
     }
-    (arg == 2) ? (_BT_injectScript({script:"_BT_BannerObjectFirstFrame", remove: 1})) : (_BT_injectScript({script:"_BT_BannerObjectLastFrame", remove: 1}));
+    (arg == 2) ? _BT_script({function: "firstFrame()"}) : _BT_script({function: "lastFrame()"});
   }
 
   function _BT_imgOverlayAsset(){
@@ -475,8 +469,7 @@ $(document).ready(function () {
   }
 
   function _BT_checkpoint(arg) {
-    (arg == 1) ? (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 2;</script>" })) : (_BT_injectScript({ script: "_BT_BannerObjectCheckpoint", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = 1;</script>"}));
-
+    _BT_script({function: "checkpoint()"});
     setToGoogleStorage({"uniqueID_checkpoint": arg});
     _BT_storage["uniqueID_checkpoint"] = arg;
   }
@@ -517,7 +510,6 @@ $(document).ready(function () {
   function _BT_guide(arg) {
     _BT_grid(arg);
     _BT_rulers(arg);
-
     setToGoogleStorage({"uniqueID_guide": arg});
     _BT_storage["uniqueID_guide"] = arg;
   }
@@ -544,13 +536,13 @@ $(document).ready(function () {
   function _BT_overflow(arg) {
     var style;
     (arg == 1) ? (style = "visible") : (style = "");
-
     $("#ad-container").css("overflow", style);
     setToGoogleStorage({"uniqueID_overflow": arg});
     _BT_storage["uniqueID_overflow"] = arg;
   }
 
   function _BT_animationBoost(arg) {
+    console.log("awd");
     $("#_BT_boostButton").children().removeClass("_BT_featureOn");
     $("#_BT_currentSpeed").removeClass("_BT_warning");
     if (arg == 0) {
@@ -582,8 +574,7 @@ $(document).ready(function () {
     var suffix = ".0";
     if (_BT_currentSpeed == 0.5) suffix = "";
     $("#_BT_currentSpeed").text("Speed: x" + _BT_currentSpeed + suffix);
-
-    _BT_injectScript({ script: "_BT_BannerObjectBoost", remove: 1, arg: "<script class='_BT_injectedScript'>var arg = " + _BT_currentSpeed + ";</script>" });
+    _BT_script({function: "boost(" + _BT_currentSpeed + ");"});
     setToGoogleStorage({"uniqueID_animationBoostValue": _BT_currentSpeed});
     _BT_storage["uniqueID_animationBoostValue"] = _BT_currentSpeed;
   }
@@ -666,12 +657,7 @@ $(document).ready(function () {
           setToGoogleStorage({"uniqueID_minimized": 0});
           _BT_storage["uniqueID_disable"] = 0;
           _BT_storage["uniqueID_minimized"] = 0;
-          chrome.storage.sync.get("uniqueID_forceRun", function (data) {
-            if (data["uniqueID_forceRun"] == 1) {
-              _BT_forceRun = 1;
-            }
-            _BT_run();
-          });
+          _BT_prepare();
         } else {
           if (_BT_isExpanded == false) {
             _BT_openNav(0);
