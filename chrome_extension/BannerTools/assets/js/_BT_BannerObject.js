@@ -1,7 +1,11 @@
+if ((typeof banner == "undefined") && (typeof banner.myTL == "undefined")) {
+    console.log("BannerTools could not find Banner object, Object Script will not work");
+}
+
 var interval;
 var isCheckpointSet = false;
 
-if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
+function startup() {
     if (localStorage['uniqueID_checkpoint']) {
         banner.myTL.progress(localStorage['uniqueID_checkpoint']);
         $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
@@ -48,9 +52,6 @@ if ((typeof banner != "undefined")&&(typeof banner.myTL != "undefined")) {
         }
     });
 }
-else{
-    console.log("BannerTools could not find Banner object, Object Script task aborted");
-}
 
 function firstFrame(){
     banner.myTL.progress(0);
@@ -77,13 +78,18 @@ function pauseAnimation() {
     banner.myTL.pause();
 }
 
-function checkpoint(){
+function checkpoint() {
+    console.log("isCheckpointSet", isCheckpointSet);
     if(!isCheckpointSet){
-        if (localStorage['uniqueID_checkpoint']){
-            banner.myTL.progress() = localStorage['uniqueID_checkpoint'];
-            $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
-            isCheckpointSet = true;
+        if (localStorage['uniqueID_checkpoint']) {
+            banner.myTL.progress(localStorage['uniqueID_checkpoint']);
         }
+        else {
+            localStorage['uniqueID_checkpoint'] = banner.myTL.progress();
+        }
+        console.log(localStorage['uniqueID_checkpoint']);
+        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
+        isCheckpointSet = true;
     }
     else {
         localStorage.removeItem('uniqueID_checkpoint');
@@ -92,7 +98,7 @@ function checkpoint(){
     }
 }
 
-function boost(arg){
+function boost(arg) {
     banner.myTL.timeScale(arg);
 }
 
@@ -116,4 +122,11 @@ function stopInterval() {
 
 function formatNumber(arg) {
     return arg.toString().substring(0, 4);
+}
+
+function adSize() {
+    var _BT_adSize = "(" + banner.adWidth + " x " + banner.adHeight + ")";
+    $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
+    localStorage["adWidth"] = banner.adWidth;
+    localStorage["adHeight"] = banner.adHeight;
 }

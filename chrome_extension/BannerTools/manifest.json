@@ -33,7 +33,6 @@
 			"assets/js/_BT_Content.js"
 		],
 		"css": [
-			"assets/css/hover-min.css",
 			"assets/css/_BT_Styles.css",
 			"assets/css/jquery-ui.min.css"
 		]
