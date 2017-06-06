@@ -40,17 +40,17 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 				};
 
 				image.src = data;
-				// chrome.tabs.query({
-				// 	active: true,
-				// 	currentWindow: true
-				// }, function (tabs) {
-				// 	chrome.storage.sync.set({
-				// 		'uniqueID_disable': 0
-				// 	});
-				// 	chrome.tabs.sendMessage(tabs[0].id, {
-				// 		_BT_screenshot: 0
-				// 	});
-				// });
+				chrome.tabs.query({
+					active: true,
+					currentWindow: true
+				}, function (tabs) {
+					chrome.storage.sync.set({
+						'uniqueID_disable': 0
+					});
+					chrome.tabs.sendMessage(tabs[0].id, {
+						_BT_screenshot: 0
+					});
+				});
 			});
 	} else if (request.cmd == "_BT_resetZoom") {
 		chrome.tabs.query({

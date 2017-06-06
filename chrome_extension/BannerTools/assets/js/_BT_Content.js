@@ -19,9 +19,16 @@ $(document).ready(function () {
     });
   }
 
+  function reset() {
+    chrome.storage.sync.clear();
+    chrome.storage.local.clear();
+    localStorage.clear();
+    location.reload();
+  }
+
   function _BT_run() {
-    if ($("#ad-container").length || _BT_storage["uniqueID_forceRun"] == 1) {
-      if (_BT_storage["uniqueID_disable"] == 1) {
+    if ($("#ad-container").length || _BT_storage["_BT_forceRun"] == 1) {
+      if (_BT_storage["_BT_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
         return;
       }
@@ -30,7 +37,40 @@ $(document).ready(function () {
       $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-3.1.1.min.js') + "'></script>");
 
       if (_BT_storage["isAdGear"] == 1) {
-        _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1, arg: "<script class='_BT_injectedScript'>var _BT_adWidth = " + localStorage["adWidth"] + ";var _BT_adHeight = " + localStorage["adHeight"] + ";</script>" });
+        $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
+        $("body").append('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></div>');
+        $("body").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
+        $("body").append('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><span id="warning" hidden></span><button id="_BT_AdGearURLButton">Update CTA</button>');
+        $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
+        _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1 });
+        $("#ad-container").remove();
+        $("#_BT_AdGearLogoButton, #_BT_AdGearHomeButton").click(function () {
+          setToStorage({ "isAdGear": 0 });
+          location.reload();
+        });
+
+        $('input').blur(function () {
+          reloadAdgear();
+        });
+
+        $('button').click(function () {
+          reloadAdgear();
+        });
+
+        $(window).keypress(function (e) {
+          switch (e.keyCode) {
+            case 13: reloadAdgear();
+              break;
+            case 114: reset();
+              break;
+          }
+        });
+
+        function reloadAdgear() {
+          console.log($("#_BT_AdGearURLInput").val());
+          localStorage["_BT_AdGearURLInput"] = $("#_BT_AdGearURLInput").val();
+          location.reload();
+        }
         return;
       }
 
@@ -64,24 +104,23 @@ $(document).ready(function () {
               break;
             case 101: _BT_animationPlayback(3);
               break;
+            case 114: reset();
+              break;
           }
         });
 
-        $("._BT_featureOverlay").css({ width: localStorage["adWidth"], height: localStorage["adHeight"] });
+        $("._BT_featureOverlay").css({ width: localStorage["_BT_adWidth"], height: localStorage["_BT_adHeight"] });
 
         $("#_BT_disableSwitch").change(function () {
           _BT_disable();
         });
 
         $("#_BT_reset").click(function () {
-          chrome.storage.sync.clear();
-          chrome.storage.local.clear();
-          localStorage.clear();
-          location.reload();
+          reset();
         });
 
         $("#_BT_forceRun").click(function () {
-          setToStorage({ "uniqueID_forceRun": 1 });
+          setToStorage({ "_BT_forceRun": 1 });
           location.reload();
         });
 
@@ -94,11 +133,11 @@ $(document).ready(function () {
           if (this.id == "_BT_xRulerButton") {
             axis = "X";
             pos = "left";
-            maxAxisRange = localStorage["adWidth"];
+            maxAxisRange = localStorage["_BT_adWidth"];
           } else {
             axis = "Y";
             pos = "top";
-            maxAxisRange = localStorage["adHeight"];
+            maxAxisRange = localStorage["_BT_adHeight"];
           }
           $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
           $("._BT_ruler" + axis).draggable({
@@ -117,8 +156,8 @@ $(document).ready(function () {
 
         $(document).on('click', '.delImg', function () {
           imgs.splice($(this).parent().attr("id"), 1);
-          if ($(this).attr("src") == localStorage['uniqueID_imgOverlay']) {
-            localStorage.removeItem('uniqueID_imgOverlay');
+          if ($(this).attr("src") == localStorage['_BT_imgOverlay']) {
+            localStorage.removeItem('_BT_imgOverlay');
             $("#_BT_imgOverlay").attr("src", "");
           }
           $(this).parent().remove();
@@ -130,15 +169,15 @@ $(document).ready(function () {
         $(document).on('click', '.img', function () {
           $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
 
-          if (localStorage['uniqueID_imgOverlay'] == $(this).attr("src")) {
+          if (localStorage['_BT_imgOverlay'] == $(this).attr("src")) {
             $("#_BT_imgOverlay").attr("src", "");
             $("#_BT_imgOverlay").removeClass("_BT_visible");
-            localStorage.removeItem('uniqueID_imgOverlay');
+            localStorage.removeItem('_BT_imgOverlay');
             $(this).removeClass("_BT_selectedImgOverlay");
           } else {
             $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
             $("#_BT_imgOverlay").addClass("_BT_visible");
-            localStorage['uniqueID_imgOverlay'] = $(this).attr("src");
+            localStorage['_BT_imgOverlay'] = $(this).attr("src");
             $(this).addClass("_BT_selectedImgOverlay");
           }
         });
@@ -160,9 +199,9 @@ $(document).ready(function () {
 
         $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
 
-        if (!_BT_storage["uniqueID_minimized"]) _BT_storage["uniqueID_minimized"] = 0;
+        if (!_BT_storage["_BT_minimized"]) _BT_storage["_BT_minimized"] = 0;
 
-        _BT_openNav(_BT_storage["uniqueID_minimized"]);
+        _BT_openNav(_BT_storage["_BT_minimized"]);
 
         $(document).ready(function () {
           _BT_appendTempScript({ function: "startup()" });
@@ -177,16 +216,16 @@ $(document).ready(function () {
   }
 
   function _BT_unpack(arg) {
-    if (arg["uniqueID_margin"]                == 1) { feature("#_BT_marginButton",      0); }
-    if (arg["uniqueID_backgroundColor"]       == 1) { feature("#_BT_blackButton",       0); }
-    if (arg["uniqueID_overflow"]              == 1) { feature("#_BT_showButton",        0); }
-    if (arg["uniqueID_guide"]                 == 1) { feature("#_BT_guideButton",       0); }
-    if (arg["uniqueID_border"]                == 1) { feature("#_BT_borderButton",      0); }
-    if (arg["uniqueID_replay"]                == 1) { feature("#_BT_replayButton",      0); }
-    if (arg["uniqueID_help"]                  == 1) { feature("#_BT_helpButton",        0); }
-    if (arg["uniqueID_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
-    if (arg["uniqueID_animationBoostValue"]   != 1) { feature("#_BT_boostButton",       0); }
-    if (localStorage['uniqueID_imgOverlay'])        { addImgOverlayAsset(localStorage['uniqueID_imgOverlay']); }
+    if (arg["_BT_margin"]                == 1) { feature("#_BT_marginButton",      0); }
+    if (arg["_BT_backgroundColor"]       == 1) { feature("#_BT_blackButton",       0); }
+    if (arg["_BT_overflow"]              == 1) { feature("#_BT_showButton",        0); }
+    if (arg["_BT_guide"]                 == 1) { feature("#_BT_guideButton",       0); }
+    if (arg["_BT_border"]                == 1) { feature("#_BT_borderButton",      0); }
+    if (arg["_BT_replay"]                == 1) { feature("#_BT_replayButton",      0); }
+    if (arg["_BT_help"]                  == 1) { feature("#_BT_helpButton",        0); }
+    if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
+    if (arg["_BT_animationBoostValue"]   != 1) { feature("#_BT_boostButton",       0); }
+    if (localStorage['_BT_imgOverlay'])        { addImgOverlayAsset(localStorage['_BT_imgOverlay']); }
   }
 
   function feature(object, arg) {
@@ -244,7 +283,7 @@ $(document).ready(function () {
   function _BT_help(arg) {
     (arg == 1) ? _BT_helpOn = true : _BT_helpOn = false;
     if (!_BT_helpOn) $("#_BT_helpDesk").removeClass("_BT_opacity");
-    setToStorage({ "uniqueID_help": arg });
+    setToStorage({ "_BT_help": arg });
   }
 
   function uploadImgOverlayAsset() {
@@ -343,7 +382,7 @@ $(document).ready(function () {
   }
 
   function _BT_disable() {
-    setToStorage({ "uniqueID_disable": 1 });
+    setToStorage({ "_BT_disable": 1 });
     location.reload();
   }
 
@@ -385,7 +424,7 @@ $(document).ready(function () {
       $("#_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
       $("#_BT_imgOverlay").attr("src", imgs[imgs.length - 1]);
       $("#_BT_imgOverlay").addClass("_BT_visible");
-      localStorage['uniqueID_imgOverlay'] = imgs[imgs.length - 1];
+      localStorage['_BT_imgOverlay'] = imgs[imgs.length - 1];
       $(".imgContainer > .img").addClass("_BT_selectedImgOverlay");
     }
     $("#_BT_imgRefGallery").width(imgs.length * 87 + "px");
@@ -396,7 +435,7 @@ $(document).ready(function () {
     $("#_BT_imgRefGallery").empty();
     $("#_BT_imgOverlay").attr("src", "");
     $("#_BT_imgOverlay, #_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").removeClass("_BT_visible");
-    localStorage.removeItem('uniqueID_imgOverlay');
+    localStorage.removeItem('_BT_imgOverlay');
   }
 
   function getImgContainer(object) {
@@ -407,19 +446,19 @@ $(document).ready(function () {
   function _BT_replay(arg) {
     (arg == 1) ? ($(".replay-button").css("visibility", "hidden")) : ($(".replay-button").css("visibility", ""));
 
-    setToStorage({ "uniqueID_replay": arg });
+    setToStorage({ "_BT_replay": arg });
   }
 
   function _BT_checkpoint(arg) {
     _BT_appendTempScript({ function: "checkpoint();" });
 
-    setToStorage({ "uniqueID_checkpoint": arg });
+    setToStorage({ "_BT_checkpoint": arg });
   }
 
   function _BT_margin(arg) {
     (arg == 1) ? ($("body, ._BT_featureOverlay").addClass("_BT_marginTop")) : ($("body, ._BT_featureOverlay").removeClass("_BT_marginTop"));
 
-    setToStorage({ "uniqueID_margin": arg });
+    setToStorage({ "_BT_margin": arg });
   }
 
   function _BT_border(arg) {
@@ -444,13 +483,13 @@ $(document).ready(function () {
       $(".draggable").removeClass("_BT_border");
     }
 
-    setToStorage({ "uniqueID_border": arg });
+    setToStorage({ "_BT_border": arg });
   }
 
   function _BT_guide(arg) {
     _BT_grid(arg);
     _BT_rulers(arg);
-    setToStorage({ "uniqueID_guide": arg });
+    setToStorage({ "_BT_guide": arg });
   }
 
   function _BT_grid(arg) {
@@ -468,14 +507,14 @@ $(document).ready(function () {
 
   function _BT_backgroundColor(arg) {
     (arg == 1) ? ($("body").addClass("_BT_backgroundColor")) : ($("body").removeClass("_BT_backgroundColor"));
-    setToStorage({ "uniqueID_backgroundColor": arg });
+    setToStorage({ "_BT_backgroundColor": arg });
   }
 
   function _BT_overflow(arg) {
     var style;
     (arg == 1) ? (style = "visible") : (style = "");
     $("#ad-container").css("overflow", style);
-    setToStorage({ "uniqueID_overflow": arg });
+    setToStorage({ "_BT_overflow": arg });
   }
 
   function _BT_animationBoost(arg) {
@@ -484,9 +523,9 @@ $(document).ready(function () {
     if (arg == 0) {
       _BT_currentSpeed = 1;
     } else {
-      if (_BT_storage["uniqueID_animationBoostValue"]) {
-        console.log("i got some", _BT_storage["uniqueID_animationBoostValue"]);
-        _BT_currentSpeed = _BT_storage["uniqueID_animationBoostValue"];
+      if (_BT_storage["_BT_animationBoostValue"]) {
+        console.log("i got some", _BT_storage["_BT_animationBoostValue"]);
+        _BT_currentSpeed = _BT_storage["_BT_animationBoostValue"];
       }
       if (!initialBoost) {
         var _BT_nextSpeed;
@@ -509,7 +548,12 @@ $(document).ready(function () {
     if (_BT_currentSpeed == 0.5) suffix = "";
     $("#_BT_currentSpeed").text("Speed: x" + _BT_currentSpeed + suffix);
     _BT_appendTempScript({ function: "boost(" + _BT_currentSpeed + ");" });
-    setToStorage({ "uniqueID_animationBoostValue": _BT_currentSpeed });
+    setToStorage({ "_BT_animationBoostValue": _BT_currentSpeed });
+  }
+
+  function setToStorage(obj) {
+    chrome.storage.sync.set(obj);
+    _BT_storage[obj.key] = obj.val;
   }
 
   function _BT_screenshot(arg) {
@@ -518,14 +562,14 @@ $(document).ready(function () {
       var _BT_storageJSON = JSON.stringify(_BT_storage);
       localStorage['_BT_storageJSON'] = _BT_storageJSON;
 
-      if (localStorage['uniqueID_checkpoint']) {
-        localStorage['uniqueID_checkpointBackup'] = localStorage['uniqueID_checkpoint'];
-        localStorage.removeItem('uniqueID_checkpoint');
+      if (localStorage['_BT_checkpoint']) {
+        localStorage['_BT_checkpointBackup'] = localStorage['_BT_checkpoint'];
+        localStorage.removeItem('_BT_checkpoint');
       }
 
-      if (localStorage['uniqueID_imgOverlay']) {
-        localStorage['uniqueID_imgOverlayBackup'] = localStorage['uniqueID_imgOverlay'];
-        localStorage.removeItem('uniqueID_imgOverlay');
+      if (localStorage['_BT_imgOverlay']) {
+        localStorage['_BT_imgOverlayBackup'] = localStorage['_BT_imgOverlay'];
+        localStorage.removeItem('_BT_imgOverlay');
       }
 
       feature("#_BT_marginButton", 1);
@@ -549,8 +593,8 @@ $(document).ready(function () {
 
       setTimeout(function () {
         var specs = [
-          localStorage["adWidth"],
-          localStorage["adHeight"]
+          localStorage["_BT_adWidth"],
+          localStorage["_BT_adHeight"]
         ];
 
         chrome.extension.sendRequest({
@@ -562,37 +606,32 @@ $(document).ready(function () {
       _BT_storage = JSON.parse(localStorage['_BT_storageJSON']);
       _BT_unpack(_BT_storage);
 
-      if (localStorage['uniqueID_checkpointBackup']) {
-        localStorage['uniqueID_checkpoint'] = localStorage['uniqueID_checkpointBackup'];
-        localStorage.removeItem('uniqueID_checkpointBackup');
+      if (localStorage['_BT_checkpointBackup']) {
+        localStorage['_BT_checkpoint'] = localStorage['_BT_checkpointBackup'];
+        localStorage.removeItem('_BT_checkpointBackup');
       }
 
-      if (localStorage['uniqueID_imgOverlayBackup']) {
-        localStorage['uniqueID_imgOverlay'] = localStorage['uniqueID_imgOverlayBackup'];
-        localStorage.removeItem('uniqueID_imgOverlayBackup');
+      if (localStorage['_BT_imgOverlayBackup']) {
+        localStorage['_BT_imgOverlay'] = localStorage['_BT_imgOverlayBackup'];
+        localStorage.removeItem('_BT_imgOverlayBackup');
       }
 
       localStorage.removeItem('_BT_storageJSON');
       $("#ad-container").css("margin", "auto");
-      _BT_openNav(_BT_storage["uniqueID_minimized"]);
+      _BT_openNav(_BT_storage["_BT_minimized"]);
     }
-  }
-
-  function setToStorage(obj) {
-    chrome.storage.sync.set(obj);
-    _BT_storage[obj.key] = obj.val;
   }
 
   chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
       if (request._BT_pluginClick == 1) {
         if (_BT_isRunning == false) {
-          setToStorage({ "uniqueID_disable": 0 });
-          setToStorage({ "uniqueID_minimized": 0 });
+          setToStorage({ "_BT_disable": 0 });
+          setToStorage({ "_BT_minimized": 0 });
           _BT_prepare();
         } else {
           if (_BT_isExpanded == false) {
-            setToStorage({ "uniqueID_minimized": 0 });
+            setToStorage({ "_BT_minimized": 0 });
             _BT_openNav(0);
           } else {
             _BT_closeNav(0);
@@ -615,14 +654,14 @@ $(document).ready(function () {
       _BT_isExpanded = true;
       $("#_BT_").addClass("_BT_expand");
       $("#_BT_disableSwitch").prop("checked", true);
-      setToStorage({ "uniqueID_minimized": 0 });
+      setToStorage({ "_BT_minimized": 0 });
     }
     console.log("BannerTools has been " + status + "!");
   }
 
   function _BT_closeNav(arg) {
     var status;
-    setToStorage({ "uniqueID_minimized": 1 });
+    setToStorage({ "_BT_minimized": 1 });
     (arg == 0) ? status = "minimized" : status = "disabled";
     _BT_isExpanded = false;
     $("#_BT_").removeClass("_BT_expand");

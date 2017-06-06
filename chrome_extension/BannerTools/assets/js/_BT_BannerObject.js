@@ -6,8 +6,8 @@ var interval;
 var isCheckpointSet = false;
 
 function startup() {
-    if (localStorage['uniqueID_checkpoint']) {
-        banner.myTL.progress(localStorage['uniqueID_checkpoint']);
+    if (localStorage['_BT_checkpoint']) {
+        banner.myTL.progress(localStorage['_BT_checkpoint']);
         $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
     }
 
@@ -79,20 +79,18 @@ function pauseAnimation() {
 }
 
 function checkpoint() {
-    console.log("isCheckpointSet", isCheckpointSet);
     if(!isCheckpointSet){
-        if (localStorage['uniqueID_checkpoint']) {
-            banner.myTL.progress(localStorage['uniqueID_checkpoint']);
+        if (localStorage['_BT_checkpoint']) {
+            banner.myTL.progress(localStorage['_BT_checkpoint']);
         }
         else {
-            localStorage['uniqueID_checkpoint'] = banner.myTL.progress();
+            localStorage['_BT_checkpoint'] = banner.myTL.progress();
         }
-        console.log(localStorage['uniqueID_checkpoint']);
         $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
         isCheckpointSet = true;
     }
     else {
-        localStorage.removeItem('uniqueID_checkpoint');
+        localStorage.removeItem('_BT_checkpoint');
         $("#_BT_checkPoint").html("");
         isCheckpointSet = false;
     }
@@ -127,6 +125,6 @@ function formatNumber(arg) {
 function adSize() {
     var _BT_adSize = "(" + banner.adWidth + " x " + banner.adHeight + ")";
     $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
-    localStorage["adWidth"] = banner.adWidth;
-    localStorage["adHeight"] = banner.adHeight;
+    localStorage["_BT_adWidth"] = banner.adWidth;
+    localStorage["_BT_adHeight"] = banner.adHeight;
 }
