@@ -1,15 +1,4 @@
 $(document).ready(function () {
-    $("#_BT_AdGearURLInput").val("https://www.google.com");
-    if (localStorage["_BT_AdGearURLInput"]) {
-        $("#_BT_AdGearURLInput").val(localStorage["_BT_AdGearURLInput"]);
-    }
-    if (($("#_BT_AdGearURLInput").val().indexOf("https://") >= 0) || ($("#_BT_AdGearURLInput").val().indexOf("http://") >= 0)) {
-        $("#warning").hide();
-    } else {
-        $("#warning").show();
-        $("#warning").text("Please make sure URL contains http:// or https:// protocol");
-    }
-
     var banner_url = window.location.href;
 
     var loader_obj = {};

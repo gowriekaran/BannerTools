@@ -46,7 +46,6 @@
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
 		"assets/img/adgear.png",
-		"assets/img/adgear2.png",
 		"assets/js/jquery-ui.min.js",
 		"assets/js/jquery-3.1.1.min.js",
 		"assets/js/_BT_BannerObject.js",

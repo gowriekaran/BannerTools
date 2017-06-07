@@ -39,7 +39,7 @@ $(document).ready(function () {
       if (_BT_storage["isAdGear"] == 1) {
         $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
         $("body").append('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></div>');
-        $("body").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
+        $("body").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
         $("body").append('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><span id="warning" hidden></span><button id="_BT_AdGearURLButton">Update CTA</button>');
         $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
         _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1 });
@@ -48,6 +48,17 @@ $(document).ready(function () {
           setToStorage({ "isAdGear": 0 });
           location.reload();
         });
+
+        $("#_BT_AdGearURLInput").val("https://www.google.com");
+        if (localStorage["_BT_AdGearURLInput"]) {
+          $("#_BT_AdGearURLInput").val(localStorage["_BT_AdGearURLInput"]);
+        }
+        if (($("#_BT_AdGearURLInput").val().indexOf("https://") >= 0) || ($("#_BT_AdGearURLInput").val().indexOf("http://") >= 0)) {
+          $("#warning").hide();
+        } else {
+          $("#warning").show();
+          $("#warning").text("Please make sure URL contains http:// or https:// protocol");
+        }
 
         $('input').blur(function () {
           reloadAdgear();
@@ -87,7 +98,7 @@ $(document).ready(function () {
 
         if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
           console.log("AdGear Banner");
-          $("#_BT_").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear2.png') + '"/>');
+          $("#_BT_").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
           $("#_BT_AdGearLogoButton").click(function () {
             setToStorage({ "isAdGear": 1 });
             location.reload();
@@ -108,8 +119,6 @@ $(document).ready(function () {
               break;
           }
         });
-
-        $("._BT_featureOverlay").css({ width: localStorage["_BT_adWidth"], height: localStorage["_BT_adHeight"] });
 
         $(".replay-button").click(function () {
           _BT_appendTempScript({ function: "firstFrame()" });
@@ -369,13 +378,9 @@ $(document).ready(function () {
     location.reload();
   }
 
-  // function _BT_forceRun(arg){
-  //   console.log(arg);
-  //   setToStorage({ "_BT_forceRun": arg });
-  //   if (arg == 0)
-  //     return;
-  //   location.reload();
-  // }
+  function _BT_forceRun(arg){
+    setToStorage({ "_BT_forceRun": arg });
+  }
 
   function _BT_animationPlayback(arg) {
     $(arg).parent().find("svg").removeClass("_BT_featureOn");

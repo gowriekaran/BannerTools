@@ -179,6 +179,7 @@ function adSize() {
 
     var _BT_adSize = "(" + banner.adWidth + " x " + banner.adHeight + ")";
     $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
+    $("._BT_featureOverlay").css({ width: banner.adWidth, height: banner.adHeight });
     localStorage["_BT_adWidth"] = banner.adWidth;
     localStorage["_BT_adHeight"] = banner.adHeight;
 }
