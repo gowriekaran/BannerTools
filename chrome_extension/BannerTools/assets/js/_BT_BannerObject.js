@@ -1,11 +1,21 @@
-if ((typeof banner == "undefined") && (typeof banner.myTL == "undefined")) {
-    console.log("BannerTools could not find Banner object, Object Script will not work");
-}
-
 var interval;
 var isCheckpointSet = false;
 
+function isSafe(){
+    if ((typeof banner == "undefined") && (typeof banner.myTL == "undefined")) {
+        console.log("BannerTools could not find Banner object, Object Script will not work. Try refreshing.");
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
 function startup() {
+    if(!isSafe()){
+        return;
+    }
+
     if (localStorage['_BT_checkpoint']) {
         banner.myTL.progress(localStorage['_BT_checkpoint']);
         $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
@@ -54,31 +64,55 @@ function startup() {
 }
 
 function firstFrame(){
+    if(!isSafe()){
+        return;
+    }
+
     banner.myTL.progress(0);
     interval = setInterval(animationInterval, 1);
     sliderInterval();
 }
 
 function lastFrame(){
+    if(!isSafe()){
+        return;
+    }
+
     banner.myTL.progress(100);
     sliderInterval();
 }
 
 function sliderInterval(){
+    if(!isSafe()){
+        return;
+    }
+
     $("#slider").slider("value", banner.myTL.progress() * 100);
     $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");
     stopInterval();
 }
 
 function playAnimation() {
+    if(!isSafe()){
+        return;
+    }
+
     banner.myTL.play();
 }
 
 function pauseAnimation() {
+    if(!isSafe()){
+        return;
+    }
+
     banner.myTL.pause();
 }
 
 function checkpoint() {
+    if(!isSafe()){
+        return;
+    }
+
     if(!isCheckpointSet){
         if (localStorage['_BT_checkpoint']) {
             banner.myTL.progress(localStorage['_BT_checkpoint']);
@@ -97,10 +131,18 @@ function checkpoint() {
 }
 
 function boost(arg) {
+    if(!isSafe()){
+        return;
+    }
+
     banner.myTL.timeScale(arg);
 }
 
 function animationInterval() {
+    if(!isSafe()){
+        return;
+    }
+
     $("#slider").slider("value", banner.myTL.progress() * 100);
     $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
     if (banner.myTL.progress() == 1) {
@@ -115,14 +157,26 @@ function animationInterval() {
 }
 
 function stopInterval() {
+    if(!isSafe()){
+        return;
+    }
+
     clearInterval(interval);
 }
 
 function formatNumber(arg) {
+    if(!isSafe()){
+        return;
+    }
+
     return arg.toString().substring(0, 4);
 }
 
 function adSize() {
+    if(!isSafe()){
+        return;
+    }
+
     var _BT_adSize = "(" + banner.adWidth + " x " + banner.adHeight + ")";
     $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
     localStorage["_BT_adWidth"] = banner.adWidth;

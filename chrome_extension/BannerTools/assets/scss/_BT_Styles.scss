@@ -1,7 +1,6 @@
 @import "_BT_variables";
 @import "_BT_featureStyles";
 @import "_BT_adGear";
-@import "_BT_iOS";
 
 #_BT_helpDesk {
   width: $appWidth;
@@ -28,6 +27,7 @@
   transition: 0.5s;
   border-left: 2px solid $borderColor;
   width: 0px;
+  text-align: center;
 
   * {
     color: $textColor;
@@ -44,16 +44,12 @@
     padding: 10px;
   }
 
-  table {
-    width: 100%;
+  div:nth-of-type(n+3) {
+    text-align: initial;
   }
 
-  tr > td:nth-child(1) {
-    width: 90%;
-  }
-  tr > td:nth-child(2) {
-    width: 10%;
-    text-align: right;
+  table {
+    width: 100%;
   }
 
   #_BT_logo {
@@ -61,12 +57,6 @@
     display: block;
     margin: auto;
     padding: 10px;
-  }
-
-  #_BT_reset,
-  #_BT_forceRun {
-    font-weight: bold;
-    cursor: pointer;
   }
 
   ._BT_info {
@@ -88,18 +78,6 @@
     #_BT_imgDelRefButton {
       visibility: hidden;
     }
-  }
-
-  ._BT_settings {
-
-      div{
-        float: left;
-        padding: 0px !important;
-      }
-
-      div:nth-of-type(2){
-        float: right;
-      }
   }
 }
 
@@ -235,16 +213,14 @@
 }
 
 #_BT_imgRefGalleryContainer {
-  visibility: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
   width: 90%;
   height: 75px;
   background-color: $imgGalleryColor;
-  padding: 10px;
-  display: block;
+  padding: 12px !important;
+  display: none;
   margin: auto;
-  border-radius: 5px;
   #_BT_imgRefGallery {
     width: 230px;
     height: 100%;

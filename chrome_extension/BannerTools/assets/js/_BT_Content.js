@@ -3,7 +3,7 @@
 $(document).ready(function () {
   var _BT_version = "2.0.0 BETA",
       _BT_storage, _BT_helpOn,
-      _BT_currentSpeed = 1,
+      _BT_Speed = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
       flip = imgOverlayFirstRun = initialBoost = true,
@@ -111,19 +111,6 @@ $(document).ready(function () {
 
         $("._BT_featureOverlay").css({ width: localStorage["_BT_adWidth"], height: localStorage["_BT_adHeight"] });
 
-        $("#_BT_disableSwitch").change(function () {
-          _BT_disable();
-        });
-
-        $("#_BT_reset").click(function () {
-          reset();
-        });
-
-        $("#_BT_forceRun").click(function () {
-          setToStorage({ "_BT_forceRun": 1 });
-          location.reload();
-        });
-
         $(".replay-button").click(function () {
           _BT_appendTempScript({ function: "firstFrame()" });
         });
@@ -206,8 +193,8 @@ $(document).ready(function () {
         $(document).ready(function () {
           _BT_appendTempScript({ function: "startup()" });
           _BT_appendTempScript({ function: "adSize()" });
-          buildFeatureControls();
-          buildRulerControls();
+          getControls("_BT_features", "#_BT_featureControls", 3);
+          getControls("_BT_rulers", "#_BT_rulerOverlayControls>table", 2);
         });
       });
     } else {
@@ -222,10 +209,14 @@ $(document).ready(function () {
     if (arg["_BT_guide"]                 == 1) { feature("#_BT_guideButton",       0); }
     if (arg["_BT_border"]                == 1) { feature("#_BT_borderButton",      0); }
     if (arg["_BT_replay"]                == 1) { feature("#_BT_replayButton",      0); }
-    if (arg["_BT_help"]                  == 1) { feature("#_BT_helpButton",        0); }
     if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
-    if (arg["_BT_animationBoostValue"]   != 1) { feature("#_BT_boostButton",       0); }
+    if (arg["_BT_forceRun"]              == 1) { feature("#_BT_forceRunButton",    0); }
+    if (arg["_BT_help"]                  != 0) { feature("#_BT_helpButton",        0); }
+                                                 feature("#_BT_boostButton",  0);
+
     if (localStorage['_BT_imgOverlay'])        { addImgOverlayAsset(localStorage['_BT_imgOverlay']); }
+
+    $("#_BT_powerButton").find("svg").addClass("_BT_featureOn");
   }
 
   function feature(object, arg) {
@@ -272,6 +263,12 @@ $(document).ready(function () {
         break;
       case "#_BT_helpButton": _BT_help(arg);
         break;
+      case "#_BT_powerButton": _BT_disable();
+        break;
+      case "#_BT_resetButton": reset();
+        break;
+      case "#_BT_forceRunButton": _BT_forceRun(arg);
+        break;
     }
   }
 
@@ -303,9 +300,9 @@ $(document).ready(function () {
     return '<div class="_BT_ruler' + axis + ' draggable ui-widget-content"><span class="_BT_rulerPos"></span></div>';
   }
 
-  function buildFeatureControls() {
+  function getControls(file, parent, perRow) {
     var features = [];
-    $.getJSON(chrome.extension.getURL('/assets/json/_BT_features.json'), function (data) {
+    $.getJSON(chrome.extension.getURL('/assets/json/' + file + '.json'), function (data) {
       $.each(data, function (key, val) {
         features.push([
           data[key]["id"],
@@ -315,24 +312,10 @@ $(document).ready(function () {
           data[key]["featureDesc"]
         ]);
       });
-      $("#_BT_featureControls").append(buildControls(features, 3));
-      _BT_unpack(_BT_storage);
-    });
-  }
-
-  function buildRulerControls() {
-    var features = [];
-    $.getJSON(chrome.extension.getURL('/assets/json/_BT_rulers.json'), function (data) {
-      $.each(data, function (key, val) {
-        features.push([
-          data[key]["id"],
-          data[key]["class"],
-          data[key]["svgIcon"],
-          data[key]["featureName"],
-          data[key]["featureDesc"]
-        ]);
-      });
-      $("#_BT_rulerOverlayControls>table").append(buildControls(features, 2));
+      $(parent).append(buildControls(features, perRow));
+      if(file == "_BT_features"){
+        _BT_unpack(_BT_storage);
+      }
     });
   }
 
@@ -386,6 +369,14 @@ $(document).ready(function () {
     location.reload();
   }
 
+  // function _BT_forceRun(arg){
+  //   console.log(arg);
+  //   setToStorage({ "_BT_forceRun": arg });
+  //   if (arg == 0)
+  //     return;
+  //   location.reload();
+  // }
+
   function _BT_animationPlayback(arg) {
     $(arg).parent().find("svg").removeClass("_BT_featureOn");
     if (arg == 1) {
@@ -421,9 +412,9 @@ $(document).ready(function () {
     $("#_BT_imgRefGallery").append(getImgContainer({ imgSrc: imgs[imgs.length - 1], id: imgs.length - 1 }));
 
     if (imgs.length - 1 < 1) {
-      $("#_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
+      $("#_BT_imgOverlay, #_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").addClass("_BT_visible");
+      $("#_BT_imgRefGalleryContainer").addClass("_BT_display");
       $("#_BT_imgOverlay").attr("src", imgs[imgs.length - 1]);
-      $("#_BT_imgOverlay").addClass("_BT_visible");
       localStorage['_BT_imgOverlay'] = imgs[imgs.length - 1];
       $(".imgContainer > .img").addClass("_BT_selectedImgOverlay");
     }
@@ -435,6 +426,7 @@ $(document).ready(function () {
     $("#_BT_imgRefGallery").empty();
     $("#_BT_imgOverlay").attr("src", "");
     $("#_BT_imgOverlay, #_BT_imgDelRefButton, #_BT_imgRefGalleryContainer").removeClass("_BT_visible");
+    $("#_BT_imgRefGalleryContainer").removeClass("_BT_display");
     localStorage.removeItem('_BT_imgOverlay');
   }
 
@@ -518,37 +510,34 @@ $(document).ready(function () {
   }
 
   function _BT_animationBoost(arg) {
-    $("#_BT_boostButton").children().removeClass("_BT_featureOn");
-    $("#_BT_currentSpeed").removeClass("_BT_warning");
-    if (arg == 0) {
-      _BT_currentSpeed = 1;
-    } else {
-      if (_BT_storage["_BT_animationBoostValue"]) {
-        console.log("i got some", _BT_storage["_BT_animationBoostValue"]);
-        _BT_currentSpeed = _BT_storage["_BT_animationBoostValue"];
-      }
-      if (!initialBoost) {
-        var _BT_nextSpeed;
-        if (_BT_currentSpeed == 0.5) _BT_nextSpeed = 1;
-        else if (_BT_currentSpeed == 1) _BT_nextSpeed = 2;
-        else if (_BT_currentSpeed == 2) _BT_nextSpeed = 5;
-        else if (_BT_currentSpeed == 5) _BT_nextSpeed = 10;
-        else _BT_nextSpeed = 0.5;
-        _BT_currentSpeed = _BT_nextSpeed;
-      } else {
-        initialBoost = false;
-      }
-
-      if (_BT_currentSpeed != 1) {
-        $("#_BT_boostButton").children().addClass("_BT_featureOn");
-        $("#_BT_currentSpeed").addClass("_BT_warning");
-      }
+    if (_BT_storage["_BT_animationBoostValue"]){
+      _BT_Speed = _BT_storage["_BT_animationBoostValue"];
     }
+
+    if(initialBoost){
+      initialBoost = false;
+    }
+    else{
+      if (_BT_Speed == 0.5) _BT_Speed = 1;
+      else if (_BT_Speed == 1) _BT_Speed = 2;
+      else if (_BT_Speed == 2) _BT_Speed = 5;
+      else if (_BT_Speed == 5) _BT_Speed = 10;
+      else _BT_Speed = 0.5;
+    }
+
     var suffix = ".0";
-    if (_BT_currentSpeed == 0.5) suffix = "";
-    $("#_BT_currentSpeed").text("Speed: x" + _BT_currentSpeed + suffix);
-    _BT_appendTempScript({ function: "boost(" + _BT_currentSpeed + ");" });
-    setToStorage({ "_BT_animationBoostValue": _BT_currentSpeed });
+    if (_BT_Speed == 0.5) suffix = "";
+    $("#_BT_Speed").text("Speed: x" + _BT_Speed + suffix);
+    _BT_appendTempScript({ function: "boost(" + _BT_Speed + ");" });
+
+    setToStorage({ "_BT_animationBoostValue": _BT_Speed });
+
+    $("#_BT_boostButton").children().addClass("_BT_featureOn");
+    $("#_BT_Speed").addClass("_BT_warning");
+    if (_BT_Speed == 1) {
+      $("#_BT_boostButton").children().removeClass("_BT_featureOn");
+      $("#_BT_Speed").removeClass("_BT_warning");
+    }
   }
 
   function setToStorage(obj) {
@@ -579,7 +568,6 @@ $(document).ready(function () {
       feature("#_BT_borderButton", 1);
       feature("#_BT_replayButton", 1);
       feature("#_BT_helpButton", 1);
-      _BT_animationBoost(0);
       initialBoost = true;
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);

@@ -36,5 +36,9 @@
 }
 
 ._BT_warning {
-  color: $warningTextColor;
+  color: $warningTextColor !important;
+}
+
+._BT_display {
+  display: block !important;
 }
