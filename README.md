@@ -1,8 +1,10 @@
-# BannerTools
+# BannerTools 
+#### (Version 2.0)
 #### Facilitate Banner Development
 [Download](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
-_Credit to Mihran Abrahamian for Lights Off / Reveal All implementation :)_
+_Credit to [Mihran Abrahamian](https://github.com/abrahamian) for Lights Off / Reveal All implementation_
+_Credit to [Tung Doan Duong](https://github.com/TungDoanDuong) for Animation Slider implementation_
 
 #### Setup:
 * Use **ad-container** ID
@@ -20,12 +22,3 @@ _Credit to Mihran Abrahamian for Lights Off / Reveal All implementation :)_
 - Show Guide (Overlaying grid and the ability to add rulers)
 - Screenshot
 - Toast (Cool notifications rather than boring console logs)
-
-_Click on the MH Logo 3 times and you'll see more features_
-
-#### Extra Features:
-- Override (Force attempt to run on any page)
-- Reset (Reset BannerTools)
-- Border All (Add a border around all elements)
-- Hide Replay
-- Toast
