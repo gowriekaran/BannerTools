@@ -1,16 +1,16 @@
 # Version 2.0
 - Refactored Code
-- HTML is now an asset. Does need to be minifed and pasted into a js string variable like before.
+- HTML is now an asset. Does not need to be minifed and pasted into a js string variable like before. Instead it gets loaded.
 - Rewritten variables with "_BT_" prefix + camelCase format
 - Storage values are loaded all at once on startup, rather than so many individual ones. Updated individually, more practical.
 - Modified screenshot function to pass array rather than query string
 - Added comments above and below injected code to quickly spot BannerTools in the dev console
-- Screenshot button changed to an image as it is more user friendly
-- Added a reverse and forward button
-- UI Update
-- More to follow
-- CSS classes
 - Removed interior, should not touch dev code
+- Integrated SASS
+- New UI: SVG icons
+- AdGear Tester
+- New features: Reference images, playback, checkpoint, boost
+- Fixed override
 
 # Version 1.7
 - Removed options

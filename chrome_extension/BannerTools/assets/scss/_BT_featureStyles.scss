@@ -1,4 +1,4 @@
-@import "variables";
+@import "_BT_variables";
 
 /* DOM Styles Manipulation */
 
@@ -32,8 +32,13 @@
 
 ._BT_selectedImgOverlay{
   opacity: 0.4 !important;
+  border: 1px solid white !important;
 }
 
 ._BT_warning {
-  color: $warningTextColor;
+  color: $warningTextColor !important;
+}
+
+._BT_display {
+  display: block !important;
 }

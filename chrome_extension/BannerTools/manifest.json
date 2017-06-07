@@ -30,35 +30,26 @@
 		"js": [
 			"assets/js/jquery-3.1.1.min.js",
 			"assets/js/jquery-ui.min.js",
-			"assets/js/BannerToolsContent.js"
+			"assets/js/_BT_Content.js"
 		],
 		"css": [
-			"assets/css/hover-min.css",
-			"assets/css/BannerToolsStyles.css",
+			"assets/css/_BT_Styles.css",
 			"assets/css/jquery-ui.min.css"
 		]
 	}],
 	"background": {
 		"scripts": [
 			"assets/js/jquery-3.1.1.min.js",
-			"assets/js/BannerToolsBackground.js"
+			"assets/js/_BT_Background.js"
 		]
 	},
 	"web_accessible_resources": [
 		"assets/img/Logo.png",
 		"assets/img/adgear.png",
-		"assets/img/adgear2.png",
-		"assets/js/_BT_BannerObjectSlider.js",
-		"assets/js/_BT_BannerObjectStartup.js",
-		"assets/js/_BT_BannerObjectFirstFrame.js",
-		"assets/js/_BT_BannerObjectLastFrame.js",
-		"assets/js/_BT_BannerObjectPlay.js",
-		"assets/js/_BT_BannerObjectPause.js",
-		"assets/js/_BT_BannerObjectBoost.js",
-		"assets/js/_BT_BannerObjectCheckpoint.js",
-		"assets/js/jquery-3.1.1.min.js",
 		"assets/js/jquery-ui.min.js",
-		"assets/js/AdGear.js",
+		"assets/js/jquery-3.1.1.min.js",
+		"assets/js/_BT_BannerObject.js",
+		"assets/js/_BT_AdGear.js",
 		"assets/html/_BT_.html",
 		"assets/json/_BT_features.json",
 		"assets/json/_BT_rulers.json"

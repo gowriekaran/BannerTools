@@ -1,31 +1,42 @@
-# BannerTools
+# [BannerTools](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 #### Facilitate Banner Development
-[Download](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
-
-_Credit to Mihran Abrahamian for Lights Off / Reveal All implementation :)_
+[Download Plugin](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
 #### Setup:
-* Use **ad-container** ID
-* Use **replay-button** ID
-* Meta tags in `<head>`:
+* Use a parent container with ID **ad-container**
+* Use an element with ID **replay-button**
+* Meta tags in `<head>` tag:
 `<meta name="ad.size" content="width=300,height=250">`
-* Enable Allow access to file URLs in Chrome Extensions Settings Page
+* Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
 
 #### Features:
-- BannerInfo (ad width, height, name)
-- Lights off
-- Margin Top
-- Reveal All
-- Start Timer
-- Show Guide (Overlaying grid and the ability to add rulers)
-- Screenshot
-- Toast (Cool notifications rather than boring console logs)
+- Boost:
+  Manipulate animation speed (0.5, 1, 2, 5, 10)
+- Border:
+  Add a 1px solid red border around every element that has a height and width greater than 0
+- Checkpoint:
+  Set a checkpoint on your timeline so you can return to it every time you refresh the page
+- Guide:
+  Show a grid over your banner to see how accurate elements are positioned
+- Hide Replay:
+  Hide the replay button, convenient when manually taking screenshots
+- Info (ad name, specs, duration):
+  Display banner name, width, height and duration
+- Lights off:
+  Close the background light
+- Margin Top:
+  Add a 100px top margin
+- Reference Images:
+  Upload images to position elements based off a reference
+- Playback Controls:
+  Play, pause, go to end, go to start, or go to a specific time
+- Reveal All:
+  Show everything
+- Rulers:
+  To measure better
+- Screenshot:
+  Screenshot a moment in time
 
-_Click on the MH Logo 3 times and you'll see more features_
-
-#### Extra Features:
-- Override (Force attempt to run on any page)
-- Reset (Reset BannerTools)
-- Border All (Add a border around all elements)
-- Hide Replay
-- Toast
+#### Credits:
+- [Mihran Abrahamian](https://github.com/abrahamian) for Lights Off / Reveal All implementation
+- [Tung Doan Duong](https://github.com/TungDoanDuong) for Animation Slider implementation

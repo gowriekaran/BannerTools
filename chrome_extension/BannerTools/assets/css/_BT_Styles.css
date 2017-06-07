@@ -3,7 +3,7 @@
   width: 250px !important; }
 
 ._BT_featureOn {
-  fill: #2979FF !important; }
+  fill: black !important; }
 
 ._BT_visible {
   visibility: visible !important; }
@@ -21,27 +21,35 @@
   border: 1px dashed red !important; }
 
 ._BT_selectedImgOverlay {
-  opacity: 0.4 !important; }
+  opacity: 0.4 !important;
+  border: 1px solid white !important; }
 
 ._BT_warning {
-  color: #F44336; }
+  color: #3F51B5 !important; }
+
+._BT_display {
+  display: block !important; }
 
 body {
   background-color: #FAFAFA; }
 
-#_BT_AdGearURLInput, #_BT_AdGearLogoButton, #_BT_AdGearURLButton, #_BT_AdGearPreviewContainer {
+#_BT_AdGearURLInput, #_BT_AdGearLogoButton, #_BT_AdGearURLButton, #_BT_AdGearPreviewContainer, #warning {
   display: block;
   margin: auto;
-  margin-top: 20px; }
+  margin-top: 20px;
+  text-align: center;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 14px;
+  color: black; }
 
 #_BT_AdGearHomeButton {
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  transform: scaleX(-1);
   position: absolute;
   top: 10px;
-  left: 10px;
-  fill: #2979FF;
-  transition: -webkit-transform 0.5s;
-  transition: transform 0.5s;
-  transition: transform 0.5s, -webkit-transform 0.5s; }
+  left: 3px;
+  fill: black; }
   #_BT_AdGearHomeButton:hover {
     cursor: pointer; }
   #_BT_AdGearHomeButton svg {
@@ -54,16 +62,11 @@ body {
 
 #_BT_AdGearURLButton {
   background-color: #FAFAFA;
-  border: 2px solid #2979FF;
+  border: 2px solid black;
   width: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-family: 'Roboto Condensed', sans-serif;
-  font-size: 14px;
-  color: black;
   padding: 5px; }
   #_BT_AdGearURLButton:active {
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1);
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1); }
   #_BT_AdGearURLButton:hover {
     cursor: pointer; }
@@ -76,61 +79,11 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   color: black; }
 
-#_BT_AdGearLogoButton {
-  transition: -webkit-transform 0.5s;
-  transition: transform 0.5s;
-  transition: transform 0.5s, -webkit-transform 0.5s; }
-  #_BT_AdGearLogoButton:hover {
-    cursor: pointer; }
+#_BT_AdGearLogoButton:hover {
+  cursor: pointer; }
 
-/*  iOS styles */
-._BT_switch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 17px; }
-
-._BT_switch input {
-  display: none; }
-
-._BT_slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s; }
-
-._BT_slider:before {
-  position: absolute;
-  content: "";
-  height: 13px;
-  width: 13px;
-  left: 2px;
-  bottom: 2px;
-  background-color: #fff;
-  -webkit-transition: .4s;
-  transition: .4s; }
-
-input:checked + ._BT_slider {
-  background-color: #2979FF; }
-
-input:focus + ._BT_slider {
-  box-shadow: 0 0 1px #2196F3; }
-
-input:checked + ._BT_slider:before {
-  -webkit-transform: translateX(13px);
-  -ms-transform: translateX(13px);
-  transform: translateX(13px); }
-
-._BT_slider._BT_sliderRound {
-  border-radius: 17px; }
-
-._BT_slider._BT_sliderRound:before {
-  border-radius: 50%; }
+#warning {
+  color: #3F51B5; }
 
 #_BT_helpDesk {
   width: 250px;
@@ -138,10 +91,12 @@ input:checked + ._BT_slider:before {
   top: 5px;
   left: 5px;
   background-color: #FAFAFA;
-  border: 2px solid #2979FF;
+  border: 2px solid black;
   padding: 10px;
   font-family: 'Roboto Condensed', sans-serif;
   opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  -o-transition: opacity 0.5s;
   transition: opacity 0.5s;
   color: black; }
 
@@ -153,9 +108,12 @@ input:checked + ._BT_slider:before {
   right: 0;
   background-color: #FAFAFA;
   overflow-x: hidden;
+  -webkit-transition: 0.5s;
+  -o-transition: 0.5s;
   transition: 0.5s;
-  border-left: 2px solid #2979FF;
-  width: 0px; }
+  border-left: 2px solid black;
+  width: 0px;
+  text-align: center; }
   #_BT_ * {
     color: black;
     font-family: 'Roboto Condensed', sans-serif;
@@ -164,26 +122,20 @@ input:checked + ._BT_slider:before {
     -ms-user-select: none;
     user-select: none; }
   #_BT_ > div:first-child {
-    background-color: #2979FF;
+    background-color: black;
+    -webkit-box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.5); }
   #_BT_ div:nth-of-type(n+2) {
     padding: 10px; }
+  #_BT_ div:nth-of-type(n+3) {
+    text-align: initial; }
   #_BT_ table {
     width: 100%; }
-  #_BT_ tr > td:nth-child(1) {
-    width: 90%; }
-  #_BT_ tr > td:nth-child(2) {
-    width: 10%;
-    text-align: right; }
   #_BT_ #_BT_logo {
     width: 75px;
     display: block;
     margin: auto;
     padding: 10px; }
-  #_BT_ #_BT_reset,
-  #_BT_ #_BT_forceRun {
-    font-weight: bold;
-    cursor: pointer; }
   #_BT_ ._BT_info {
     font-style: italic; }
   #_BT_ #_BT_featureControls button {
@@ -195,11 +147,6 @@ input:checked + ._BT_slider:before {
     height: 50px; }
   #_BT_ #_BT_featureControls #_BT_imgDelRefButton {
     visibility: hidden; }
-  #_BT_ ._BT_easterEgg div {
-    float: left;
-    padding: 0px !important; }
-  #_BT_ ._BT_easterEgg div:nth-of-type(2) {
-    float: right; }
 
 .svgControls td, #_BT_ #_BT_featureControls td, #_BT_rulerOverlayControls td {
   height: 55px !important;
@@ -213,7 +160,7 @@ input:checked + ._BT_slider:before {
   fill: #9E9E9E; }
 
 .svgControls svg:hover, #_BT_ #_BT_featureControls svg:hover, #_BT_rulerOverlayControls svg:hover {
-  fill: #2979FF !important;
+  fill: black !important;
   cursor: pointer; }
 
 #_BT_imgOverlay {
@@ -221,6 +168,8 @@ input:checked + ._BT_slider:before {
 
 #_BT_gridOverlay {
   background-size: 10px 10px;
+  background-image: -webkit-linear-gradient(left, grey 1px, transparent 1px), -webkit-linear-gradient(top, grey 1px, transparent 1px);
+  background-image: -o-linear-gradient(left, grey 1px, transparent 1px), -o-linear-gradient(top, grey 1px, transparent 1px);
   background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
   opacity: 0.5; }
 
@@ -238,7 +187,7 @@ input:checked + ._BT_slider:before {
   visibility: hidden; }
   #_BT_rulerOverlayControls table {
     background-color: #FAFAFA;
-    border: 2px solid #2979FF;
+    border: 2px solid black;
     width: 250px;
     margin-left: auto;
     margin-right: auto; }
@@ -295,24 +244,22 @@ input:checked + ._BT_slider:before {
     background: #BDBDBD;
     height: 5px; }
   #animationPlayback #slider .ui-slider-handle {
-    border-color: #2979FF;
-    background-color: #2979FF;
+    border-color: black;
+    background-color: black;
     border-radius: 100px;
     width: 10px;
     height: 10px;
     top: -4px; }
 
 #_BT_imgRefGalleryContainer {
-  visibility: hidden;
   overflow-x: scroll;
   overflow-y: hidden;
   width: 90%;
   height: 75px;
-  background-color: #2979FF;
-  padding: 10px;
-  display: block;
-  margin: auto;
-  border-radius: 5px; }
+  background-color: black;
+  padding: 12px !important;
+  display: none;
+  margin: auto; }
   #_BT_imgRefGalleryContainer #_BT_imgRefGallery {
     width: 230px;
     height: 100%; }
@@ -326,7 +273,8 @@ input:checked + ._BT_slider:before {
       #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer img {
         width: 100%;
         height: 100%;
-        position: absolute; }
+        position: absolute;
+        border: 1px solid black; }
       #_BT_imgRefGalleryContainer #_BT_imgRefGallery .imgContainer span {
         display: none;
         position: absolute;
