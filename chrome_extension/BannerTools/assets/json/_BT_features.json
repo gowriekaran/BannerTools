@@ -1,128 +1,128 @@
 [
     {
         "id":"_BT_firstFrameButton",
-        "class":"_BT_feature _BT_featureOff",
+        "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='transform: scaleX(-1);'><path d='M19 12l-18 12v-24l18 12zm4-11h-4v22h4v-22z'/></svg>",
         "featureName":"First frame",
-        "featureDesc":"Click this to go to the beginning of the animation"
+        "featureDesc":"Click this to go to the beginning of the animation."
     },
     {
         "id":"_BT_playButton",
-        "class":"_BT_feature _BT_featureOff",
+        "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<button aria-live='assertive' tabindex='32' aria-label='Pause'> <svg viewBox='0 0 36 36' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'> <defs> <path id='_BT_12' d='M 11 10 L 17 10 L 17 26 L 11 26 M 20 10 L 26 10 L 26 26 L 20 26'> <animate id='_BT_playPause' begin='indefinite' attributeType='XML' attributeName='d' fill='freeze' from='M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26' to='M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28' dur='0.1s' keySplines='.4 0 1 1' repeatCount='1'></animate> </path> </defs> <use xlink:href='#_BT_12' class='_BT_svg-shadow'></use> <use xlink:href='#_BT_12' class='_BT_svg-fill'></use> </svg> </button>",
         "featureName":"Play / Pause",
-        "featureDesc":"Click this to play / pause animation"
+        "featureDesc":"Click this to play / pause animation."
     },
     {
         "id":"_BT_lastFrameButton",
-        "class":"_BT_feature _BT_featureOff",
+        "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'> <path d='M19 12l-18 12v-24l18 12zm4-11h-4v22h4v-22z'/> </svg>",
         "featureName":"Last frame",
-        "featureDesc":"Click this to go to the ending of the animation"
+        "featureDesc":"Click this to go to the ending of the animation."
     },
     {
         "id": "_BT_powerButton",
         "class": "_BT_feature _BT_featureOff",
         "svgIcon": "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm2 6h-4v12h4v-12z'/></svg>",
         "featureName": "Disable",
-        "featureDesc": "Completely turn off BannerTools"
+        "featureDesc": "Completely turn off BannerTools."
     },
     {
         "id": "_BT_resetButton",
         "class": "_BT_feature _BT_featureOff",
         "svgIcon": "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M10 18v-12h4v12h-4zm2-18c-.883 0-1.742.102-2.57.283l.349 1.974c.715-.163 1.456-.257 2.221-.257 5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10c0-1.914.551-3.697 1.489-5.217l2.173 2.173 1.353-7.014-7.015 1.35 2.037 2.038c-1.282 1.907-2.037 4.198-2.037 6.67 0 6.627 5.373 12 12 12s12-5.373 12-12-5.373-12-12-12z'/></svg>",
         "featureName": "Reset",
-        "featureDesc": "Reset BannerTools"
+        "featureDesc": "Completely reset BannerTools."
     },
     {
         "id": "_BT_forceRunButton",
         "class": "_BT_feature _BT_featureOff",
         "svgIcon": "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M11.327 14.859c-.217-.648.031-1.333.595-1.734.284-.202.609-.306.932-.306.317 0 .633.101.902.308-.21-.704-.851-1.127-1.516-1.127-.312 0-.63.093-.911.294-.882.629-.879 1.938-.002 2.565zm2.639 6.434c.7.235 2.868.835 5.38 2.707l4.654-3.319c-1.208-1.692-.875-2.876-2.075-4.558-.464-.652-.885-1.084-1.565-1.084-.179 0-.313.027-.573.075l.422.592c.106.148.071.355-.077.461-.149.106-.355.071-.461-.077l-.377-.528c-.109-.153-.285-.241-.469-.241-.068 0-.06-.007-.978.205l.513.718c.105.148.071.354-.077.461-.148.106-.354.072-.461-.078l-.444-.622c-.109-.153-.285-.241-.467-.241-.083 0-.067-.005-1.01.234l.543.759c.105.148.07.354-.078.461-.147.106-.354.071-.46-.077l-2.198-3.077c-.289-.406-.854-.5-1.26-.211s-.501.854-.211 1.26l3.246 4.55c-.87-.322-2.217-.463-2.467.44-.149.538.282.966.95 1.19zm-4.966-15.293h4v4.089c-.246-.052-.497-.089-.758-.089h-.002c-.745 0-1.462.23-2.073.666-.521.373-.91.881-1.167 1.451v-6.117zm2.562 15.972l-.562.028c-6.075 0-11-4.925-11-11s4.925-11 11-11 11 4.925 11 11c0 .804-.092 1.586-.256 2.342-.395-.179-.849-.303-1.385-.303-.234 0-.428.024-.615.054.161-.673.256-1.371.256-2.093 0-4.962-4.037-9-9-9s-9 4.038-9 9 4.037 9 9 9h.011c-.071.652.093 1.36.551 1.972z'/></svg>",
         "featureName": "Force run",
-        "featureDesc": "Force BannerTools to run on any page"
+        "featureDesc": "Force BannerTools to run on any page. Unpredictable results. View ReadMe for best experience."
     },
     {
         "id": "_BT_helpButton",
         "class": "_BT_feature _BT_featureOff",
         "svgIcon": "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M14.601 21.5c0 1.38-1.116 2.5-2.499 2.5-1.378 0-2.499-1.12-2.499-2.5s1.121-2.5 2.499-2.5c1.383 0 2.499 1.119 2.499 2.5zm-2.42-21.5c-4.029 0-7.06 2.693-7.06 8h3.955c0-2.304.906-4.189 3.024-4.189 1.247 0 2.57.828 2.684 2.411.123 1.666-.767 2.511-1.892 3.582-2.924 2.78-2.816 4.049-2.816 7.196h3.943c0-1.452-.157-2.508 1.838-4.659 1.331-1.436 2.986-3.222 3.021-5.943.047-3.963-2.751-6.398-6.697-6.398z'/></svg>",
         "featureName": "Help",
-        "featureDesc": "Go hover on stuff"
+        "featureDesc": "Hover on features to know more."
     },
     {
         "id":"_BT_boostButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M15.91 13.34l2.636-4.026-.454-.406-3.673 3.099c-.675-.138-1.402.068-1.894.618-.736.823-.665 2.088.159 2.824.824.736 2.088.665 2.824-.159.492-.55.615-1.295.402-1.95zm-3.91-10.646v-2.694h4v2.694c-1.439-.243-2.592-.238-4 0zm8.851 2.064l1.407-1.407 1.414 1.414-1.321 1.321c-.462-.484-.964-.927-1.5-1.328zm-18.851 4.242h8v2h-8v-2zm-2 4h8v2h-8v-2zm3 4h7v2h-7v-2zm21-3c0 5.523-4.477 10-10 10-2.79 0-5.3-1.155-7.111-3h3.28c1.138.631 2.439 1 3.831 1 4.411 0 8-3.589 8-8s-3.589-8-8-8c-1.392 0-2.693.369-3.831 1h-3.28c1.811-1.845 4.321-3 7.111-3 5.523 0 10 4.477 10 10z'/></svg>",
         "featureName":"Turbo",
-        "featureDesc":"Do you have the need for speed?"
+        "featureDesc":"Do you have the need for speed? Manipulate animation speed (0.5, 1, 2, 5, 10)."
     },
     {
         "id":"_BT_checkpointButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M12 3c2.131 0 4 1.73 4 3.702 0 2.05-1.714 4.941-4 8.561-2.286-3.62-4-6.511-4-8.561 0-1.972 1.869-3.702 4-3.702zm0-2c-3.148 0-6 2.553-6 5.702 0 3.148 2.602 6.907 6 12.298 3.398-5.391 6-9.15 6-12.298 0-3.149-2.851-5.702-6-5.702zm0 8c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm8 6h-3.135c-.385.641-.798 1.309-1.232 2h3.131l.5 1h-4.264l-.344.544-.289.456h.558l.858 2h-7.488l.858-2h.479l-.289-.456-.343-.544h-2.042l-1.011-1h2.42c-.435-.691-.848-1.359-1.232-2h-3.135l-4 8h24l-4-8zm-12.794 6h-3.97l1.764-3.528 1.516 1.528h1.549l-.859 2zm8.808-2h3.75l1 2h-3.892l-.858-2z'/></svg>",
         "featureName":"Checkpoint",
-        "featureDesc":"Mark a checkpoint and return to it everytime the page reloads"
+        "featureDesc":"Mark a checkpoint in the timeline and return to it everytime the page reloads."
     },
     {
         "id":"_BT_guideButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M6 6h-6v-6h6v6zm9-6h-6v6h6v-6zm9 0h-6v6h6v-6zm-18 9h-6v6h6v-6zm9 0h-6v6h6v-6zm9 0h-6v6h6v-6zm-18 9h-6v6h6v-6zm9 0h-6v6h6v-6zm9 0h-6v6h6v-6z'/> </svg>",
         "featureName":"Show grid",
-        "featureDesc":"Display a grid and use rulers for pixel precise tasks"
+        "featureDesc":"Display a grid and use rulers for pixel precise tasks."
     },
     {
         "id":"_BT_borderButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M16 0v2h-8v-2h8zm0 24v-2h-8v2h8zm2-22h4v4h2v-6h-6v2zm-18 14h2v-8h-2v8zm2-10v-4h4v-2h-6v6h2zm22 2h-2v8h2v-8zm-2 10v4h-4v2h6v-6h-2zm-16 4h-4v-4h-2v6h6v-2z'/> </svg>",
         "featureName":"Border everything",
-        "featureDesc":"Add a 1px dashed red border around all elements (with height and width greater than 0)"
+        "featureDesc":"Add a 1px dashed red border around all elements (with height and width greater than 0)."
     },
     {
         "id":"_BT_marginButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'> <path d='M32 16c0-8.837-7.163-16-16-16s-16 7.163-16 16 7.163 16 16 16 16-7.163 16-16zM3 16c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13-13-5.82-13-13z'></path> <path d='M9.914 11.086l-2.829 2.829 8.914 8.914 8.914-8.914-2.828-2.828-6.086 6.086z'></path> </svg>",
         "featureName":"Drop 100px",
-        "featureDesc":"For those that are claustrophobic"
+        "featureDesc":"For those that are claustrophobic and being stuck to the ceiling."
     },
     {
         "id":"_BT_showButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'> <path d='M16 6c-6.979 0-13.028 4.064-16 10 2.972 5.936 9.021 10 16 10s13.027-4.064 16-10c-2.972-5.936-9.021-10-16-10zM23.889 11.303c1.88 1.199 3.473 2.805 4.67 4.697-1.197 1.891-2.79 3.498-4.67 4.697-2.362 1.507-5.090 2.303-7.889 2.303s-5.527-0.796-7.889-2.303c-1.88-1.199-3.473-2.805-4.67-4.697 1.197-1.891 2.79-3.498 4.67-4.697 0.122-0.078 0.246-0.154 0.371-0.228-0.311 0.854-0.482 1.776-0.482 2.737 0 4.418 3.582 8 8 8s8-3.582 8-8c0-0.962-0.17-1.883-0.482-2.737 0.124 0.074 0.248 0.15 0.371 0.228v0zM16 13c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z'></path> </svg>",
         "featureName":"Show it all",
-        "featureDesc":"Show everything behind the curtain"
+        "featureDesc":"Show me the magic behind the curtain."
     },
     {
         "id":"_BT_blackButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M14 19h-4c-.276 0-.5.224-.5.5s.224.5.5.5h4c.276 0 .5-.224.5-.5s-.224-.5-.5-.5zm0 2h-4c-.276 0-.5.224-.5.5s.224.5.5.5h4c.276 0 .5-.224.5-.5s-.224-.5-.5-.5zm.25 2h-4.5l1.188.782c.154.138.38.218.615.218h.895c.234 0 .461-.08.615-.218l1.187-.782zm3.75-13.799c0 3.569-3.214 5.983-3.214 8.799h-5.572c0-2.816-3.214-5.23-3.214-8.799 0-3.723 2.998-5.772 5.997-5.772 3.001 0 6.003 2.051 6.003 5.772zm4-.691v1.372h-2.538c.02-.223.038-.448.038-.681 0-.237-.017-.464-.035-.69h2.535zm-10.648-6.553v-1.957h1.371v1.964c-.242-.022-.484-.035-.726-.035-.215 0-.43.01-.645.028zm5.521 1.544l1.57-1.743 1.019.918-1.603 1.777c-.25-.297-.593-.672-.986-.952zm-10.738.952l-1.603-1.777 1.019-.918 1.57 1.743c-.392.28-.736.655-.986.952zm-1.597 5.429h-2.538v-1.372h2.535c-.018.226-.035.454-.035.691 0 .233.018.458.038.681z'/> </svg>",
         "featureName":"Close the lights",
-        "featureDesc":"This one is for the vampires"
+        "featureDesc":"This one is for the vampires."
     },
     {
         "id":"_BT_screenshotButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M18 5l-2-3h-8l-2 3h-6v17h24v-17h-6zm4 7h-4.079c.581 3.754-2.312 7-5.921 7-3.612 0-6.501-3.248-5.921-7h-4.079v-5h5.07l2-3h5.859l2 3h5.071v5zm-10-3c-2.243 0-4 1.73-4 3.939 0 2.239 1.794 4.061 4 4.061s4-1.822 4-4.061c0-2.209-1.757-3.939-4-3.939zm-.436 3.555c-.632.503-1.461.5-1.852-.006-.39-.506-.194-1.324.438-1.827.632-.502 1.461-.499 1.851.007.391.505.195 1.323-.437 1.826z'/> </svg>",
         "featureName":"Screenshot",
-        "featureDesc":"Take a screenshot of the current frame"
+        "featureDesc":"Take a screenshot of the current frame, make it a memorable moment."
     },
     {
         "id":"_BT_replayButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:a='http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/' x='0px' y='0px' width='24px' height='24px' viewBox='0 0 24 24' style='enable-background:new 0 0 24 24;' xml:space='preserve'><defs></defs><g><path d='M12,0c3.3,0,6.3,1.4,8.5,3.5L22.9,1L24,8.4l-7.4-1l2.5-2.5C17.2,3.1,14.8,2,12,2C6.5,2,2,6.5,2,12s4.5,10,10,10c3.9,0,7.2-2.2,8.9-5.4l1.7,1c-2,3.8-6,6.4-10.6,6.4C5.4,24,0,18.6,0,12S5.4,0,12,0z'/></g><g><path d='M4.3,16.5V7.9h1.2v3.7h2.1V7.9h1.2v8.6H7.6v-4H5.5v4H4.3z'/><path d='M10.1,9.5V8.2h1.2v1.2H10.1z M10.1,16.5v-6.1h1.2v6.1H10.1z'/><path d='M13.9,16.6c-0.3,0-0.5-0.1-0.7-0.2c-0.2-0.2-0.4-0.4-0.5-0.6c-0.1-0.3-0.2-0.5-0.2-0.8s-0.1-0.6-0.1-0.9c0-0.1,0-0.5,0-1.1c0-0.2,0-0.4,0-0.6c0-0.2,0-0.3,0.1-0.5c0-0.2,0.1-0.3,0.1-0.5c0-0.1,0.1-0.3,0.2-0.4c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.2-0.2,0.4-0.2c0.1-0.1,0.3-0.1,0.5-0.1c0.1,0,0.3,0,0.4,0.1c0.1,0,0.2,0.1,0.3,0.2s0.2,0.1,0.3,0.2s0.2,0.1,0.3,0.3v-3h1.2v8.6h-1.2v-0.6c-0.2,0.2-0.4,0.3-0.6,0.5C14.4,16.5,14.2,16.6,13.9,16.6z M14.2,15.6c0.3,0,0.6-0.1,0.9-0.2v-3.8c-0.3-0.2-0.6-0.2-0.9-0.2c-0.1,0-0.2,0-0.3,0.1s-0.1,0.1-0.2,0.3s-0.1,0.2-0.1,0.3c0,0.1,0,0.3,0,0.4c0,0.7,0,1.3,0,1.7c0,0.2,0,0.4,0,0.5c0,0.2,0.1,0.3,0.1,0.5c0,0.1,0.1,0.3,0.2,0.3C14,15.5,14.1,15.6,14.2,15.6z'/><path d='M19.2,16.6c-0.3,0-0.6-0.1-0.8-0.2c-0.2-0.1-0.4-0.2-0.5-0.4s-0.2-0.4-0.3-0.6c-0.1-0.3-0.1-0.5-0.2-0.8c0-0.3,0-0.6-0.1-0.9c0-0.3,0-0.5,0-0.8c0-0.3,0-0.6,0.1-0.8s0.1-0.5,0.2-0.7c0.1-0.2,0.2-0.4,0.3-0.6c0.1-0.1,0.3-0.3,0.5-0.4c0.2-0.1,0.5-0.1,0.8-0.1c0.3,0,0.5,0,0.7,0.1c0.2,0.1,0.4,0.2,0.5,0.3c0.1,0.1,0.2,0.3,0.3,0.5s0.2,0.4,0.2,0.6c0,0.2,0.1,0.5,0.1,0.7c0,0.2,0,0.5,0,0.8v0.1h-2.4v0.3c0,0,0,0.1,0,0.2c0,0.1,0,0.2,0,0.4s0,0.2,0,0.4c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.2,0.1,0.3c0,0.1,0.1,0.1,0.2,0.2s0.2,0.1,0.3,0.1c0.1,0,0.2,0,0.3-0.1c0.1,0,0.1-0.1,0.2-0.2c0-0.1,0.1-0.2,0.1-0.3s0-0.2,0-0.4v-0.3h1.2v0.2c0,0.7-0.2,1.1-0.5,1.5C20.3,16.4,19.8,16.6,19.2,16.6z M18.6,12.8h1.2v-0.4c0-0.2,0-0.3,0-0.4c0-0.1,0-0.2-0.1-0.4c0-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.1-0.3-0.1c-0.1,0-0.2,0-0.3,0.1c-0.1,0.1-0.1,0.2-0.2,0.3s-0.1,0.2-0.1,0.4c0,0.1,0,0.3,0,0.4V12.8z'/></g></svg>",
         "featureName":"Hide replay button",
-        "featureDesc":"Hide the replay button, convenient when manually taking screenshots of the backup image"
+        "featureDesc":"Hide the replay button, convenient when manually taking screenshots of the backup image."
     },
     {
         "id":"_BT_imgAddRefButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M1.859 6l-.489-2h21.256l-.491 2h-20.276zm1.581-4l-.439-2h17.994l-.439 2h-17.116zm20.56 16h-24l2 6h20l2-6zm-20.896-2l-.814-6h19.411l-.839 6h2.02l1.118-8h-24l1.085 8h2.019zm2.784-3.995c-.049-.555.419-1.005 1.043-1.005.625 0 1.155.449 1.185 1.004.03.555-.438 1.005-1.044 1.005-.605 0-1.136-.449-1.184-1.004zm7.575-.224l-1.824 2.68-1.813-1.312-2.826 2.851h10l-3.537-4.219z'/> </svg>",
         "featureName":"Add some reference images",
-        "featureDesc":"So you can see if things are placed in their proper positions"
+        "featureDesc":"So you can see if things are placed in their proper positions."
     },
     {
         "id":"_BT_imgDelRefButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M19.5 12c-2.483 0-4.5 2.015-4.5 4.5s2.017 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.017-4.5-4.5-4.5zm2.5 5h-5v-1h5v1zm-18 0l4-5.96 2.48 1.96 2.52-4 1.853 2.964c-1.271 1.303-1.977 3.089-1.827 5.036h-9.026zm10.82 4h-14.82v-18h22v7.501c-.623-.261-1.297-.422-2-.476v-5.025h-18v14h11.502c.312.749.765 1.424 1.318 2zm-9.32-11c-.828 0-1.5-.671-1.5-1.5 0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .829-.672 1.5-1.5 1.5z'/> </svg>",
         "featureName":"Delete all reference images",
-        "featureDesc":"Quickly delete all reference images"
+        "featureDesc":"Quickly delete all reference images."
     }
 ]

@@ -78,7 +78,6 @@ $(document).ready(function () {
         });
 
         function reloadAdgear() {
-          console.log($("#_BT_AdGearURLInput").val());
           localStorage["_BT_AdGearURLInput"] = $("#_BT_AdGearURLInput").val();
           location.reload();
         }
@@ -97,7 +96,6 @@ $(document).ready(function () {
         $("#_BT_version").append(' v' + _BT_version);
 
         if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
-          console.log("AdGear Banner");
           $("#_BT_").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
           $("#_BT_AdGearLogoButton").click(function () {
             setToStorage({ "isAdGear": 1 });
@@ -383,7 +381,7 @@ $(document).ready(function () {
   }
 
   function _BT_animationPlayback(arg) {
-    $(arg).parent().find("svg").removeClass("_BT_featureOn");
+    $("._BT_playBack").find("svg").removeClass("_BT_featureOn");
     if (arg == 1) {
       flip = !flip;
       $('#_BT_playPause').attr({
@@ -395,7 +393,7 @@ $(document).ready(function () {
         _BT_appendTempScript({ function: "playAnimation()" });
       } else {
         _BT_appendTempScript({ function: "pauseAnimation()" });
-        $(arg).children().children().addClass("_BT_featureOn");
+        $("#_BT_playButton").children().children().addClass("_BT_featureOn");
       }
       return;
     }
