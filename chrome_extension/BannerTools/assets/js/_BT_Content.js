@@ -118,6 +118,10 @@ $(document).ready(function () {
           }
         });
 
+        $("#_BT_disableSwitch").change(function () {
+          _BT_disable();
+        });
+
         $(".replay-button").click(function () {
           _BT_appendTempScript({ function: "firstFrame()" });
         });
@@ -222,8 +226,6 @@ $(document).ready(function () {
                                                  feature("#_BT_boostButton",  0);
 
     if (localStorage['_BT_imgOverlay'])        { addImgOverlayAsset(localStorage['_BT_imgOverlay']); }
-
-    $("#_BT_powerButton").find("svg").addClass("_BT_featureOn");
   }
 
   function feature(object, arg) {
@@ -270,12 +272,20 @@ $(document).ready(function () {
         break;
       case "#_BT_helpButton": _BT_help(arg);
         break;
-      case "#_BT_powerButton": _BT_disable();
-        break;
       case "#_BT_resetButton": reset();
         break;
       case "#_BT_forceRunButton": _BT_forceRun(arg);
         break;
+      case "#_BT_settings": _BT_panel(object);
+        break;
+    }
+  }
+
+  function _BT_panel(object){
+    console.log(object);
+    if(object == "#BT_settings"){
+      $(".panel").hide();
+      $("_BT_settingsPanel").show();
     }
   }
 

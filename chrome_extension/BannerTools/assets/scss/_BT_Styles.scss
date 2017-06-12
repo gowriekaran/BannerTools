@@ -1,6 +1,7 @@
 @import "_BT_variables";
 @import "_BT_featureStyles";
 @import "_BT_adGear";
+@import "_BT_iOS";
 
 #_BT_helpDesk {
   width: $appWidth;
@@ -52,6 +53,15 @@
     width: 100%;
   }
 
+  tr > td:nth-child(1) {
+    width: 90%;
+  }
+
+  tr > td:nth-child(2) {
+    width: 10%;
+    text-align: right;
+  }
+
   #_BT_logo {
     width: 75px;
     display: block;
@@ -77,6 +87,12 @@
 
     #_BT_imgDelRefButton {
       visibility: hidden;
+    }
+  }
+
+  #_BT_settingsPanel {
+    div {
+      padding: 0px !important;
     }
   }
 }

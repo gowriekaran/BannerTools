@@ -85,6 +85,58 @@ body {
 #warning {
   color: #3F51B5; }
 
+/*  iOS styles */
+._BT_switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px; }
+
+._BT_switch input {
+  display: none; }
+
+._BT_slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s; }
+
+._BT_slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  -o-transition: .4s;
+  transition: .4s; }
+
+input:checked + ._BT_slider {
+  background-color: black; }
+
+input:focus + ._BT_slider {
+  -webkit-box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196F3; }
+
+input:checked + ._BT_slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px); }
+
+._BT_slider._BT_sliderRound {
+  border-radius: 17px; }
+
+._BT_slider._BT_sliderRound:before {
+  border-radius: 50%; }
+
 #_BT_helpDesk {
   width: 250px;
   position: absolute;
@@ -131,6 +183,11 @@ body {
     text-align: initial; }
   #_BT_ table {
     width: 100%; }
+  #_BT_ tr > td:nth-child(1) {
+    width: 90%; }
+  #_BT_ tr > td:nth-child(2) {
+    width: 10%;
+    text-align: right; }
   #_BT_ #_BT_logo {
     width: 75px;
     display: block;
@@ -147,6 +204,8 @@ body {
     height: 50px; }
   #_BT_ #_BT_featureControls #_BT_imgDelRefButton {
     visibility: hidden; }
+  #_BT_ #_BT_settingsPanel div {
+    padding: 0px !important; }
 
 .svgControls td, #_BT_ #_BT_featureControls td, #_BT_rulerOverlayControls td {
   height: 55px !important;
