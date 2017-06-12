@@ -1,0 +1,22 @@
+* {
+  background-color: #FAFAFA;
+  color: black;
+  font-family: 'Roboto Condensed', sans-serif;
+  user-select: none; }
+
+div {
+  padding: 0px !important; }
+  div input {
+    width: 100px;
+    height: 25px;
+    font-size: 14px; }
+  div button {
+    background-color: black;
+    border: 2px solid black;
+    color: #FAFAFA !important;
+    width: 100px;
+    padding: 5px; }
+    div button:active {
+      box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.1); }
+    div button:hover {
+      cursor: pointer; }

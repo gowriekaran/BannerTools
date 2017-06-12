@@ -8,13 +8,23 @@ $(document).ready(function () {
       imgs = new Array(),
       flip = imgOverlayFirstRun = initialBoost = true,
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
-      play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26";
+      play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
+      _BT_adContainer = "#ad-container",
+      _BT_replayButton = ".replay-button";
 
   _BT_prepare();
 
   function _BT_prepare() {
     chrome.storage.sync.get(null, function (items) {
       _BT_storage = items;
+
+      if (_BT_storage["_BT_adContainer"]) {
+        _BT_adContainer = _BT_storage["_BT_adContainer"];
+      }
+      if (_BT_storage["_BT_replayButton"]) {
+        _BT_replayButton = _BT_storage["_BT_replayButton"];
+      }
+
       _BT_run();
     });
   }
@@ -26,8 +36,172 @@ $(document).ready(function () {
     location.reload();
   }
 
+  function _BT_mainPanel() {
+    $(_BT_replayButton).click(function () {
+      _BT_appendTempScript({ function: "firstFrame()" });
+    });
+
+    $("#_BT_adContainer").val(_BT_adContainer);
+    $("#_BT_replayButton").val(_BT_replayButton);
+
+    $("#_BT_settingsSaveButton").click(function () {
+      if ($("#_BT_adContainer").val()) {
+        setToStorage({"_BT_adContainer": $("#_BT_adContainer").val()});
+      }
+      if ($("#_BT_replayButton").val()){
+        setToStorage({ "_BT_replayButton": $("#_BT_replayButton").val() });
+      }
+
+      location.reload();
+    });
+
+    $(document).on('click', '._BT_rulerButtons', function () {
+      var axis, maxAxisRange, pos;
+      if (this.id == "_BT_xRulerButton") {
+        axis = "X";
+        pos = "left";
+        maxAxisRange = localStorage["_BT_adWidth"];
+      } else {
+        axis = "Y";
+        pos = "top";
+        maxAxisRange = localStorage["_BT_adHeight"];
+      }
+      $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
+      $("._BT_ruler" + axis).draggable({
+        axis: axis,
+        containment: "#_BT_rulerOverlay",
+        drag: function () {
+          var Position = $(this).css(pos);
+
+          if (Position == (maxAxisRange - 2) + "px") {
+            Position = (maxAxisRange + "px");
+          }
+          $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
+        }
+      });
+    });
+
+    $(document).on('click', '.delImg', function () {
+      imgs.splice($(this).parent().attr("id"), 1);
+      if ($(this).attr("src") == localStorage['_BT_imgOverlay']) {
+        localStorage.removeItem('_BT_imgOverlay');
+        $("#_BT_imgOverlay").attr("src", "");
+      }
+      $(this).parent().remove();
+      if ($('#_BT_imgRefGallery').is(':empty')) {
+        _BT_deleteImgOverlayAssets();
+      }
+    });
+
+    $(document).on('click', '.img', function () {
+      $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
+
+      if (localStorage['_BT_imgOverlay'] == $(this).attr("src")) {
+        $("#_BT_imgOverlay").attr("src", "");
+        $("#_BT_imgOverlay").removeClass("_BT_visible");
+        localStorage.removeItem('_BT_imgOverlay');
+        $(this).removeClass("_BT_selectedImgOverlay");
+      } else {
+        $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
+        $("#_BT_imgOverlay").addClass("_BT_visible");
+        localStorage['_BT_imgOverlay'] = $(this).attr("src");
+        $(this).addClass("_BT_selectedImgOverlay");
+      }
+    });
+
+    $(document).on('click', '._BT_feature', function () {
+      feature("#" + this.id, $(this).attr('bt-value'));
+    });
+
+    $(document).on('mouseover', '._BT_feature, ._BT_rulerButtons', function () {
+      if (_BT_helpOn) {
+        $("#_BT_helpDesk").addClass("_BT_opacity");
+        _BT_appendHelp($(this).attr('bt-featurename'), $(this).attr('bt-featuredesc'));
+      }
+    });
+
+    $(document).on('mouseout', '._BT_feature, ._BT_rulerButtons', function () {
+      if (_BT_helpOn) $("#_BT_helpDesk").removeClass("_BT_opacity");
+    });
+
+    $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
+
+    $(window).keypress(function (e) {
+      switch (e.keyCode) {
+        case 0: _BT_animationPlayback(1);
+          break;
+        case 32: _BT_animationPlayback(1);
+          break;
+        case 113: _BT_animationPlayback(2);
+          break;
+        case 101: _BT_animationPlayback(3);
+          break;
+        case 114: reset();
+          break;
+      }
+    });
+
+    if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
+      $("#_BT_mainPanel").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
+      $("#_BT_AdGearLogoButton").click(function () {
+        setToStorage({ "isAdGear": 1 });
+        location.reload();
+      });
+    }
+
+    $(document).ready(function () {
+      _BT_appendTempScript({ function: "startup()" });
+      _BT_appendTempScript({ function: "adSize()" });
+      getControls("_BT_features", "#_BT_featureControls", 3);
+      getControls("_BT_rulers", "#_BT_rulerOverlayControls>table", 2);
+    });
+  }
+
+  function _BT_adGearPanel() {
+    $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
+    $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
+    _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1 });
+    $(_BT_adContainer).remove();
+    $("#_BT_AdGearHomeButton").click(function () {
+      setToStorage({ "isAdGear": 0 });
+      location.reload();
+    });
+
+    if (localStorage["_BT_AdGearURLInput"]) {
+      $("#_BT_AdGearURLInput").val(localStorage["_BT_AdGearURLInput"]);
+    }
+    if (($("#_BT_AdGearURLInput").val().indexOf("https://") >= 0) || ($("#_BT_AdGearURLInput").val().indexOf("http://") >= 0)) {
+      $("#warning").hide();
+    } else {
+      $("#warning").show();
+      $("#warning").text("Please make sure URL contains http:// or https:// protocol");
+    }
+
+    $('input').blur(function () {
+      reloadAdgear();
+    });
+
+    $('button').click(function () {
+      reloadAdgear();
+    });
+
+    $(window).keypress(function (e) {
+      switch (e.keyCode) {
+        case 13: reloadAdgear();
+          break;
+        case 114: reset();
+          break;
+      }
+    });
+
+    function reloadAdgear() {
+      localStorage["_BT_AdGearURLInput"] = $("#_BT_AdGearURLInput").val();
+      location.reload();
+    }
+  }
+
   function _BT_run() {
-    if ($("#ad-container").length || _BT_storage["_BT_forceRun"] == 1) {
+    if ($(_BT_adContainer).length || _BT_storage["_BT_forceRun"] == 1) {
       if (_BT_storage["_BT_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
         return;
@@ -36,57 +210,12 @@ $(document).ready(function () {
       $("head").prepend('<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">');
       $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-3.1.1.min.js') + "'></script>");
 
-      if (_BT_storage["isAdGear"] == 1) {
-        $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
-        $("body").append('<div id="_BT_AdGearHomeButton"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg></div>');
-        $("body").append('<img id="_BT_AdGearLogoButton" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
-        $("body").append('<input type="text" id="_BT_AdGearURLInput" placeholder="https://www.google.com"><span id="warning" hidden></span><button id="_BT_AdGearURLButton">Update CTA</button>');
-        $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
-        _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1 });
-        $("#ad-container").remove();
-        $("#_BT_AdGearLogoButton, #_BT_AdGearHomeButton").click(function () {
-          setToStorage({ "isAdGear": 0 });
-          location.reload();
-        });
-
-        $("#_BT_AdGearURLInput").val("https://www.google.com");
-        if (localStorage["_BT_AdGearURLInput"]) {
-          $("#_BT_AdGearURLInput").val(localStorage["_BT_AdGearURLInput"]);
-        }
-        if (($("#_BT_AdGearURLInput").val().indexOf("https://") >= 0) || ($("#_BT_AdGearURLInput").val().indexOf("http://") >= 0)) {
-          $("#warning").hide();
-        } else {
-          $("#warning").show();
-          $("#warning").text("Please make sure URL contains http:// or https:// protocol");
-        }
-
-        $('input').blur(function () {
-          reloadAdgear();
-        });
-
-        $('button').click(function () {
-          reloadAdgear();
-        });
-
-        $(window).keypress(function (e) {
-          switch (e.keyCode) {
-            case 13: reloadAdgear();
-              break;
-            case 114: reset();
-              break;
-          }
-        });
-
-        function reloadAdgear() {
-          localStorage["_BT_AdGearURLInput"] = $("#_BT_AdGearURLInput").val();
-          location.reload();
-        }
-        return;
+      if (_BT_storage["isAdGear"] != 1) {
+        $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
+        _BT_appendAssetScript({ script: "_BT_BannerObject" });
       }
 
       _BT_isRunning = true;
-      $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
-      _BT_appendAssetScript({ script: "_BT_BannerObject" });
 
       chrome.extension.sendRequest({
         cmd: "_BT_getBT"
@@ -95,121 +224,23 @@ $(document).ready(function () {
         $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
         $("#_BT_version").append(' v' + _BT_version);
 
-        if ($("script[src*='" + "https://h5.adgear.com/v1/js/html5.min.js" + "']").length !== 0) {
-          $("#_BT_").append('<img id="_BT_AdGearLogoButton" class="hvr-grow" src="' + chrome.extension.getURL('/assets/img/adgear.png') + '"/>');
-          $("#_BT_AdGearLogoButton").click(function () {
-            setToStorage({ "isAdGear": 1 });
-            location.reload();
-          });
+        if (_BT_storage["isAdGear"] == 1) {
+          _BT_panel("#_BT_adGear");
         }
-
-        $(window).keypress(function (e) {
-          switch (e.keyCode) {
-            case 0: _BT_animationPlayback(1);
-              break;
-            case 32: _BT_animationPlayback(1);
-              break;
-            case 113: _BT_animationPlayback(2);
-              break;
-            case 101: _BT_animationPlayback(3);
-              break;
-            case 114: reset();
-              break;
-          }
-        });
+        else {
+          _BT_mainPanel();
+        }
 
         $("#_BT_disableSwitch").change(function () {
           _BT_disable();
         });
 
-        $(".replay-button").click(function () {
-          _BT_appendTempScript({ function: "firstFrame()" });
-        });
-
-        $(document).on('click', '._BT_rulerButtons', function () {
-          var axis, maxAxisRange, pos;
-          if (this.id == "_BT_xRulerButton") {
-            axis = "X";
-            pos = "left";
-            maxAxisRange = localStorage["_BT_adWidth"];
-          } else {
-            axis = "Y";
-            pos = "top";
-            maxAxisRange = localStorage["_BT_adHeight"];
-          }
-          $("#_BT_rulerOverlay").append(_BT_getRuler(axis));
-          $("._BT_ruler" + axis).draggable({
-            axis: axis,
-            containment: "#_BT_rulerOverlay",
-            drag: function () {
-              var Position = $(this).css(pos);
-
-              if (Position == (maxAxisRange - 2) + "px") {
-                Position = (maxAxisRange + "px");
-              }
-              $(this).find($('._BT_rulerPos')).text(axis + ': ' + Position);
-            }
-          });
-        });
-
-        $(document).on('click', '.delImg', function () {
-          imgs.splice($(this).parent().attr("id"), 1);
-          if ($(this).attr("src") == localStorage['_BT_imgOverlay']) {
-            localStorage.removeItem('_BT_imgOverlay');
-            $("#_BT_imgOverlay").attr("src", "");
-          }
-          $(this).parent().remove();
-          if ($('#_BT_imgRefGallery').is(':empty')) {
-            _BT_deleteImgOverlayAssets();
-          }
-        });
-
-        $(document).on('click', '.img', function () {
-          $("[class*=_BT_selectedImgOverlay]").removeClass("_BT_selectedImgOverlay");
-
-          if (localStorage['_BT_imgOverlay'] == $(this).attr("src")) {
-            $("#_BT_imgOverlay").attr("src", "");
-            $("#_BT_imgOverlay").removeClass("_BT_visible");
-            localStorage.removeItem('_BT_imgOverlay');
-            $(this).removeClass("_BT_selectedImgOverlay");
-          } else {
-            $("#_BT_imgOverlay").attr("src", $(this).attr("src"));
-            $("#_BT_imgOverlay").addClass("_BT_visible");
-            localStorage['_BT_imgOverlay'] = $(this).attr("src");
-            $(this).addClass("_BT_selectedImgOverlay");
-          }
-        });
-
-        $(document).on('click', '._BT_feature', function () {
-          feature("#" + this.id, $(this).attr('bt-value'));
-        });
-
-        $(document).on('mouseover', '._BT_feature, ._BT_rulerButtons', function () {
-          if (_BT_helpOn) {
-            $("#_BT_helpDesk").addClass("_BT_opacity");
-            _BT_appendHelp($(this).attr('bt-featurename'), $(this).attr('bt-featuredesc'));
-          }
-        });
-
-        $(document).on('mouseout', '._BT_feature, ._BT_rulerButtons', function () {
-          if (_BT_helpOn) $("#_BT_helpDesk").removeClass("_BT_opacity");
-        });
-
-        $("#_BT_imgOverlayUpload").change(uploadImgOverlayAsset);
-
         if (!_BT_storage["_BT_minimized"]) _BT_storage["_BT_minimized"] = 0;
 
         _BT_openNav(_BT_storage["_BT_minimized"]);
-
-        $(document).ready(function () {
-          _BT_appendTempScript({ function: "startup()" });
-          _BT_appendTempScript({ function: "adSize()" });
-          getControls("_BT_features", "#_BT_featureControls", 3);
-          getControls("_BT_rulers", "#_BT_rulerOverlayControls>table", 2);
-        });
       });
     } else {
-      console.log("BannerTools will remain disabled as it could not find 'ad-container' ID!");
+      console.log("BannerTools will remain disabled as it could not find '" + _BT_adContainer + "' ID!");
     }
   }
 
@@ -219,7 +250,7 @@ $(document).ready(function () {
     if (arg["_BT_overflow"]              == 1) { feature("#_BT_showButton",        0); }
     if (arg["_BT_guide"]                 == 1) { feature("#_BT_guideButton",       0); }
     if (arg["_BT_border"]                == 1) { feature("#_BT_borderButton",      0); }
-    if (arg["_BT_replay"]                == 1) { feature("#_BT_replayButton",      0); }
+    if (arg["_BT_replay"]                == 1) { feature("#_BT__BT_replayButton",      0); }
     if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
     if (arg["_BT_forceRun"]              == 1) { feature("#_BT_forceRunButton",    0); }
     if (arg["_BT_help"]                  != 0) { feature("#_BT_helpButton",        0); }
@@ -250,7 +281,7 @@ $(document).ready(function () {
         break;
       case "#_BT_marginButton": _BT_margin(arg);
         break;
-      case "#_BT_replayButton": _BT_replay(arg);
+      case "#_BT__BT_replayButton": _BT_replay(arg);
         break;
       case "#_BT_blackButton": _BT_backgroundColor(arg);
         break;
@@ -281,11 +312,14 @@ $(document).ready(function () {
     }
   }
 
-  function _BT_panel(object){
-    console.log(object);
-    if(object == "#BT_settings"){
-      $(".panel").hide();
-      $("_BT_settingsPanel").show();
+  function _BT_panel(object) {
+    $(".panel").hide();
+    if(object == "#_BT_settings"){
+      $("#_BT_settingsPanel").show();
+    }
+    else if (object == "#_BT_adGear") {
+      $("#_BT_adGearPanel").show();
+      _BT_adGearPanel();
     }
   }
 
@@ -449,7 +483,7 @@ $(document).ready(function () {
   }
 
   function _BT_replay(arg) {
-    (arg == 1) ? ($(".replay-button").css("visibility", "hidden")) : ($(".replay-button").css("visibility", ""));
+    (arg == 1) ? ($(_BT_replayButton).css("visibility", "hidden")) : ($(_BT_replayButton).css("visibility", ""));
 
     setToStorage({ "_BT_replay": arg });
   }
@@ -499,7 +533,7 @@ $(document).ready(function () {
 
   function _BT_grid(arg) {
     (arg == 1) ? ($("#_BT_gridOverlay").addClass("_BT_visible")) : ($("#_BT_gridOverlay").removeClass("_BT_visible"));
-    (arg == 1) ? ($(".replay-button").css("z-index", "10000")) : ($(".replay-button").css("z-index", ""));
+    (arg == 1) ? ($(_BT_replayButton).css("z-index", "10000")) : ($(_BT_replayButton).css("z-index", ""));
   }
 
   function _BT_rulers(arg) {
@@ -518,7 +552,7 @@ $(document).ready(function () {
   function _BT_overflow(arg) {
     var style;
     (arg == 1) ? (style = "visible") : (style = "");
-    $("#ad-container").css("overflow", style);
+    $(_BT_adContainer).css("overflow", style);
     setToStorage({ "_BT_overflow": arg });
   }
 
@@ -579,13 +613,13 @@ $(document).ready(function () {
       feature("#_BT_showButton", 1);
       feature("#_BT_guideButton", 1);
       feature("#_BT_borderButton", 1);
-      feature("#_BT_replayButton", 1);
+      feature("#_BT__BT_replayButton", 1);
       feature("#_BT_helpButton", 1);
       initialBoost = true;
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
 
-      $("#ad-container").css("margin", 0);
+      $(_BT_adContainer).css("margin", 0);
       _BT_replay(1);
 
       chrome.extension.sendRequest({
@@ -618,7 +652,7 @@ $(document).ready(function () {
       }
 
       localStorage.removeItem('_BT_storageJSON');
-      $("#ad-container").css("margin", "auto");
+      $(_BT_adContainer).css("margin", "auto");
       _BT_openNav(_BT_storage["_BT_minimized"]);
     }
   }

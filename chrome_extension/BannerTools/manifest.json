@@ -3,6 +3,7 @@
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
 	"version": "2.0.0",
+	"options_page": "assets/html/_BT_Options.html",
 	"browser_action": {
 		"default_icon": "assets/img/icon16.jpg"
 	},
@@ -33,7 +34,7 @@
 			"assets/js/_BT_Content.js"
 		],
 		"css": [
-			"assets/css/_BT_Styles.css",
+			"assets/css/_BT_styles.css",
 			"assets/css/jquery-ui.min.css"
 		]
 	}],
