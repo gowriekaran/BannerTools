@@ -1,0 +1,279 @@
+@import "_BT_global";
+@import "_BT_variables";
+@import "_BT_featureStyles";
+@import "_BT_adGear";
+@import "_BT_iOS";
+@import "_BT_options";
+
+#_BT_helpDesk {
+  width: $appWidth;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: $backgroundColor;
+  border: 2px solid $borderColor;
+  padding: 10px;
+  font-family: 'Roboto Condensed', sans-serif;
+  opacity: 0;
+  transition: opacity 0.5s;
+  color: $textColor;
+}
+
+#_BT_ {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: $backgroundColor;
+  overflow-x: hidden;
+  transition: 0.5s;
+  border-left: 2px solid $borderColor;
+  width: 0px;
+  text-align: center;
+
+  > div:first-child {
+    background-color: $headerColor;
+    box-shadow: 0px 0px 8px 2px rgba(0,0,0,0.5);
+  }
+
+  div:nth-of-type(n+2) {
+    padding: 10px;
+  }
+
+  div:nth-of-type(n+3) {
+    text-align: initial;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  tr > td:nth-child(1) {
+    width: 90%;
+  }
+
+  tr > td:nth-child(2) {
+    width: 10%;
+    text-align: right;
+  }
+
+  #_BT_settingsPanel {
+    display: none;
+  }
+
+  #_BT_logo {
+    width: 75px;
+    display: block;
+    margin: auto;
+    padding: 10px;
+  }
+
+  ._BT_info {
+    font-style: italic;
+  }
+
+  #_BT_featureControls {
+    @extend .svgControls;
+
+    button {
+      border: 0px;
+      display: block;
+      margin: auto;
+      background-color: rgba(0,0,0,0);
+      width: 50px;
+      height: 50px;
+    }
+
+    #_BT_imgDelRefButton {
+      visibility: hidden;
+    }
+  }
+
+  #_BT_AdGearLogoButton {
+    display: block;
+    margin: auto;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.svgControls {
+  td {
+    height: 55px !important;
+    width: 50px !important;
+    padding: 5px;
+  }
+
+  svg {
+    display: block;
+    margin: auto;
+    text-align:center;
+    fill: $featureColor;
+  }
+
+  svg:hover {
+    fill: $featureHoverColor !important;
+    cursor: pointer;
+  }
+}
+
+#_BT_imgOverlay {
+  opacity: 0.5;
+}
+
+#_BT_gridOverlay {
+  background-size: 10px 10px;
+  background-image: linear-gradient(to right, grey 1px, transparent 1px), linear-gradient(to bottom, grey 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+._BT_featureOverlay {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  visibility: hidden;
+}
+
+#_BT_rulerOverlayControls {
+  @extend .svgControls;
+  width: 100%;
+  visibility: hidden;
+
+  table {
+    background-color: $backgroundColor;
+    border: 2px solid $borderColor;
+    width: $appWidth;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+._BT_rulerX {
+  cursor: col-resize;
+  width: 0px;
+  height: 100%;
+  border-right: 1px $rulerColor solid !important;
+  background: $rulerColor !important;
+  border-color: $rulerColor !important;
+  position: absolute;
+}
+
+._BT_rulerY {
+  cursor: row-resize;
+  height: 0px;
+  width: 100%;
+  border-top: 1px $rulerColor solid !important;
+  background: $rulerColor !important;
+  border-color: $rulerColor !important;
+  position: absolute;
+}
+
+._BT_rulerPos {
+  position: absolute;
+  font-size: 12px;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-family: 'Roboto Condensed', sans-serif;
+  display: block;
+  width: 50px;
+}
+
+#animationPlayback {
+  div {
+    padding: 0px !important;
+  }
+
+  div:first-child {
+    display: block;
+    margin: auto;
+  }
+
+  #_BT_timeLine {
+    margin-top: 10px;
+
+    div{
+      float: left;
+    }
+    div:nth-of-type(2){
+      float: right;
+    }
+  }
+
+  #slider {
+    width: 90%;
+    border-color: $sliderBorderColor;
+    background: $sliderBackgroundColor;
+    height: 5px;
+
+    .ui-slider {
+      background: $sliderColor;
+      height: 5px;
+    }
+
+    .ui-slider-range {
+      background: $sliderRangeColor;
+      height: 5px;
+    }
+
+    .ui-slider-handle {
+      border-color: $sliderHandleColor;
+      background-color: $sliderHandleColor;
+      border-radius: 100px;
+      width: 10px;
+      height: 10px;
+      top: -4px;
+    }
+  }
+}
+
+#_BT_imgRefGalleryContainer {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 90%;
+  height: 75px;
+  background-color: $imgGalleryColor;
+  padding: 12px !important;
+  display: none;
+  margin: auto;
+  #_BT_imgRefGallery {
+    width: 230px;
+    height: 100%;
+    .imgContainer {
+      width: 75px;
+      height: 100%;
+      float: left;
+      position: relative;
+      padding: 0px !important;
+      margin-right: 10px;
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        border: 1px solid $imgGalleryColor;
+      }
+      span {
+        display: none;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        color: $spanColor;
+      }
+      *:hover {
+        cursor: pointer;
+      }
+    }
+    .imgContainer:hover {
+      span{
+        display: block;
+      }
+    }
+  }
+}
