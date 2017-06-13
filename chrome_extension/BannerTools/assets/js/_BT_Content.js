@@ -18,11 +18,11 @@ $(document).ready(function () {
     chrome.storage.sync.get(null, function (items) {
       _BT_storage = items;
 
-      if (_BT_storage["_BT_adContainer"]) {
-        _BT_adContainer = _BT_storage["_BT_adContainer"];
+      if (items["_BT_adContainer"]) {
+        _BT_adContainer = items["_BT_adContainer"];
       }
-      if (_BT_storage["_BT_replayButton"]) {
-        _BT_replayButton = _BT_storage["_BT_replayButton"];
+      if (items["_BT_replayButton"]) {
+        _BT_replayButton = items["_BT_replayButton"];
       }
 
       _BT_run();
@@ -43,17 +43,6 @@ $(document).ready(function () {
 
     $("#_BT_adContainer").val(_BT_adContainer);
     $("#_BT_replayButton").val(_BT_replayButton);
-
-    $("#_BT_settingsSaveButton").click(function () {
-      if ($("#_BT_adContainer").val()) {
-        setToStorage({"_BT_adContainer": $("#_BT_adContainer").val()});
-      }
-      if ($("#_BT_replayButton").val()){
-        setToStorage({ "_BT_replayButton": $("#_BT_replayButton").val() });
-      }
-
-      location.reload();
-    });
 
     $(document).on('click', '._BT_rulerButtons', function () {
       var axis, maxAxisRange, pos;
@@ -221,7 +210,7 @@ $(document).ready(function () {
         cmd: "_BT_get_BT_"
       }, function (html) {
         $("body").append(html);
-        $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
+        $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/logo.png'));
         $("#_BT_version").append(' v' + _BT_version);
 
         if (_BT_storage["isAdGear"] == 1) {
@@ -244,7 +233,19 @@ $(document).ready(function () {
           cmd: "_BT_get_BT_settings"
         }, function (html) {
           $(html).insertBefore("#_BT_mainPanel");
-          _BT_appendAssetScript({ script: "_BT_settings", remove: 1 });
+          $("#_BT_adContainer").val(_BT_adContainer);
+          $("#_BT_replayButton").val(_BT_replayButton);
+
+          $("#_BT_settingsSaveButton").click(function () {
+            if ($("#_BT_adContainer").val()) {
+              setToStorage({ "_BT_adContainer": $("#_BT_adContainer").val() });
+            }
+            if ($("#_BT_replayButton").val()) {
+              setToStorage({ "_BT_replayButton": $("#_BT_replayButton").val() });
+            }
+
+            location.reload();
+          });
         });
     } else {
       console.log("BannerTools will remain disabled as it could not find '" + _BT_adContainer + "' ID!");

@@ -45,13 +45,12 @@
 		]
 	},
 	"web_accessible_resources": [
-		"assets/img/Logo.png",
+		"assets/img/logo.png",
 		"assets/img/adgear.png",
 		"assets/js/jquery-ui.min.js",
 		"assets/js/jquery-3.1.1.min.js",
 		"assets/js/_BT_bannerObject.js",
 		"assets/js/_BT_adgear.js",
-		"assets/js/_BT_settings.js",
 		"assets/html/_BT_.html",
 		"assets/json/_BT_features.json",
 		"assets/json/_BT_rulers.json"
