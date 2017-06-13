@@ -160,7 +160,7 @@ $(document).ready(function () {
   function _BT_adGearPanel() {
     $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
     $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
-    _BT_appendAssetScript({ script: "_BT_AdGear", remove: 1 });
+    _BT_appendAssetScript({ script: "_BT_adgear", remove: 1 });
     $(_BT_adContainer).remove();
     $("#_BT_AdGearHomeButton").click(function () {
       setToStorage({ "isAdGear": 0 });
@@ -212,13 +212,13 @@ $(document).ready(function () {
 
       if (_BT_storage["isAdGear"] != 1) {
         $("head").append("<script src='" + chrome.extension.getURL('assets/js/jquery-ui.min.js') + "'></script>");
-        _BT_appendAssetScript({ script: "_BT_BannerObject" });
+        _BT_appendAssetScript({ script: "_BT_bannerObject" });
       }
 
       _BT_isRunning = true;
 
       chrome.extension.sendRequest({
-        cmd: "_BT_getBT"
+        cmd: "_BT_get_BT_"
       }, function (html) {
         $("body").append(html);
         $("#_BT_logo").attr("src", chrome.extension.getURL('/assets/img/Logo.png'));
@@ -238,7 +238,14 @@ $(document).ready(function () {
         if (!_BT_storage["_BT_minimized"]) _BT_storage["_BT_minimized"] = 0;
 
         _BT_openNav(_BT_storage["_BT_minimized"]);
-      });
+        });
+
+        chrome.extension.sendRequest({
+          cmd: "_BT_get_BT_settings"
+        }, function (html) {
+          $(html).insertBefore("#_BT_mainPanel");
+          _BT_appendAssetScript({ script: "_BT_settings", remove: 1 });
+        });
     } else {
       console.log("BannerTools will remain disabled as it could not find '" + _BT_adContainer + "' ID!");
     }

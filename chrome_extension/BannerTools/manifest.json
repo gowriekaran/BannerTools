@@ -3,7 +3,7 @@
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
 	"version": "2.0.0",
-	"options_page": "assets/html/_BT_Options.html",
+	"options_page": "assets/html/_BT_options.html",
 	"browser_action": {
 		"default_icon": "assets/img/icon16.jpg"
 	},
@@ -31,7 +31,7 @@
 		"js": [
 			"assets/js/jquery-3.1.1.min.js",
 			"assets/js/jquery-ui.min.js",
-			"assets/js/_BT_Content.js"
+			"assets/js/_BT_content.js"
 		],
 		"css": [
 			"assets/css/_BT_styles.css",
@@ -41,7 +41,7 @@
 	"background": {
 		"scripts": [
 			"assets/js/jquery-3.1.1.min.js",
-			"assets/js/_BT_Background.js"
+			"assets/js/_BT_background.js"
 		]
 	},
 	"web_accessible_resources": [
@@ -49,8 +49,9 @@
 		"assets/img/adgear.png",
 		"assets/js/jquery-ui.min.js",
 		"assets/js/jquery-3.1.1.min.js",
-		"assets/js/_BT_BannerObject.js",
-		"assets/js/_BT_AdGear.js",
+		"assets/js/_BT_bannerObject.js",
+		"assets/js/_BT_adgear.js",
+		"assets/js/_BT_settings.js",
 		"assets/html/_BT_.html",
 		"assets/json/_BT_features.json",
 		"assets/json/_BT_rulers.json"
