@@ -3,16 +3,15 @@ var isCheckpointSet = false;
 var BT;
 
 function bannerTimelineObject(obj){
-    if (typeof obj == "undefined") {
-        console.log("BannerTools could not find Banner object, Object Script task aborted. Try refreshing.");
+    if (!isSafe(obj)) {
+        return;
     }
-    else{
-        BT = obj;
-    }
+
+    BT = obj;
 }
 
-function isSafe(){
-    if (typeof BT == "undefined") {
+function isSafe(obj){
+    if (typeof obj == "undefined") {
         console.log("BannerTools could not find Banner object, Object Script task aborted. Try refreshing.");
         return false;
     }
@@ -22,7 +21,7 @@ function isSafe(){
 }
 
 function startup() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -74,7 +73,7 @@ function startup() {
 }
 
 function firstFrame(){
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -84,7 +83,7 @@ function firstFrame(){
 }
 
 function lastFrame(){
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -93,7 +92,7 @@ function lastFrame(){
 }
 
 function sliderInterval(){
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -103,7 +102,7 @@ function sliderInterval(){
 }
 
 function playAnimation() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -111,7 +110,7 @@ function playAnimation() {
 }
 
 function pauseAnimation() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -119,7 +118,7 @@ function pauseAnimation() {
 }
 
 function checkpoint() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -141,7 +140,7 @@ function checkpoint() {
 }
 
 function animationInterval() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -159,7 +158,7 @@ function animationInterval() {
 }
 
 function stopInterval() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -167,7 +166,7 @@ function stopInterval() {
 }
 
 function formatNumber(arg) {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
@@ -175,13 +174,29 @@ function formatNumber(arg) {
 }
 
 function adSize() {
-    if(!isSafe()){
+    if(!isSafe(BT)){
         return;
     }
 
-    var _BT_adSize = "(" + banner.adWidth + " x " + banner.adHeight + ")";
+    var _BT_adSize, _BT_adWidth, _BT_adHeight;
+
+    if (typeof banner == "undefined") {
+        _BT_adSize = $("meta[name='ad.size']").attr("content");
+
+        var _BT_start_pos = _BT_adSize.indexOf("=") + 1;
+        var _BT_end_pos = _BT_adSize.indexOf(",", _BT_start_pos);
+
+        _BT_adWidth = _BT_adSize.substring(_BT_start_pos, _BT_end_pos);
+        _BT_adHeight = _BT_adSize.split(",").pop();
+        _BT_adHeight = _BT_adSize.split("=").pop();
+    } else {
+        _BT_adWidth = banner.adWidth;
+        _BT_adHeight = banner.adHeight;
+    }
+    _BT_adSize = "";
+    _BT_adSize = "(" + _BT_adWidth + " x " + _BT_adHeight + ")";
     $("#_BT_adNowPlaying").text(document.title.split('-')[0] + _BT_adSize);
-    $("._BT_featureOverlay").css({ width: banner.adWidth, height: banner.adHeight });
-    localStorage["_BT_adWidth"] = banner.adWidth;
-    localStorage["_BT_adHeight"] = banner.adHeight;
+    $("._BT_featureOverlay").css({ width: _BT_adWidth, height: _BT_adHeight });
+    localStorage["_BT_adWidth"] = _BT_adWidth;
+    localStorage["_BT_adHeight"] = _BT_adHeight;
 }
