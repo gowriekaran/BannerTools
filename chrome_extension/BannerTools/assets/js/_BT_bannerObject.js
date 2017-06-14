@@ -140,14 +140,6 @@ function checkpoint() {
     }
 }
 
-function boost(arg) {
-    if(!isSafe()){
-        return;
-    }
-
-    BT.timeScale(arg);
-}
-
 function animationInterval() {
     if(!isSafe()){
         return;

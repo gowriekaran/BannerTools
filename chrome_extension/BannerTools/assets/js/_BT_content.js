@@ -6,7 +6,7 @@ $(document).ready(function () {
       _BT_Speed = 1,
       _BT_isRunning = _BT_isExpanded = false,
       imgs = new Array(),
-      flip = imgOverlayFirstRun = initialBoost = true,
+      flip = imgOverlayFirstRun = true,
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
       play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
       _BT_adContainer = "#ad-container",
@@ -285,7 +285,6 @@ $(document).ready(function () {
     if (arg["_BT_replay"]                == 1) { feature("#_BT__BT_replayButton",      0); }
     if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
     if (arg["_BT_help"]                  != 0) { feature("#_BT_helpButton",        0); }
-                                                 feature("#_BT_boostButton",  0);
 
     if (localStorage['_BT_imgOverlay'])        { addImgOverlayAsset(localStorage['_BT_imgOverlay']); }
   }
@@ -327,8 +326,6 @@ $(document).ready(function () {
       case "#_BT_firstFrameButton": _BT_animationPlayback(2);
         break;
       case "#_BT_lastFrameButton": _BT_animationPlayback(3);
-        break;
-      case "#_BT_boostButton": _BT_animationBoost(1);
         break;
       case "#_BT_checkpointButton": _BT_checkpoint(arg);
         break;
@@ -583,37 +580,6 @@ $(document).ready(function () {
     setToStorage({ "_BT_overflow": arg });
   }
 
-  function _BT_animationBoost(arg) {
-    if (_BT_storage["_BT_animationBoostValue"]){
-      _BT_Speed = _BT_storage["_BT_animationBoostValue"];
-    }
-
-    if(initialBoost){
-      initialBoost = false;
-    }
-    else{
-      if (_BT_Speed == 0.5) _BT_Speed = 1;
-      else if (_BT_Speed == 1) _BT_Speed = 2;
-      else if (_BT_Speed == 2) _BT_Speed = 5;
-      else if (_BT_Speed == 5) _BT_Speed = 10;
-      else _BT_Speed = 0.5;
-    }
-
-    var suffix = ".0";
-    if (_BT_Speed == 0.5) suffix = "";
-    $("#_BT_Speed").text("Speed: x" + _BT_Speed + suffix);
-    _BT_appendTempScript({ function: "boost(" + _BT_Speed + ");" });
-
-    setToStorage({ "_BT_animationBoostValue": _BT_Speed });
-
-    $("#_BT_boostButton").children().addClass("_BT_featureOn");
-    $("#_BT_Speed").addClass("_BT_warning");
-    if (_BT_Speed == 1) {
-      $("#_BT_boostButton").children().removeClass("_BT_featureOn");
-      $("#_BT_Speed").removeClass("_BT_warning");
-    }
-  }
-
   function setToStorage(obj) {
     chrome.storage.sync.set(obj);
     _BT_storage[obj.key] = obj.val;
@@ -642,7 +608,6 @@ $(document).ready(function () {
       feature("#_BT_borderButton", 1);
       feature("#_BT__BT_replayButton", 1);
       feature("#_BT_helpButton", 1);
-      initialBoost = true;
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
 
