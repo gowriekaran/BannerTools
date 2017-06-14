@@ -6,25 +6,6 @@
   color: $textColor;
 }
 
-#_BT_AdGearHomeButton {
-  fill: $featureOnColor;
-  display:table;
-
-  svg {
-    transform: scaleX(-1);
-  }
-
-  span {
-    display:table-cell;
-    vertical-align:middle;
-    margin-left: 10px;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 #_BT_AdGearPreviewContainer {
   * {
     display: block;

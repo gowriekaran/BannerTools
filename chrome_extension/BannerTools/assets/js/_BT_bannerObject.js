@@ -1,9 +1,19 @@
 var interval;
 var isCheckpointSet = false;
+var BT;
+
+function bannerTimelineObject(obj){
+    if (typeof obj == "undefined") {
+        console.log("BannerTools could not find Banner object, Object Script task aborted. Try refreshing.");
+    }
+    else{
+        BT = obj;
+    }
+}
 
 function isSafe(){
-    if ((typeof banner == "undefined") && (typeof banner.myTL == "undefined")) {
-        console.log("BannerTools could not find Banner object, Object Script will not work. Try refreshing.");
+    if (typeof BT == "undefined") {
+        console.log("BannerTools could not find Banner object, Object Script task aborted. Try refreshing.");
         return false;
     }
     else{
@@ -17,28 +27,28 @@ function startup() {
     }
 
     if (localStorage['_BT_checkpoint']) {
-        banner.myTL.progress(localStorage['_BT_checkpoint']);
-        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
+        BT.progress(localStorage['_BT_checkpoint']);
+        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(BT.time()) + "s");
     }
 
-    $("#_BT_adTotalDurationLabel").html("Total time: " + formatNumber(banner.myTL.totalDuration()) + "s");
-    if (banner.myTL.totalDuration() > 30) {
+    $("#_BT_adTotalDurationLabel").html("Total time: " + formatNumber(BT.totalDuration()) + "s");
+    if (BT.totalDuration() > 30) {
         $("#_BT_adTotalDurationLabel").addClass("._BT_warning");
     }
 
-    $("#_BT_adDurationLabel").html(banner.myTL.duration().toString().substring(0, 4) + "s");
-    if (banner.myTL.duration() > 30) {
+    $("#_BT_adDurationLabel").html(BT.duration().toString().substring(0, 4) + "s");
+    if (BT.duration() > 30) {
         $("#_BT_adDurationLabel").addClass("._BT_warning");
     }
 
-    if ((banner.myTL.repeat() + 1) == 1) {
+    if ((BT.repeat() + 1) == 1) {
         $("#_BT_adPlaying").html(" once");
     }
-    else if ((banner.myTL.repeat() + 1) == 2) {
+    else if ((BT.repeat() + 1) == 2) {
         $("#_BT_adPlaying").html(" twice");
     }
     else {
-        $("#_BT_adPlaying").html(banner.myTL.repeat() + 1 + " times");
+        $("#_BT_adPlaying").html(BT.repeat() + 1 + " times");
     }
 
     interval = setInterval(animationInterval, 1);
@@ -53,8 +63,8 @@ function startup() {
         max: 100,
         step: .1,
         slide: function (event, ui) {
-            banner.myTL.progress(ui.value / 100);
-            $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
+            BT.progress(ui.value / 100);
+            $("#_BT_currentTime").html(formatNumber(BT.time()) + "s");
 
             if (typeof interval == 'undefined') {
                 interval = setInterval(animationInterval, 0);
@@ -68,7 +78,7 @@ function firstFrame(){
         return;
     }
 
-    banner.myTL.progress(0);
+    BT.progress(0);
     interval = setInterval(animationInterval, 1);
     sliderInterval();
 }
@@ -78,7 +88,7 @@ function lastFrame(){
         return;
     }
 
-    banner.myTL.progress(100);
+    BT.progress(100);
     sliderInterval();
 }
 
@@ -87,8 +97,8 @@ function sliderInterval(){
         return;
     }
 
-    $("#slider").slider("value", banner.myTL.progress() * 100);
-    $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");
+    $("#slider").slider("value", BT.progress() * 100);
+    $("#_BT_currentTime").html(BT.time().toString().substring(0,5) + "s");
     stopInterval();
 }
 
@@ -97,7 +107,7 @@ function playAnimation() {
         return;
     }
 
-    banner.myTL.play();
+    BT.play();
 }
 
 function pauseAnimation() {
@@ -105,7 +115,7 @@ function pauseAnimation() {
         return;
     }
 
-    banner.myTL.pause();
+    BT.pause();
 }
 
 function checkpoint() {
@@ -115,12 +125,12 @@ function checkpoint() {
 
     if(!isCheckpointSet){
         if (localStorage['_BT_checkpoint']) {
-            banner.myTL.progress(localStorage['_BT_checkpoint']);
+            BT.progress(localStorage['_BT_checkpoint']);
         }
         else {
-            localStorage['_BT_checkpoint'] = banner.myTL.progress();
+            localStorage['_BT_checkpoint'] = BT.progress();
         }
-        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
+        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(BT.time()) + "s");
         isCheckpointSet = true;
     }
     else {
@@ -135,7 +145,7 @@ function boost(arg) {
         return;
     }
 
-    banner.myTL.timeScale(arg);
+    BT.timeScale(arg);
 }
 
 function animationInterval() {
@@ -143,9 +153,9 @@ function animationInterval() {
         return;
     }
 
-    $("#slider").slider("value", banner.myTL.progress() * 100);
-    $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
-    if (banner.myTL.progress() == 1) {
+    $("#slider").slider("value", BT.progress() * 100);
+    $("#_BT_currentTime").html(formatNumber(BT.time()) + "s");
+    if (BT.progress() == 1) {
         if (banner.played == 1) {
             stopInterval();
         }

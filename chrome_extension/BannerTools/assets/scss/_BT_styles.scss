@@ -98,6 +98,25 @@
       cursor: pointer;
     }
   }
+
+  #_BT_returnButton {
+    fill: $featureOnColor;
+    display: none;
+
+    svg {
+      transform: scaleX(-1);
+    }
+
+    span {
+      display:table-cell;
+      vertical-align:middle;
+      margin-left: 10px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .svgControls {

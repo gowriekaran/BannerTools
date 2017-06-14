@@ -10,7 +10,8 @@ $(document).ready(function () {
       pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
       play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
       _BT_adContainer = "#ad-container",
-      _BT_replayButton = ".replay-button";
+      _BT_replayButton = ".replay-button",
+      _BT_timeline = "banner.myTL";
 
   _BT_prepare();
 
@@ -23,6 +24,9 @@ $(document).ready(function () {
       }
       if (items["_BT_replayButton"]) {
         _BT_replayButton = items["_BT_replayButton"];
+      }
+      if (items["_BT_timeline"]) {
+        _BT_timeline = items["_BT_timeline"];
       }
 
       _BT_run();
@@ -37,9 +41,13 @@ $(document).ready(function () {
   }
 
   function _BT_mainPanel() {
-    $(_BT_replayButton).click(function () {
-      _BT_appendTempScript({ function: "firstFrame()" });
+    $(document).ready(function () {
+      var bannerTimelineObject = "bannerTimelineObject(" + _BT_timeline + ");";
+      _BT_appendTempScript({ function: bannerTimelineObject });
     });
+    $(_BT_replayButton).click(function () {
+    _BT_appendTempScript({ function: "firstFrame()" });
+  });
 
     $("#_BT_adContainer").val(_BT_adContainer);
     $("#_BT_replayButton").val(_BT_replayButton);
@@ -125,8 +133,6 @@ $(document).ready(function () {
           break;
         case 101: _BT_animationPlayback(3);
           break;
-        case 114: reset();
-          break;
       }
     });
 
@@ -151,7 +157,7 @@ $(document).ready(function () {
     $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
     _BT_appendAssetScript({ script: "_BT_adgear", remove: 1 });
     $(_BT_adContainer).remove();
-    $("#_BT_AdGearHomeButton").click(function () {
+    $("#_BT_returnButton").click(function () {
       setToStorage({ "isAdGear": 0 });
       location.reload();
     });
@@ -178,8 +184,6 @@ $(document).ready(function () {
       switch (e.keyCode) {
         case 13: reloadAdgear();
           break;
-        case 114: reset();
-          break;
       }
     });
 
@@ -190,7 +194,7 @@ $(document).ready(function () {
   }
 
   function _BT_run() {
-    if ($(_BT_adContainer).length || _BT_storage["_BT_forceRun"] == 1) {
+    if ($(_BT_adContainer).length) {
       if (_BT_storage["_BT_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
         return;
@@ -235,6 +239,11 @@ $(document).ready(function () {
           $(html).insertBefore("#_BT_mainPanel");
           $("#_BT_adContainer").val(_BT_adContainer);
           $("#_BT_replayButton").val(_BT_replayButton);
+          $("#_BT_timeline").val(_BT_timeline);
+
+          $("#_BT_returnButton").click(function () {
+            location.reload();
+          });
 
           $("#_BT_settingsSaveButton").click(function () {
             if ($("#_BT_adContainer").val()) {
@@ -243,8 +252,23 @@ $(document).ready(function () {
             if ($("#_BT_replayButton").val()) {
               setToStorage({ "_BT_replayButton": $("#_BT_replayButton").val() });
             }
+            if ($("#_BT_timeline").val()) {
+              setToStorage({ "_BT_timeline": $("#_BT_timeline").val() });
+            }
 
             location.reload();
+          });
+
+           $("#_BT_resetButton").click(function () {
+            reset();
+            location.reload();
+           });
+
+          $(window).keypress(function (e) {
+            switch (e.keyCode) {
+              case 13: $("#_BT_settingsSaveButton").click();
+                break;
+            }
           });
         });
     } else {
@@ -260,7 +284,6 @@ $(document).ready(function () {
     if (arg["_BT_border"]                == 1) { feature("#_BT_borderButton",      0); }
     if (arg["_BT_replay"]                == 1) { feature("#_BT__BT_replayButton",      0); }
     if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
-    if (arg["_BT_forceRun"]              == 1) { feature("#_BT_forceRunButton",    0); }
     if (arg["_BT_help"]                  != 0) { feature("#_BT_helpButton",        0); }
                                                  feature("#_BT_boostButton",  0);
 
@@ -313,8 +336,6 @@ $(document).ready(function () {
         break;
       case "#_BT_resetButton": reset();
         break;
-      case "#_BT_forceRunButton": _BT_forceRun(arg);
-        break;
       case "#_BT_settings": _BT_panel(object);
         break;
     }
@@ -324,8 +345,10 @@ $(document).ready(function () {
     $(".panel").hide();
     if(object == "#_BT_settings"){
       $("#_BT_settingsPanel").show();
+      $("#_BT_returnButton").css("display","table");
     }
     else if (object == "#_BT_adGear") {
+      $("#_BT_returnButton").css("display","table");
       $("#_BT_adGearPanel").show();
       _BT_adGearPanel();
     }
@@ -426,10 +449,6 @@ $(document).ready(function () {
   function _BT_disable() {
     setToStorage({ "_BT_disable": 1 });
     location.reload();
-  }
-
-  function _BT_forceRun(arg){
-    setToStorage({ "_BT_forceRun": arg });
   }
 
   function _BT_animationPlayback(arg) {
