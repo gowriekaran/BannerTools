@@ -10,7 +10,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 });
 
 chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
-	if (request.cmd == "_BT_getBT") {
+	if (request.cmd == "_BT_get_BT_") {
 		$.ajax({
 			url: chrome.extension.getURL("/assets/html/_BT_.html"),
 			dataType: "html",
@@ -58,6 +58,12 @@ chrome.extension.onRequest.addListener(function (request, sender, sendResponse) 
 			currentWindow: true
 		}, function (tabs) {
 			chrome.tabs.setZoom(tabs[0].id, 1);
+		});
+	} else if (request.cmd == "_BT_get_BT_settings") {
+		$.ajax({
+			url: chrome.extension.getURL("/assets/html/_BT_settings.html"),
+			dataType: "html",
+			success: sendResponse
 		});
 	}
 })
