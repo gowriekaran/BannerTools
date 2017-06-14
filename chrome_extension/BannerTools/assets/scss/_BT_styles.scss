@@ -20,6 +20,11 @@
 }
 
 #_BT_ {
+
+  * {
+    @extend .global;
+  }
+
   height: 100%;
   position: fixed;
   z-index: 1;

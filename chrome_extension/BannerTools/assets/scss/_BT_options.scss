@@ -1,7 +1,11 @@
 @import "_BT_global";
 @import "_BT_variables";
 
+
 #_BT_settingsPanel {
+    *{
+        @extend .global;
+    }
     div {
         padding: 0px !important;
 
