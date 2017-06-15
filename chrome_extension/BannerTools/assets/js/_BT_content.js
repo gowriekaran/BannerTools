@@ -29,7 +29,20 @@ $(document).ready(function () {
         _BT_timeline = items["_BT_timeline"];
       }
 
-      _BT_run();
+      if ($("script[src*='" + "https://s0.2mdn.net/ads/studio/Enabler.js" + "']").length !== 0) {
+        console.log("BannerTools will be paused as Enabler has been detected and it will wait a few seconds to make sure all the assets have been loaded.");
+        setTimeout(function () {
+          console.log("BannerTools will now resume as Enabler should have loaded all it's assets by now.")
+          _BT_run();
+          setTimeout(function () {
+            console.log("BannerTools will go to first frame as a precaution due to the settimeout.");
+            _BT_animationPlayback(2)
+          }, 150);
+        }, 2000);
+      } else {
+        _BT_run();
+      }
+
     });
   }
 
@@ -129,9 +142,9 @@ $(document).ready(function () {
           break;
         case 32: _BT_animationPlayback(1);
           break;
-        case 113: _BT_animationPlayback(2);
+        case 49: _BT_animationPlayback(2);
           break;
-        case 101: _BT_animationPlayback(3);
+        case 50: _BT_animationPlayback(3);
           break;
       }
     });
