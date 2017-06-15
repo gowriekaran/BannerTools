@@ -311,7 +311,7 @@ $(document).ready(function () {
         break;
       case "#_BT_marginButton": _BT_margin(arg);
         break;
-      case "#_BT__BT_replayButton": _BT_replay(arg);
+      case "#_BT_replayButton": _BT_replay(arg);
         break;
       case "#_BT_blackButton": _BT_backgroundColor(arg);
         break;
