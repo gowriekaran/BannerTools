@@ -18,7 +18,7 @@
 - Guide:
   Show a grid over your banner to see how accurate elements are positioned
 - Hide Replay:
-  Hide the replay button, convenient when manually taking screenshots
+  Hide the replay button, convenient when manually making backup images
 - Info (ad name, specs, duration):
   Display banner name, width, height and duration
 - Lights off:
