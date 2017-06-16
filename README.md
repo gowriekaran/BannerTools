@@ -3,15 +3,13 @@
 [Download Plugin](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
 #### Setup:
-* Use a parent container with ID **ad-container**
-* Use an element with ID **replay-button**
+* Use a parent container with ID **ad-container** (can be modified in options page)
+* Use an element with ID **replay-button** (can be modified in options page)
 * Meta tags in `<head>` tag:
 `<meta name="ad.size" content="width=300,height=250">`
 * Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
 
 #### Features:
-- Boost:
-  Manipulate animation speed (0.5, 1, 2, 5, 10)
 - Border:
   Add a 1px solid red border around every element that has a height and width greater than 0
 - Checkpoint:
