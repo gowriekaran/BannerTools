@@ -11,9 +11,9 @@
 
 #### Features:
 - Border:
-  Add a 1px solid red border around every element that has a height and width greater than 0
+  Add a 1px dashed red border around every element (that has a height and width greater than 0)
 - Checkpoint:
-  Set a checkpoint on your timeline so you can return to it every time you refresh the page
+  Set a checkpoint in your timeline, so you can return to it every time you refresh the page
 - Guide:
   Show a grid over your banner to see how accurate elements are positioned
 - Hide Replay:
@@ -25,13 +25,13 @@
 - Margin Top:
   Add a 100px top margin
 - Reference Images:
-  Upload images to position elements based off a reference
+  Upload images and use them as a reference to accurately position elements
 - Playback Controls:
-  Play, pause, go to end, go to start, or go to a specific time
+  Play, pause, end, start, or go to a specific time
 - Reveal All:
   Show everything
 - Rulers:
-  To measure better
+  To measure element positioning more precisely
 - Screenshot:
   Screenshot a moment in time
 
