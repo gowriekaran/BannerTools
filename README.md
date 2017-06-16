@@ -5,6 +5,7 @@
 #### Setup:
 * Use a parent container with ID **ad-container** (can be modified in options page)
 * Use an element with ID **replay-button** (can be modified in options page)
+* Use a timeline object with name **banner.myTL** (can be modified in options page)
 * Meta tags in `<head>` tag:
 `<meta name="ad.size" content="width=300,height=250">`
 * Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
@@ -26,6 +27,10 @@
   Add a 100px top margin
 - Reference Images:
   Upload images and use them as a reference to accurately position elements
+- Shortkeys:
+  Spacebar: play/pause
+  1: go to start
+  2: go to end
 - Playback Controls:
   Play, pause, end, start, or go to a specific time
 - Reveal All:

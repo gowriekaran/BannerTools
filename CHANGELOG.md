@@ -1,16 +1,21 @@
 # Version 2.0
 - Refactored Code
-- HTML is now an asset. Does not need to be minifed and pasted into a js string variable like before. Instead it gets loaded.
+- HTML is now an asset loaded through JS
 - Rewritten variables with "_BT_" prefix + camelCase format
-- Storage values are loaded all at once on startup, rather than so many individual ones. Updated individually, more practical.
-- Modified screenshot function to pass array rather than query string
+- Storage values are loaded all at once on startup. Updated individually
+- Modified screenshot function to pass array of data, rather than query string
 - Added comments above and below injected code to quickly spot BannerTools in the dev console
-- Removed interior, should not touch dev code
+- BT code is no longer injected into ad-container
 - Integrated SASS
-- New UI: SVG icons
+- New UI & SVG icons
 - AdGear Tester
-- New features: Reference images, playback, checkpoint, boost
-- Fixed override
+- Enabler Detection (Buggy)
+- New features: Reference images, playback, checkpoint
+- Removed override
+- You can now modify the object and element BT depends on
+- Play/pause with spacebar
+- Go to end with 1
+- Go to start with 2
 
 # Version 1.7
 - Removed options
