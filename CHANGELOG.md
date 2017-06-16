@@ -1,8 +1,27 @@
-#Version 1.7
+# Version 2.0
+- Refactored Code
+- HTML is now an asset loaded through JS
+- Rewritten variables with "_BT_" prefix + camelCase format
+- Storage values are loaded all at once on startup. Updated individually
+- Modified screenshot function to pass array of data, rather than query string
+- Added comments above and below injected code to quickly spot BannerTools in the dev console
+- BT code is no longer injected into ad-container
+- Integrated SASS
+- New UI & SVG icons
+- AdGear Tester
+- Enabler Detection (Buggy)
+- New features: Reference images, playback, checkpoint
+- Removed override
+- You can now modify the object and element BT depends on
+- Play/pause with spacebar
+- Go to end with 1
+- Go to start with 2
+
+# Version 1.7
 - Removed options
 - Bug fixes
 
-#Version 1.6
+# Version 1.6
 - Hooked into banner object
 - Added feature to play / pause banner
 - Updated screenshot to automatically go to last frame
