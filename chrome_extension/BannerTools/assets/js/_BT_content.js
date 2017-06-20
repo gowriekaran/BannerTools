@@ -1,17 +1,14 @@
 //  Created by: Gowriekaran Sinnadurai
 
 $(document).ready(function () {
-  var _BT_version = "2.0.0 BETA",
-      _BT_storage, _BT_helpOn,
-      _BT_Speed = 1,
-      _BT_isRunning = _BT_isExpanded = false,
-      imgs = new Array(),
-      flip = imgOverlayFirstRun = true,
-      pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
-      play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26",
-      _BT_adContainer = "#ad-container",
-      _BT_replayButton = ".replay-button",
-      _BT_timeline = "banner.myTL";
+  var _BT_version = "2.0.1",
+    _BT_storage, _BT_helpOn,
+    _BT_Speed = 1,
+    _BT_isRunning = _BT_isExpanded = false,
+    imgs = new Array(),
+    playing = imgOverlayFirstRun = true,
+    pause = "M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28",
+    play = "M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26";
 
   _BT_prepare();
 
@@ -19,30 +16,22 @@ $(document).ready(function () {
     chrome.storage.sync.get(null, function (items) {
       _BT_storage = items;
 
-      if (items["_BT_adContainer"]) {
-        _BT_adContainer = items["_BT_adContainer"];
-      }
-      if (items["_BT_replayButton"]) {
-        _BT_replayButton = items["_BT_replayButton"];
-      }
-      if (items["_BT_timeline"]) {
-        _BT_timeline = items["_BT_timeline"];
-      }
+      // if ($("script[src*='" + "https://s0.2mdn.net/ads/studio/Enabler.js" + "']").length !== 0) {
+      //   // console.log("BannerTools will be paused as Enabler has been detected and it will wait a few seconds to make sure all the assets have been loaded.");
+      //   // setTimeout(function () {
+      //   //   console.log("BannerTools will now resume as Enabler should have loaded all it's assets by now.")
+      //   //   _BT_run();
+      //   // }, 2000);
+      //     if (Enabler.isInitialized()) {
+      //       _BT_run();
+      //     } else {
+      //       Enabler.addEventListener(studio.events.StudioEvent.INIT, _BT_run);
+      //     }
 
-      if ($("script[src*='" + "https://s0.2mdn.net/ads/studio/Enabler.js" + "']").length !== 0) {
-        console.log("BannerTools will be paused as Enabler has been detected and it will wait a few seconds to make sure all the assets have been loaded.");
-        setTimeout(function () {
-          console.log("BannerTools will now resume as Enabler should have loaded all it's assets by now.")
-          _BT_run();
-          setTimeout(function () {
-            console.log("BannerTools will go to first frame as a precaution due to the settimeout.");
-            _BT_animationPlayback(2)
-          }, 150);
-        }, 2000);
-      } else {
-        _BT_run();
-      }
-
+      // } else {
+      //   _BT_run();
+      // }
+      _BT_run();
     });
   }
 
@@ -54,16 +43,9 @@ $(document).ready(function () {
   }
 
   function _BT_mainPanel() {
-    $(document).ready(function () {
-      var bannerTimelineObject = "bannerTimelineObject(" + _BT_timeline + ");";
-      _BT_appendTempScript({ function: bannerTimelineObject });
-    });
-    $(_BT_replayButton).click(function () {
+    $(".replay-button").click(function () {
     _BT_appendTempScript({ function: "firstFrame()" });
   });
-
-    $("#_BT_adContainer").val(_BT_adContainer);
-    $("#_BT_replayButton").val(_BT_replayButton);
 
     $(document).on('click', '._BT_rulerButtons', function () {
       var axis, maxAxisRange, pos;
@@ -138,13 +120,11 @@ $(document).ready(function () {
 
     $(window).keypress(function (e) {
       switch (e.keyCode) {
-        case 0: _BT_animationPlayback(1);
-          break;
-        case 32: _BT_animationPlayback(1);
-          break;
         case 49: _BT_animationPlayback(2);
           break;
         case 50: _BT_animationPlayback(3);
+          break;
+        case 51: _BT_animationPlayback(1);
           break;
       }
     });
@@ -158,7 +138,7 @@ $(document).ready(function () {
     }
 
     $(document).ready(function () {
-      _BT_appendTempScript({ function: "startup()" });
+      _BT_appendTempScript({ function: "detect()" });
       _BT_appendTempScript({ function: "adSize()" });
       getControls("_BT_features", "#_BT_featureControls", 3);
       getControls("_BT_rulers", "#_BT_rulerOverlayControls>table", 2);
@@ -169,7 +149,7 @@ $(document).ready(function () {
     $("head").append('<script type="text/javascript" src="https://h5.adgear.com/v1/js/loaders/basic.min.js"></script>');
     $("body").append('<div id="_BT_AdGearPreviewContainer"><iframe id="_BT_AdGearPreview" src="about:blank;" width="' + localStorage["_BT_adWidth"] + '" height="' + localStorage["_BT_adHeight"] + '" frameborder="0" scrolling="no"></iframe></div>');
     _BT_appendAssetScript({ script: "_BT_adgear", remove: 1 });
-    $(_BT_adContainer).remove();
+    $("#ad-container").remove();
     $("#_BT_returnButton").click(function () {
       setToStorage({ "isAdGear": 0 });
       location.reload();
@@ -207,7 +187,7 @@ $(document).ready(function () {
   }
 
   function _BT_run() {
-    if ($(_BT_adContainer).length) {
+    if ($("#ad-container").length) {
       if (_BT_storage["_BT_disable"] == 1) {
         console.log("BannerTools is currently disabled. Click on the extension to launch it!");
         return;
@@ -250,25 +230,7 @@ $(document).ready(function () {
           cmd: "_BT_get_BT_settings"
         }, function (html) {
           $(html).insertBefore("#_BT_mainPanel");
-          $("#_BT_adContainer").val(_BT_adContainer);
-          $("#_BT_replayButton").val(_BT_replayButton);
-          $("#_BT_timeline").val(_BT_timeline);
-
           $("#_BT_returnButton").click(function () {
-            location.reload();
-          });
-
-          $("#_BT_settingsSaveButton").click(function () {
-            if ($("#_BT_adContainer").val()) {
-              setToStorage({ "_BT_adContainer": $("#_BT_adContainer").val() });
-            }
-            if ($("#_BT_replayButton").val()) {
-              setToStorage({ "_BT_replayButton": $("#_BT_replayButton").val() });
-            }
-            if ($("#_BT_timeline").val()) {
-              setToStorage({ "_BT_timeline": $("#_BT_timeline").val() });
-            }
-
             location.reload();
           });
 
@@ -276,16 +238,9 @@ $(document).ready(function () {
             reset();
             location.reload();
            });
-
-          $(window).keypress(function (e) {
-            switch (e.keyCode) {
-              case 13: $("#_BT_settingsSaveButton").click();
-                break;
-            }
-          });
         });
     } else {
-      console.log("BannerTools will remain disabled as it could not find '" + _BT_adContainer + "' ID!");
+      console.log("BannerTools will remain disabled as it could not find '#ad-container' ID!");
     }
   }
 
@@ -295,7 +250,7 @@ $(document).ready(function () {
     if (arg["_BT_overflow"]              == 1) { feature("#_BT_showButton",        0); }
     if (arg["_BT_guide"]                 == 1) { feature("#_BT_guideButton",       0); }
     if (arg["_BT_border"]                == 1) { feature("#_BT_borderButton",      0); }
-    if (arg["_BT_replay"]                == 1) { feature("#_BT__BT_replayButton",      0); }
+    if (arg["_BT_replay"]                == 1) { feature("#_BT_replayButton",      0); }
     if (arg["_BT_checkpoint"]            == 1) { feature("#_BT_checkpointButton",  0); }
     if (arg["_BT_help"]                  != 0) { feature("#_BT_helpButton",        0); }
 
@@ -464,13 +419,13 @@ $(document).ready(function () {
   function _BT_animationPlayback(arg) {
     $("._BT_playBack").find("svg").removeClass("_BT_featureOn");
     if (arg == 1) {
-      flip = !flip;
+      playing = !playing;
       $('#_BT_playPause').attr({
-        "from": flip ? pause : play,
-        "to": flip ? play : pause
+        "from": playing ? pause : play,
+        "to": playing ? play : pause
       }).get(0).beginElement();
 
-      if (flip) {
+      if (playing) {
         _BT_appendTempScript({ function: "playAnimation()" });
       } else {
         _BT_appendTempScript({ function: "pauseAnimation()" });
@@ -478,6 +433,7 @@ $(document).ready(function () {
       }
       return;
     }
+
     (arg == 2) ? _BT_appendTempScript({ function: "firstFrame()" }) : _BT_appendTempScript({ function: "lastFrame()" });
   }
 
@@ -520,7 +476,7 @@ $(document).ready(function () {
   }
 
   function _BT_replay(arg) {
-    (arg == 1) ? ($(_BT_replayButton).css("visibility", "hidden")) : ($(_BT_replayButton).css("visibility", ""));
+    (arg == 1) ? ($(".replay-button").css("visibility", "hidden")) : ($(".replay-button").css("visibility", ""));
 
     setToStorage({ "_BT_replay": arg });
   }
@@ -570,7 +526,7 @@ $(document).ready(function () {
 
   function _BT_grid(arg) {
     (arg == 1) ? ($("#_BT_gridOverlay").addClass("_BT_visible")) : ($("#_BT_gridOverlay").removeClass("_BT_visible"));
-    (arg == 1) ? ($(_BT_replayButton).css("z-index", "10000")) : ($(_BT_replayButton).css("z-index", ""));
+    (arg == 1) ? ($(".replay-button").css("z-index", "10000")) : ($(".replay-button").css("z-index", ""));
   }
 
   function _BT_rulers(arg) {
@@ -589,7 +545,7 @@ $(document).ready(function () {
   function _BT_overflow(arg) {
     var style;
     (arg == 1) ? (style = "visible") : (style = "");
-    $(_BT_adContainer).css("overflow", style);
+    $("#ad-container").css("overflow", style);
     setToStorage({ "_BT_overflow": arg });
   }
 
@@ -619,12 +575,12 @@ $(document).ready(function () {
       feature("#_BT_showButton", 1);
       feature("#_BT_guideButton", 1);
       feature("#_BT_borderButton", 1);
-      feature("#_BT__BT_replayButton", 1);
+      feature("#_BT_replayButton", 1);
       feature("#_BT_helpButton", 1);
       _BT_deleteImgOverlayAssets();
       _BT_closeNav(1);
 
-      $(_BT_adContainer).css("margin", 0);
+      $("#ad-container").css("margin", 0);
       _BT_replay(1);
 
       chrome.extension.sendRequest({
@@ -657,7 +613,7 @@ $(document).ready(function () {
       }
 
       localStorage.removeItem('_BT_storageJSON');
-      $(_BT_adContainer).css("margin", "auto");
+      $("#ad-container").css("margin", "auto");
       _BT_openNav(_BT_storage["_BT_minimized"]);
     }
   }

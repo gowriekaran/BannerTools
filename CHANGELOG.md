@@ -1,3 +1,7 @@
+# Version 2.0.1
+- Removed custom objects
+- Fixed enabler
+
 # Version 2.0
 - Refactored Code
 - HTML is now an asset loaded through JS

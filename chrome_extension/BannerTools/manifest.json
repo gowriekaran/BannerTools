@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "BannerTools",
 	"description": "To help facilitate banner development.",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"options_page": "assets/html/_BT_options.html",
 	"browser_action": {
 		"default_icon": "assets/img/icon16.jpg"

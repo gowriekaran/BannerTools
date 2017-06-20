@@ -1,53 +1,59 @@
 var interval;
 var isCheckpointSet = false;
-var BT;
 
-function bannerTimelineObject(obj){
-    if (!isSafe(obj)) {
-        return;
-    }
-
-    BT = obj;
-}
-
-function isSafe(obj){
-    if (typeof obj == "undefined") {
+function isSafe() {
+    if (typeof banner.myTL == "undefined") {
         console.log("BannerTools could not find Banner object, Object Script task aborted. Try refreshing.");
         return false;
     }
-    else{
+    else {
         return true;
     }
 }
 
+function detect() {
+    if ($("script[src*='" + "https://s0.2mdn.net/ads/studio/Enabler.js" + "']").length !== 0) {
+        console.log("Enabler!");
+
+        if (Enabler.isInitialized()) {
+            startup();
+        } else {
+            Enabler.addEventListener(studio.events.StudioEvent.INIT, startup);
+        }
+
+    } else {
+        startup();
+    }
+}
+
 function startup() {
-    if(!isSafe(BT)){
+    if (!isSafe()) {
         return;
     }
 
     if (localStorage['_BT_checkpoint']) {
-        BT.progress(localStorage['_BT_checkpoint']);
-        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(BT.time()) + "s");
+        banner.myTL.progress(localStorage['_BT_checkpoint']);
+        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
     }
 
-    $("#_BT_adTotalDurationLabel").html("Total time: " + formatNumber(BT.totalDuration()) + "s");
-    if (BT.totalDuration() > 30) {
+    $("#_BT_adTotalDurationLabel").html("Total time: " + formatNumber(banner.myTL.totalDuration()) + "s");
+    if (banner.myTL.totalDuration() > 30) {
         $("#_BT_adTotalDurationLabel").addClass("._BT_warning");
     }
 
-    $("#_BT_adDurationLabel").html(BT.duration().toString().substring(0, 4) + "s");
-    if (BT.duration() > 30) {
+    $("#_BT_adDurationLabel").html(banner.myTL.duration().toString().substring(0, 4) + "s");
+    if (banner.myTL.duration() > 30) {
         $("#_BT_adDurationLabel").addClass("._BT_warning");
     }
 
-    if ((BT.repeat() + 1) == 1) {
+    if ((banner.myTL.repeat() + 1) == 1) {
         $("#_BT_adPlaying").html(" once");
     }
-    else if ((BT.repeat() + 1) == 2) {
+    else if ((banner.myTL.repeat() + 1) == 2) {
         $("#_BT_adPlaying").html(" twice");
     }
     else {
-        $("#_BT_adPlaying").html(BT.repeat() + 1 + " times");
+        $("#_BT_adPlaying").html(banner.myTL.repeat() + 1 + " times");
     }
 
     interval = setInterval(animationInterval, 1);
@@ -62,8 +68,8 @@ function startup() {
         max: 100,
         step: .1,
         slide: function (event, ui) {
-            BT.progress(ui.value / 100);
-            $("#_BT_currentTime").html(formatNumber(BT.time()) + "s");
+            banner.myTL.progress(ui.value / 100);
+            $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
 
             if (typeof interval == 'undefined') {
                 interval = setInterval(animationInterval, 0);
@@ -73,63 +79,39 @@ function startup() {
 }
 
 function firstFrame(){
-    if(!isSafe(BT)){
-        return;
-    }
-
-    BT.progress(0);
+    banner.myTL.progress(0);
     interval = setInterval(animationInterval, 1);
     sliderInterval();
 }
 
 function lastFrame(){
-    if(!isSafe(BT)){
-        return;
-    }
-
-    BT.progress(100);
+    banner.myTL.progress(100);
     sliderInterval();
 }
 
 function sliderInterval(){
-    if(!isSafe(BT)){
-        return;
-    }
-
-    $("#slider").slider("value", BT.progress() * 100);
-    $("#_BT_currentTime").html(BT.time().toString().substring(0,5) + "s");
+    $("#slider").slider("value", banner.myTL.progress() * 100);
+    $("#_BT_currentTime").html(banner.myTL.time().toString().substring(0,5) + "s");
     stopInterval();
 }
 
 function playAnimation() {
-    if(!isSafe(BT)){
-        return;
-    }
-
-    BT.play();
+    banner.myTL.play();
 }
 
 function pauseAnimation() {
-    if(!isSafe(BT)){
-        return;
-    }
-
-    BT.pause();
+    banner.myTL.pause();
 }
 
 function checkpoint() {
-    if(!isSafe(BT)){
-        return;
-    }
-
     if(!isCheckpointSet){
         if (localStorage['_BT_checkpoint']) {
-            BT.progress(localStorage['_BT_checkpoint']);
+            banner.myTL.progress(localStorage['_BT_checkpoint']);
         }
         else {
-            localStorage['_BT_checkpoint'] = BT.progress();
+            localStorage['_BT_checkpoint'] = banner.myTL.progress();
         }
-        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(BT.time()) + "s");
+        $("#_BT_checkPoint").html("Checkpoint: " + formatNumber(banner.myTL.time()) + "s");
         isCheckpointSet = true;
     }
     else {
@@ -140,13 +122,9 @@ function checkpoint() {
 }
 
 function animationInterval() {
-    if(!isSafe(BT)){
-        return;
-    }
-
-    $("#slider").slider("value", BT.progress() * 100);
-    $("#_BT_currentTime").html(formatNumber(BT.time()) + "s");
-    if (BT.progress() == 1) {
+    $("#slider").slider("value", banner.myTL.progress() * 100);
+    $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
+    if (banner.myTL.progress() == 1) {
         if (banner.played == 1) {
             stopInterval();
         }
@@ -158,26 +136,14 @@ function animationInterval() {
 }
 
 function stopInterval() {
-    if(!isSafe(BT)){
-        return;
-    }
-
     clearInterval(interval);
 }
 
 function formatNumber(arg) {
-    if(!isSafe(BT)){
-        return;
-    }
-
     return arg.toString().substring(0, 4);
 }
 
 function adSize() {
-    if(!isSafe(BT)){
-        return;
-    }
-
     var _BT_adSize, _BT_adWidth, _BT_adHeight;
 
     if (typeof banner == "undefined") {
