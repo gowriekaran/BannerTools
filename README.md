@@ -3,9 +3,9 @@
 [Download Plugin](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
 #### Setup:
-* Use a parent container with ID **ad-container** (can be modified in options page)
-* Use an element with ID **replay-button** (can be modified in options page)
-* Use a timeline object with name **banner.myTL** (can be modified in options page)
+* Use a parent container with ID **ad-container**
+* Use an element with ID **replay-button**
+* Use a timeline object with name **banner.myTL**
 * Meta tags in `<head>` tag:
 `<meta name="ad.size" content="width=300,height=250">`
 * Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
