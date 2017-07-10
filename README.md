@@ -3,16 +3,10 @@
 [Download Plugin](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
 #### Setup:
-* Use a parent container with ID **ad-container**
-* Use an element with ID **replay-button**
-* Use a timeline object with name **banner.myTL**
-* Meta tags in `<head>` tag:
-`<meta name="ad.size" content="width=300,height=250">`
+* Requires [Gulp](https://bitbucket.org/mhwebBB/gulp-banner-mh)
 * Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
 
 #### Features:
-- Border:
-  Add a 1px dashed red border around every element (that has a height and width greater than 0)
 - Checkpoint:
   Set a checkpoint in your timeline, so you can return to it every time you refresh the page
 - Guide:
@@ -25,6 +19,8 @@
   Close the background light
 - Margin Top:
   Add a 100px top margin
+- Outline:
+  Add a 1px dashed red border around every element (that has a height and width greater than 0)
 - Reference Images:
   Upload images and use them as a reference to accurately position elements
 - Shortkeys:

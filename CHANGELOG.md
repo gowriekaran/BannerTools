@@ -1,3 +1,7 @@
+# Version 2.0.2
+- Renamed "Border everything" feature to "Outline everything"
+- Bug fixes
+
 # Version 2.0.1
 - Removed custom objects
 - Fixed enabler

@@ -91,15 +91,7 @@ function startup() {
         $("#_BT_adDurationLabel").addClass("._BT_warning");
     }
 
-    if ((banner.myTL.repeat() + 1) == 1) {
-        $("#_BT_adPlaying").html(" once");
-    }
-    else if ((banner.myTL.repeat() + 1) == 2) {
-        $("#_BT_adPlaying").html(" twice");
-    }
-    else {
-        $("#_BT_adPlaying").html(banner.myTL.repeat() + 1 + " times");
-    }
+    $("#_BT_adPlaying").html(banner.autoplayCount + " time(s)");
 
     interval = setInterval(animationInterval, 1);
 
@@ -170,7 +162,7 @@ function animationInterval() {
     $("#slider").slider("value", banner.myTL.progress() * 100);
     $("#_BT_currentTime").html(formatNumber(banner.myTL.time()) + "s");
     if (banner.myTL.progress() == 1) {
-        if (banner.played == 1) {
+        if (banner.autoplayCount == banner.played) {
             stopInterval();
         }
         else {
