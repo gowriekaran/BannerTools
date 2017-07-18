@@ -13,7 +13,7 @@
   display: none
 }
 
-._BT_slider {
+._BT_iOS_switch {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -25,7 +25,7 @@
   transition: .4s
 }
 
-._BT_slider:before {
+._BT_iOS_switch:before {
   position: absolute;
   content: "";
   height: 13px;
@@ -37,24 +37,24 @@
   transition: .4s
 }
 
-input:checked+._BT_slider {
+input:checked+._BT_iOS_switch {
   background-color: $switchColor;
 }
 
-input:focus+._BT_slider {
+input:focus+._BT_iOS_switch {
   box-shadow: 0 0 1px #2196F3
 }
 
-input:checked+._BT_slider:before {
+input:checked+._BT_iOS_switch:before {
   -webkit-transform: translateX(13px);
   -ms-transform: translateX(13px);
   transform: translateX(13px)
 }
 
-._BT_slider._BT_sliderRound {
+._BT_iOS_switch._BT_iOS_switchRound {
   border-radius: 17px
 }
 
-._BT_slider._BT_sliderRound:before {
+._BT_iOS_switch._BT_iOS_switchRound:before {
   border-radius: 50%
 }

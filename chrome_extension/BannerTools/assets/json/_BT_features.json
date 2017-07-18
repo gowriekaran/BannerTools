@@ -4,28 +4,21 @@
         "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' style='transform: scaleX(-1);'><path d='M19 12l-18 12v-24l18 12zm4-11h-4v22h4v-22z'/></svg>",
         "featureName":"First frame",
-        "featureDesc":"Click this to go to the beginning of the animation."
+        "featureDesc":"Go to the start of the creative."
     },
     {
         "id":"_BT_playButton",
         "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<button aria-live='assertive' tabindex='32' aria-label='Pause'> <svg viewBox='0 0 36 36' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'> <defs> <path id='_BT_12' d='M 11 10 L 17 10 L 17 26 L 11 26 M 20 10 L 26 10 L 26 26 L 20 26'> <animate id='_BT_playPause' begin='indefinite' attributeType='XML' attributeName='d' fill='freeze' from='M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26' to='M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28' dur='0.1s' keySplines='.4 0 1 1' repeatCount='1'></animate> </path> </defs> <use xlink:href='#_BT_12' class='_BT_svg-shadow'></use> <use xlink:href='#_BT_12' class='_BT_svg-fill'></use> </svg> </button>",
         "featureName":"Play / Pause",
-        "featureDesc":"Click this to play / pause animation."
+        "featureDesc":"Play or pause the creative."
     },
     {
         "id":"_BT_lastFrameButton",
         "class":"_BT_feature _BT_featureOff _BT_playBack",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'> <path d='M19 12l-18 12v-24l18 12zm4-11h-4v22h4v-22z'/> </svg>",
         "featureName":"Last frame",
-        "featureDesc":"Click this to go to the ending of the animation."
-    },
-    {
-        "id": "_BT_settings",
-        "class": "_BT_feature _BT_featureOff",
-        "svgIcon": "<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M24 13.616v-3.232c-1.651-.587-2.694-.752-3.219-2.019v-.001c-.527-1.271.1-2.134.847-3.707l-2.285-2.285c-1.561.742-2.433 1.375-3.707.847h-.001c-1.269-.526-1.435-1.576-2.019-3.219h-3.232c-.582 1.635-.749 2.692-2.019 3.219h-.001c-1.271.528-2.132-.098-3.707-.847l-2.285 2.285c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02v3.232c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847h.001c1.27.526 1.436 1.579 2.019 3.219h3.232c.582-1.636.75-2.69 2.027-3.222h.001c1.262-.524 2.12.101 3.698.851l2.285-2.286c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021zm-12 2.384c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z'/></svg>",
-        "featureName": "Settings",
-        "featureDesc": "Click this to go to BannerTools options page."
+        "featureDesc":"Go to the end of the creative."
     },
     {
         "id": "_BT_helpButton",
@@ -39,49 +32,49 @@
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><path d='M12 3c2.131 0 4 1.73 4 3.702 0 2.05-1.714 4.941-4 8.561-2.286-3.62-4-6.511-4-8.561 0-1.972 1.869-3.702 4-3.702zm0-2c-3.148 0-6 2.553-6 5.702 0 3.148 2.602 6.907 6 12.298 3.398-5.391 6-9.15 6-12.298 0-3.149-2.851-5.702-6-5.702zm0 8c-1.105 0-2-.895-2-2s.895-2 2-2 2 .895 2 2-.895 2-2 2zm8 6h-3.135c-.385.641-.798 1.309-1.232 2h3.131l.5 1h-4.264l-.344.544-.289.456h.558l.858 2h-7.488l.858-2h.479l-.289-.456-.343-.544h-2.042l-1.011-1h2.42c-.435-.691-.848-1.359-1.232-2h-3.135l-4 8h24l-4-8zm-12.794 6h-3.97l1.764-3.528 1.516 1.528h1.549l-.859 2zm8.808-2h3.75l1 2h-3.892l-.858-2z'/></svg>",
         "featureName":"Checkpoint",
-        "featureDesc":"Click this to mark a checkpoint in the timeline and return to it everytime the page reloads."
+        "featureDesc":"Mark a checkpoint in the timeline and return to it everytime the page reloads."
     },
     {
         "id":"_BT_guideButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M6 6h-6v-6h6v6zm9-6h-6v6h6v-6zm9 0h-6v6h6v-6zm-18 9h-6v6h6v-6zm9 0h-6v6h6v-6zm9 0h-6v6h6v-6zm-18 9h-6v6h6v-6zm9 0h-6v6h6v-6zm9 0h-6v6h6v-6z'/> </svg>",
         "featureName":"Show grid and rulers",
-        "featureDesc":"Click this to display a grid over the animation. It comes with rulers so you can measure precisely."
+        "featureDesc":"Display a grid over the creative. It comes with rulers so you can measure precisely."
     },
     {
         "id":"_BT_borderButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M16 0v2h-8v-2h8zm0 24v-2h-8v2h8zm2-22h4v4h2v-6h-6v2zm-18 14h2v-8h-2v8zm2-10v-4h4v-2h-6v6h2zm22 2h-2v8h2v-8zm-2 10v4h-4v2h6v-6h-2zm-16 4h-4v-4h-2v6h6v-2z'/> </svg>",
-        "featureName":"Border everything",
-        "featureDesc":"Click this to add a 1px dashed red border around all elements (with height and width greater than 0)."
+        "featureName":"Outline everything",
+        "featureDesc":"Add a 1px dashed red border around all elements (with height and width greater than 0)."
     },
     {
         "id":"_BT_marginButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'> <path d='M32 16c0-8.837-7.163-16-16-16s-16 7.163-16 16 7.163 16 16 16 16-7.163 16-16zM3 16c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13-13-5.82-13-13z'></path> <path d='M9.914 11.086l-2.829 2.829 8.914 8.914 8.914-8.914-2.828-2.828-6.086 6.086z'></path> </svg>",
         "featureName":"Drop 100px down",
-        "featureDesc":"For those that are claustrophobic."
+        "featureDesc":"For those that are claustrophobic. Position the creative 100px downwards."
     },
     {
         "id":"_BT_showButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'> <path d='M16 6c-6.979 0-13.028 4.064-16 10 2.972 5.936 9.021 10 16 10s13.027-4.064 16-10c-2.972-5.936-9.021-10-16-10zM23.889 11.303c1.88 1.199 3.473 2.805 4.67 4.697-1.197 1.891-2.79 3.498-4.67 4.697-2.362 1.507-5.090 2.303-7.889 2.303s-5.527-0.796-7.889-2.303c-1.88-1.199-3.473-2.805-4.67-4.697 1.197-1.891 2.79-3.498 4.67-4.697 0.122-0.078 0.246-0.154 0.371-0.228-0.311 0.854-0.482 1.776-0.482 2.737 0 4.418 3.582 8 8 8s8-3.582 8-8c0-0.962-0.17-1.883-0.482-2.737 0.124 0.074 0.248 0.15 0.371 0.228v0zM16 13c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z'></path> </svg>",
         "featureName":"Show it all",
-        "featureDesc":"Show me the magic behind the curtain."
+        "featureDesc":"Show me the magic behind the curtain. Reveal everything."
     },
     {
         "id":"_BT_blackButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M14 19h-4c-.276 0-.5.224-.5.5s.224.5.5.5h4c.276 0 .5-.224.5-.5s-.224-.5-.5-.5zm0 2h-4c-.276 0-.5.224-.5.5s.224.5.5.5h4c.276 0 .5-.224.5-.5s-.224-.5-.5-.5zm.25 2h-4.5l1.188.782c.154.138.38.218.615.218h.895c.234 0 .461-.08.615-.218l1.187-.782zm3.75-13.799c0 3.569-3.214 5.983-3.214 8.799h-5.572c0-2.816-3.214-5.23-3.214-8.799 0-3.723 2.998-5.772 5.997-5.772 3.001 0 6.003 2.051 6.003 5.772zm4-.691v1.372h-2.538c.02-.223.038-.448.038-.681 0-.237-.017-.464-.035-.69h2.535zm-10.648-6.553v-1.957h1.371v1.964c-.242-.022-.484-.035-.726-.035-.215 0-.43.01-.645.028zm5.521 1.544l1.57-1.743 1.019.918-1.603 1.777c-.25-.297-.593-.672-.986-.952zm-10.738.952l-1.603-1.777 1.019-.918 1.57 1.743c-.392.28-.736.655-.986.952zm-1.597 5.429h-2.538v-1.372h2.535c-.018.226-.035.454-.035.691 0 .233.018.458.038.681z'/> </svg>",
         "featureName":"Close the lights",
-        "featureDesc":"This one is for the vampires."
+        "featureDesc":"This one is for the vampires. Darken the background."
     },
     {
         "id":"_BT_screenshotButton",
         "class":"_BT_feature _BT_featureOff",
         "svgIcon":"<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'> <path d='M18 5l-2-3h-8l-2 3h-6v17h24v-17h-6zm4 7h-4.079c.581 3.754-2.312 7-5.921 7-3.612 0-6.501-3.248-5.921-7h-4.079v-5h5.07l2-3h5.859l2 3h5.071v5zm-10-3c-2.243 0-4 1.73-4 3.939 0 2.239 1.794 4.061 4 4.061s4-1.822 4-4.061c0-2.209-1.757-3.939-4-3.939zm-.436 3.555c-.632.503-1.461.5-1.852-.006-.39-.506-.194-1.324.438-1.827.632-.502 1.461-.499 1.851.007.391.505.195 1.323-.437 1.826z'/> </svg>",
-        "featureName":"Screenshot",
-        "featureDesc":"Take a screenshot of the current frame, make it a memorable moment."
+        "featureName":"Screenshot (beta feature)",
+        "featureDesc":"Take a screenshot of the current frame."
     },
     {
         "id":"_BT_replayButton",

@@ -1,7 +1,7 @@
 //  Created by: Gowriekaran Sinnadurai
 
 $(document).ready(function () {
-  var _BT_version = "2.0.1",
+  var _BT_version = "2.0.2",
     _BT_storage, _BT_helpOn,
     _BT_Speed = 1,
     _BT_isRunning = _BT_isExpanded = false,
@@ -211,7 +211,10 @@ $(document).ready(function () {
         $("#_BT_version").append(' v' + _BT_version);
 
         if (_BT_storage["isAdGear"] == 1) {
-          _BT_panel("#_BT_adGear");
+          $(".panel").hide();
+          $("#_BT_returnButton").css("display", "table");
+          $("#_BT_adGearPanel").show();
+          _BT_adGearPanel();
         }
         else {
           _BT_mainPanel();
@@ -226,19 +229,6 @@ $(document).ready(function () {
         _BT_openNav(_BT_storage["_BT_minimized"]);
         });
 
-        chrome.extension.sendRequest({
-          cmd: "_BT_get_BT_settings"
-        }, function (html) {
-          $(html).insertBefore("#_BT_mainPanel");
-          $("#_BT_returnButton").click(function () {
-            location.reload();
-          });
-
-           $("#_BT_resetButton").click(function () {
-            reset();
-            location.reload();
-           });
-        });
     } else {
       console.log("BannerTools will remain disabled as it could not find '#ad-container' ID!");
     }
@@ -301,21 +291,6 @@ $(document).ready(function () {
         break;
       case "#_BT_resetButton": reset();
         break;
-      case "#_BT_settings": _BT_panel(object);
-        break;
-    }
-  }
-
-  function _BT_panel(object) {
-    $(".panel").hide();
-    if(object == "#_BT_settings"){
-      $("#_BT_settingsPanel").show();
-      $("#_BT_returnButton").css("display","table");
-    }
-    else if (object == "#_BT_adGear") {
-      $("#_BT_returnButton").css("display","table");
-      $("#_BT_adGearPanel").show();
-      _BT_adGearPanel();
     }
   }
 
