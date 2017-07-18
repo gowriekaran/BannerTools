@@ -33,7 +33,7 @@
   Show everything
 - Rulers:
   To measure element positioning more precisely
-- Screenshot:
+- Screenshot (beta feature):
   Screenshot a moment in time
 
 #### Credits:
