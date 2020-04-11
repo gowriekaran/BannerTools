@@ -3,7 +3,7 @@
 [Download Plugin](https://chrome.google.com/webstore/detail/bannertools/coadikkjopidjmjbkhnipibbonohffma)
 
 #### Setup:
-* Requires [Gulp](https://bitbucket.org/mhwebBB/gulp-banner-mh)
+* Requires [Internal Creative Builder](https://bitbucket.org/mhwebBB/gulp-banner-mh)
 * Enable **Allow access to file URLs** in [Chrome Extensions Settings](chrome://extensions/) page
 
 #### Features:
